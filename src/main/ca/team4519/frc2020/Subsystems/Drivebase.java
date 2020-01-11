@@ -40,6 +40,9 @@ public class Drivebase extends Subsystem implements Thread {
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.kBrushless);
         leftDriveNeoB.setSmartCurrentLimit(Constants.DriveNeoCurrentLimit);
         leftDriveNeoB.follow(rightDriveNeoA);
+
+        leftDriveGrayhill = new Encoder(Constants.leftDriveGrayhillA, Constants.leftDriveGrayhillB, Constants.isLeftDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
+        rightDriveGrayhill = new encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhilllipped, CounterBase.EncodingType.k4X);
         
     }
 
