@@ -4,8 +4,10 @@ import ca.team4519.Constants;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;;
 
@@ -22,6 +24,8 @@ public class Drivebase extends Subsystem implements Thread {
     private final Encoder rightDriveGrayhill;
 
     private final Solenoid shifter;
+
+    private final AHRS navX;
 
     public Drivebase()
     {
@@ -51,6 +55,8 @@ public class Drivebase extends Subsystem implements Thread {
         rightDriveGrayhill.setDistancePerPulse(Gains.DrivebaseGains.EncoderTicksPerRev);
 
         shifter = new Solenoid(Constants.shifter);
+
+        navX = new AHRS(SerialPort.Port.kMXP);
         
     }
 
