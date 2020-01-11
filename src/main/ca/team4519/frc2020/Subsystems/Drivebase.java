@@ -4,6 +4,7 @@ import ca.team4519.Constants;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;;
@@ -20,8 +21,11 @@ public class Drivebase extends Subsystem implements Thread {
     private final Encoder leftDriveGrayhill;
     private final Encoder rightDriveGrayhill;
 
+    private final Solenoid shifter;
+
     public Drivebase()
     {
+        thisInstance = this;
 
         rightDriveNeoA = new CANSparkMax(Constants.rightDriveNeoA, CANSparkMaxLowLevel.kBrushless);
         rightDriveNeoA.setMotorType(CANSparkMaxLowLevel.kBrushless);
@@ -45,6 +49,8 @@ public class Drivebase extends Subsystem implements Thread {
         leftDriveGrayhill.setDistancePerPulse(Gains.DrivebaseGains.EncoderTicksPerRev);
         rightDriveGrayhill = new encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhilllipped, CounterBase.EncodingType.k4X);
         rightDriveGrayhill.setDistancePerPulse(Gains.DrivebaseGains.EncoderTicksPerRev);
+
+        shifter = new Solenoid(Constants.shifter);
         
     }
 
