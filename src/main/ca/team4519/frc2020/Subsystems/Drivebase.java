@@ -42,7 +42,9 @@ public class Drivebase extends Subsystem implements Thread {
         leftDriveNeoB.follow(rightDriveNeoA);
 
         leftDriveGrayhill = new Encoder(Constants.leftDriveGrayhillA, Constants.leftDriveGrayhillB, Constants.isLeftDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
+        leftDriveGrayhill.setDistancePerPulse(Gains.DrivebaseGains.EncoderTicksPerRev);
         rightDriveGrayhill = new encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhilllipped, CounterBase.EncodingType.k4X);
+        rightDriveGrayhill.setDistancePerPulse(Gains.DrivebaseGains.EncoderTicksPerRev);
         
     }
 
