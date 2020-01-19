@@ -154,7 +154,7 @@ public class Drivebase extends Subsystem implements Thread
 
     public double getRightDistanceMeters()
     {
-        return ( ( (rightDriveNeoEncoderA.getPosition() + rightDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters));
+        return ( ( (rightDriveNeoEncoderA.getPosition() + rightDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters);
     }
 
     public Rotation2d getAngle()
@@ -191,7 +191,7 @@ public class Drivebase extends Subsystem implements Thread
         {
             controller = null;
         }
-        setLeftRightPower(new DrivetrainOutput(0.0, 0.0 ));
+        setLeftRightPower(new DrivetrainOutput(0.0, 0.0));
         // TODO Auto-generated method stub
 
     }
