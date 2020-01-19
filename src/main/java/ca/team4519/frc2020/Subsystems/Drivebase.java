@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -35,6 +37,8 @@ public class Drivebase extends Subsystem implements Thread
     private final Encoder leftDriveGrayhill;
     private final Encoder rightDriveGrayhill;
 
+    private final DifferentialDriveOdometry odometry;
+
     private final Solenoid shifter;
 
     private final AHRS navX;
@@ -44,7 +48,7 @@ public class Drivebase extends Subsystem implements Thread
     }
 
     public interface Controllers{
-        DrivetrainOutput update(new DrivetrainOutput(0.0,0.0)); //TODO Interface with this properly
+        DrivetrainOutput update(DifferentialDriveOdometry odometry);
     }
 
 
@@ -95,10 +99,17 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveGrayhill = new Encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
         rightDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
 
+        odometry = new DifferentialDriveOdometry(getAngle(), null);
+
         shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
         
+    }
+
+    public DifferentialDriveOdometry getRobotPose(){
+        odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
+        return odometry;
     }
 
     public void shift(boolean triggerShift)
@@ -136,6 +147,21 @@ public class Drivebase extends Subsystem implements Thread
 		return new DrivetrainOutput(left, right);
     }
 
+    public double getLeftDistanceMeters()
+    {
+       return ( ( (leftDriveNeoEncoderA.getPosition() + leftDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters);
+    }
+
+    public double getRightDistanceMeters()
+    {
+        return ( ( (rightDriveNeoEncoderA.getPosition() + rightDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters));
+    }
+
+    public Rotation2d getAngle()
+    {
+        return Rotation2d.fromDegrees(-navX.getAngle());
+    }
+
     @Override
     public void loops()
     {
@@ -144,7 +170,8 @@ public class Drivebase extends Subsystem implements Thread
             return;
         }
 
-        // TODO Auto-generated method stub
+        odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
+        setLeftRightPower(controller.update(getRobotPose()));
 
     }
 

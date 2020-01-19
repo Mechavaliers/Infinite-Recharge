@@ -7,12 +7,13 @@ import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Subsystems.Drivebase.AutoPaths;
 import ca.team4519.frc2020.Subsystems.Drivebase.Controllers;
 import ca.team4519.lib.DrivetrainOutput;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.modifiers.TankModifier;
 
 public class PathFollowingController implements Controllers {
 
+    private TrajectoryFollowingController controller;
     private Trajectory.Config config;
     private File pathFile;
 
@@ -29,25 +30,27 @@ public class PathFollowingController implements Controllers {
 
         Trajectory trajectoryLoaded = Pathfinder.readFromCSV(pathFile);
 
-        TankModifier modifier = new TankModifier(trajectoryLoaded);
-        modifier.modify(Gains.Drive.Wheelbase_Width);
+        controller = new TrajectoryFollowingController(
+        Gains.Drive.Dist_P,
+        Gains.Drive.Dist_I,
+        Gains.Drive.Dist_D,
+        Gains.Drive.Dist_V,
+        Gains.Drive.Dist_A,
+        Gains.Drive.Dist_Tollerance);
 
-        Trajectory left = modifier.getLeftTrajectory();
-        Trajectory right = modifier.getRightTrajectory();
-
-
-
-
+        controller.setTarget(trajectoryLoaded);
     }
 
-
-
+    public static double leftEncoderTicks()
+    {
+        return 
+    }
 
     @Override
-    public DrivetrainOutput update() {
-        
-        // TODO Auto-generated method stub
-        return new DrivetrainOutput(0.0, 0.0);
+    public DrivetrainOutput update(DifferentialDriveOdometry odometry) {
+        //controller.update(odometry.getPoseMeters(), ); //TODO Implement new 2016style pose controller
+
+        return new DrivetrainOutput(controller.getLeft(), controller.getRight());
     }
 
 }

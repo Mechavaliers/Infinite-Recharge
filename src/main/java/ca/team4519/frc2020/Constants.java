@@ -2,9 +2,10 @@ package ca.team4519.frc2020;
 
 public class Constants {
 
-    //Drivebase
+    public static final double inchesToMeters = 0.0254;
 
-    public static final int driveNeoCurrentLimit = 10; //In Amps
+    //Drivebase
+    public static final int driveNeoCurrentLimit = 80; //In Amps
         //Drive Motors
     public static final int leftDriveNeoA = 1;  
     public static final int leftDriveNeoB = 0; 
