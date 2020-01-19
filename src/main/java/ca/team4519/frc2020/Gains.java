@@ -8,14 +8,15 @@ public class Gains{
 		public static boolean Shifter_HIGH_GEAR = true;
 		public static boolean Shifter_LOW_GEAR = false;
 
-		public static double CONTROL_LOOP_TIME = 0.005;	// 0.5 Millisecond
+		public static double CONTROL_LOOP_TIME = 0.005;	// 5 Millisecond = 200hz
 		
 		public static double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static double PATH_TOLLERANCE = 0.25;	//TODO Update this
 		
 		//	Inches/Seconds
-		public static double ROBOT_MAX_VELOCITY= 180.0;			//CHANGE AT COMP
+		public static double ROBOT_MAX_VELOCITY= 180.0;			//
 		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
+		public static double ROBOT_MAX_JERK = 23; //TOT UPDATE THis
 		public static double ROBOT_MAX_ROTATIONAL_VELOCITY = 360.0;	//TODO Update this
 		public static double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
 		public static double Wheelbase_Width = 21.868502;	//Inches
