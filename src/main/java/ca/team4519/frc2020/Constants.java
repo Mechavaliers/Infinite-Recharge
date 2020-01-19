@@ -1,4 +1,4 @@
-package frc.ca.team4519.frc2020;
+package ca.team4519.frc2020;
 
 public class Constants {
 
@@ -8,6 +8,8 @@ public class Constants {
         //Drive Motors
     public static final int leftDriveNeoA = 1;  
     public static final int leftDriveNeoB = 0; 
+    public static final int rightDriveNeoA = 2;
+    public static final int rightDriveNeoB = 3;
         //Shifter
     public static final int shifter = 0;    
         //Encoders
