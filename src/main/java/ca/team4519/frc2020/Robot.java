@@ -7,45 +7,63 @@
 
 package ca.team4519.frc2020;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import ca.team4519.frc2020.Subsystems.Drivebase;
+import ca.team4519.lib.MechaTimedRobot;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.gradle file in the
- * project.
- */
-public class Robot extends TimedRobot {
+import edu.wpi.first.wpilibj.Joystick;
+
+public class Robot extends MechaTimedRobot
+{
   
 
+  Joystick driver = new Joystick(0);
   
   @Override
-  public void robotInit() {
+  public void robotInit()
+  {
+
   }
 
   @Override
-  public void autonomousInit() {
+  public void autonomousInit()
+  {
+
   }
 
   @Override
-  public void autonomousPeriodic() {
+  public void autonomousPeriodic()
+  {
+
   }
 
   @Override
-  public void teleopInit() {
+  public void teleopInit()
+  {
+    Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic()
+  {
+
   }
 
   @Override
-  public void testInit() {
+  public void testInit()
+  {
+
   }
 
   @Override
-  public void testPeriodic() {
+  public void testPeriodic()
+  {
+
+  }
+
+  @Override
+  public void allPeriodic()
+  {
+
   }
 
 }

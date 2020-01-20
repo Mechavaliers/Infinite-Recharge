@@ -5,7 +5,12 @@ import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
-import ca.team4519.lib.controllers.Controller;
+
+import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -13,12 +18,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;;
 
 public class Drivebase extends Subsystem implements Thread
 {
@@ -43,8 +42,9 @@ public class Drivebase extends Subsystem implements Thread
 
     private final AHRS navX;
 
-    public enum AutoPaths{
-        NONE,FAST;
+    public enum AutoPaths
+    {
+        NONE,FAST
     }
 
     public interface Controllers{
@@ -117,7 +117,6 @@ public class Drivebase extends Subsystem implements Thread
         if(triggerShift)
         {
             shifter.set(Gains.Drive.Shifter_LOW_GEAR);
-            
         }
         else
         {
@@ -172,7 +171,6 @@ public class Drivebase extends Subsystem implements Thread
 
         odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
         setLeftRightPower(controller.update(getRobotPose()));
-
     }
 
     @Override
@@ -192,8 +190,6 @@ public class Drivebase extends Subsystem implements Thread
             controller = null;
         }
         setLeftRightPower(new DrivetrainOutput(0.0, 0.0));
-        // TODO Auto-generated method stub
-
     }
 
     @Override
