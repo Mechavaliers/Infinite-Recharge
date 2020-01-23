@@ -1,8 +1,5 @@
 package ca.team4519.frc2020.Subsystems.Controllers;
 
-import java.io.File;
-import java.io.IOException;
-
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Subsystems.Drivebase.AutoPaths;
 import ca.team4519.frc2020.Subsystems.Drivebase.Controllers;
@@ -10,6 +7,9 @@ import ca.team4519.lib.DrivetrainOutput;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
+
+import java.io.File;
+import java.io.IOException;
 
 public class PathFollowingController implements Controllers {
 
@@ -35,8 +35,7 @@ public class PathFollowingController implements Controllers {
         Gains.Drive.Dist_I,
         Gains.Drive.Dist_D,
         Gains.Drive.Dist_V,
-        Gains.Drive.Dist_A,
-        Gains.Drive.Dist_Tollerance);
+        Gains.Drive.Dist_A);
 
         controller.setTarget(trajectoryLoaded);
     }

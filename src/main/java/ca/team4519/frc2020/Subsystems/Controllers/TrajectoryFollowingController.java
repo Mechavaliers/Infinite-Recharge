@@ -11,10 +11,11 @@ public class TrajectoryFollowingController extends Controller
     double left;
     double right;
 
+
     DistanceFollower leftDistanceFollower;
     DistanceFollower rightDistanceFollower;
 
-    public TrajectoryFollowingController(double kP, double kI, double kD, double kV, double kA, double tollerance)
+    public TrajectoryFollowingController(double kP, double kI, double kD, double kV, double kA)
     {
         leftDistanceFollower = new DistanceFollower();
         leftDistanceFollower.configurePIDVA(kP, kI, kD, kV, kA);
