@@ -99,7 +99,7 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveGrayhill = new Encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
         rightDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
 
-        odometry = new DifferentialDriveOdometry(getAngle(), null);
+        odometry = new DifferentialDriveOdometry(getAngle());
 
         shifter = new Solenoid(Constants.shifter);
 
@@ -158,7 +158,7 @@ public class Drivebase extends Subsystem implements Thread
 
     public Rotation2d getAngle()
     {
-        return Rotation2d.fromDegrees(-navX.getAngle());
+        return Rotation2d.fromDegrees(30);
     }
 
     @Override

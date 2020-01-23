@@ -63,7 +63,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
-
+    Drivebase.GrabInstance().update();
   }
 
 }

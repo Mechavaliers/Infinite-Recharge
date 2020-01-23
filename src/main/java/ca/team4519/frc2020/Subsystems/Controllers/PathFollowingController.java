@@ -43,7 +43,7 @@ public class PathFollowingController implements Controllers {
 
     public static double leftEncoderTicks()
     {
-        return 
+        return 1;
     }
 
     @Override
