@@ -39,13 +39,13 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopInit()
   {
-    Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
+
   }
 
   @Override
   public void teleopPeriodic()
   {
-
+    Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
   @Override
