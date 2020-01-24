@@ -3,6 +3,7 @@ package ca.team4519.frc2020.Subsystems;
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.DrivetrainOutput;
+import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 
@@ -25,13 +26,13 @@ public class Drivebase extends Subsystem implements Thread
     public static Drivebase thisInstance;
 
     private final CANSparkMax rightDriveNeoA;
-    private final CANEncoder rightDriveNeoEncoderA;
+    private final CANEncoder rightDriveNeoAEncoder;
     private final CANSparkMax rightDriveNeoB;
-    private final CANEncoder rightDriveNeoEncoderB;
+    private final CANEncoder rightDriveNeoBEncoder;
     private final CANSparkMax leftDriveNeoA;
-    private final CANEncoder leftDriveNeoEncoderA;
+    private final CANEncoder leftDriveNeoAEncoder;
     private final CANSparkMax leftDriveNeoB;
-    private final CANEncoder leftDriveNeoEncoderB;
+    private final CANEncoder leftDriveNeoBEncoder;
 
     private final Encoder leftDriveGrayhill;
     private final Encoder rightDriveGrayhill;
@@ -72,27 +73,27 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
-        rightDriveNeoEncoderA = new CANEncoder(rightDriveNeoA);
+        rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
         rightDriveNeoB.follow(rightDriveNeoA);
 
-        rightDriveNeoEncoderB = new CANEncoder(rightDriveNeoB);
+        rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
 
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
-        leftDriveNeoEncoderA = new CANEncoder(leftDriveNeoA);
+        leftDriveNeoAEncoder = new CANEncoder(leftDriveNeoA);
 
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
         leftDriveNeoB.follow(rightDriveNeoA);
         
-        leftDriveNeoEncoderB = new CANEncoder(leftDriveNeoB);
+        leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
 
         leftDriveGrayhill = new Encoder(Constants.leftDriveGrayhillA, Constants.leftDriveGrayhillB, Constants.isLeftDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
         leftDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
@@ -117,10 +118,12 @@ public class Drivebase extends Subsystem implements Thread
         if(triggerShift)
         {
             shifter.set(Gains.Drive.Shifter_LOW_GEAR);
+            MechaLogger.grabInstance().logThis_Bool("ShifterHighGear", () -> Gains.Drive.Shifter_LOW_GEAR);
         }
         else
         {
             shifter.set(Gains.Drive.Shifter_HIGH_GEAR);
+            MechaLogger.grabInstance().logThis_Bool("ShifterHighGear", () -> Gains.Drive.Shifter_HIGH_GEAR);
         }
     }
 
@@ -139,21 +142,28 @@ public class Drivebase extends Subsystem implements Thread
     {
 		throttle = (Math.abs(throttle) > Math.abs(0.03))? throttle : 0.0;
 		turn = (Math.abs(turn) > Math.abs(0.03))? turn : 0.0;
+
+        double finalThrottle = throttle;
+        double finalTurn = turn;
+        MechaLogger.grabInstance().logThis_Double("RawInput_Throttle", () -> finalThrottle);
+        MechaLogger.grabInstance().logThis_Double("RawInput_Turn", () -> finalTurn);
 		
 		double right = throttle + turn;
-		double left = throttle - turn;	
-				
+		double left = throttle - turn;
+		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Right", () -> right);
+		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Left", () -> left);
+
 		return new DrivetrainOutput(left, right);
     }
 
     public double getLeftDistanceMeters()
     {
-       return ( ( (leftDriveNeoEncoderA.getPosition() + leftDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters);
+       return ( ( (leftDriveNeoAEncoder.getPosition() + leftDriveNeoBEncoder.getPosition() ) / 2) * Constants.inchesToMeters);
     }
 
     public double getRightDistanceMeters()
     {
-        return ( ( (rightDriveNeoEncoderA.getPosition() + rightDriveNeoEncoderB.getPosition() ) / 2) * Constants.inchesToMeters);
+        return ( ( (rightDriveNeoAEncoder.getPosition() + rightDriveNeoBEncoder.getPosition() ) / 2) * Constants.inchesToMeters);
     }
 
     public Rotation2d getAngle()
@@ -164,10 +174,7 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void loops()
     {
-        if(controller == null)
-        {
-            return;
-        }
+        if(controller == null) return;
 
         odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
         setLeftRightPower(controller.update(getRobotPose()));
@@ -185,24 +192,41 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void disableSubsystem()
     {
-        if(controller != null)
-        {
-            controller = null;
-        }
+        if(controller != null) controller = null;
         setLeftRightPower(new DrivetrainOutput(0.0, 0.0));
+    }
+
+    @Override
+    public void updateDashboard()
+    {
+        SmartDashboard.putNumber("Left Drive Neo A Velocity", leftDriveNeoAEncoder.getVelocity());
+        SmartDashboard.putNumber("Left Drive Neo A Position", leftDriveNeoAEncoder.getPosition());
+        SmartDashboard.putNumber("Left Drive Neo B Velocity", leftDriveNeoBEncoder.getVelocity());
+        SmartDashboard.putNumber("Left Drive Neo B Position", leftDriveNeoBEncoder.getPosition());
+        SmartDashboard.putNumber("Right Drive Neo A Velocity", rightDriveNeoAEncoder.getVelocity());
+        SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
+        SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
+        SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
+    }
+
+    @Override
+    public void feedLogger()
+    {
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Velocity", leftDriveNeoAEncoder::getVelocity);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Velocity", leftDriveNeoBEncoder::getVelocity);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoAEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
     }
 
     @Override
     public void update()
     {
-        SmartDashboard.putNumber("Left Drive Neo A Velocity", leftDriveNeoEncoderA.getVelocity());
-        SmartDashboard.putNumber("Left Drive Neo A Position", leftDriveNeoEncoderA.getPosition());
-        SmartDashboard.putNumber("Left Drive Neo B Velocity", leftDriveNeoEncoderB.getVelocity());
-        SmartDashboard.putNumber("Left Drive Neo B Position", leftDriveNeoEncoderB.getPosition());
-        SmartDashboard.putNumber("Right Drive Neo A Velocity", rightDriveNeoEncoderA.getVelocity());
-        SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoEncoderA.getPosition());
-        SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoEncoderB.getVelocity());
-        SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoEncoderB.getPosition());
+      updateDashboard();
+      feedLogger();
     }
 
     public void test()
