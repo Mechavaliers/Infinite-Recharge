@@ -8,8 +8,8 @@
 package ca.team4519.frc2020;
 
 import ca.team4519.frc2020.Subsystems.Drivebase;
+import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.MechaTimedRobot;
-
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends MechaTimedRobot
@@ -63,6 +63,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
+    MechaLogger.grabInstance().saveLogs();
     Drivebase.GrabInstance().update();
   }
 
