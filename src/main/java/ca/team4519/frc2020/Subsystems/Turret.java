@@ -41,6 +41,18 @@ public class Turret extends Subsystem implements Thread{
     }
 
     @Override
+    public void updateDashboard() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void feedLogger() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
     public void update() {
         // TODO Auto-generated method stub
 
