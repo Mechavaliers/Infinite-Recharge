@@ -184,6 +184,7 @@ public class Drivebase extends Subsystem implements Thread
     public void zeroSensors()
     {
         rightDriveGrayhill.reset();
+        rightDriveNeoAEncoder.setPosition(0.0);
         leftDriveGrayhill.reset();
         navX.reset();
 
@@ -207,6 +208,18 @@ public class Drivebase extends Subsystem implements Thread
         SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
         SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
+
+        if(controller == null)
+        {
+            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
+            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
+
+        }
+        else
+        {
+            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
+            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
+        }
     }
 
     @Override
@@ -220,6 +233,19 @@ public class Drivebase extends Subsystem implements Thread
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
+
+        if(controller == null)
+        {
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 0);
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 0);
+        }
+        else
+        {
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", rightDriveNeoBEncoder::getPosition);
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", rightDriveNeoBEncoder::getPosition);
+        }
+
+
     }
 
     @Override

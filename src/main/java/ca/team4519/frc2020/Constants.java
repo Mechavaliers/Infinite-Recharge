@@ -22,6 +22,7 @@ public class Constants {
     public static final boolean isLeftDriveGrayhillFlipped = false;
     public static final boolean isRightDriveGrayhillFlipped = false;
 
+    public static final int IntakeArmPot = 0;
 
 
 

@@ -1,9 +1,34 @@
 package ca.team4519.frc2020.Subsystems;
 
+import ca.team4519.frc2020.Constants;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Intake extends Subsystem implements Thread{
+
+    private static Intake thisInstance;
+
+    //private final Vic;
+
+    private final AnalogPotentiometer armPosition;
+
+    private Intake()
+    {
+        armPosition = new AnalogPotentiometer(Constants.IntakeArmPot);
+    }
+
+    public synchronized static Intake GrabInstance()
+    {
+
+        if(thisInstance == null)
+        {
+            thisInstance = new Intake();
+        }
+
+        return thisInstance;
+
+    }
 
     @Override
     public void loops() {

@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package ca.team4519.frc2020;
 
 import ca.team4519.frc2020.Subsystems.Drivebase;
@@ -45,7 +38,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
-    Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
+   // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
   @Override
@@ -63,6 +56,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
+    System.out.println("All Periodic Loop");
     MechaLogger.grabInstance().saveLogs();
     Drivebase.GrabInstance().update();
   }
