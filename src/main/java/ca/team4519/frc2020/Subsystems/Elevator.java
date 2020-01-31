@@ -5,6 +5,8 @@ import ca.team4519.lib.Thread;
 
 public class Elevator extends Subsystem implements Thread{
 	
+	private static Elevator thisInstance;
+	
 	public synchronized static Elevator GrabInstance()
     {
 
