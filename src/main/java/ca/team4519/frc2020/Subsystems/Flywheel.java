@@ -5,6 +5,18 @@ import ca.team4519.lib.Thread;
 
 public class Flywheel extends Subsystem implements Thread{
 
+	 public synchronized static Flywheel GrabInstance()
+    {
+
+       if(thisInstance == null)
+       {
+           thisInstance = new Flywheel();
+       }
+
+       return thisInstance;
+
+    }
+	
     @Override
     public void loops() {
         // TODO Auto-generated method stub

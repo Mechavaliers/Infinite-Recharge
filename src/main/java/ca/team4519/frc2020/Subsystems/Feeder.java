@@ -5,6 +5,18 @@ import ca.team4519.lib.Thread;
 
 public class Feeder extends Subsystem implements Thread{
 
+	 public synchronized static Feeder GrabInstance()
+    {
+
+       if(thisInstance == null)
+       {
+           thisInstance = new Feeder();
+       }
+
+       return thisInstance;
+
+   	 }
+	
     @Override
     public void loops() {
         // TODO Auto-generated method stub
