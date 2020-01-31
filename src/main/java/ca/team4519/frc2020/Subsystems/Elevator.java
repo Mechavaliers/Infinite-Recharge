@@ -4,6 +4,18 @@ import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 
 public class Elevator extends Subsystem implements Thread{
+	
+	public synchronized static Elevator GrabInstance()
+    {
+
+        if(thisInstance == null)
+        {
+            thisInstance = new Elevator();
+        }
+
+        return thisInstance;
+
+    }
 
     @Override
     public void loops() {
