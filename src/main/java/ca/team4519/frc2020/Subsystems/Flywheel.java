@@ -5,6 +5,8 @@ import ca.team4519.lib.Thread;
 
 public class Flywheel extends Subsystem implements Thread{
 
+	 private static Flywheel thisInstance;
+	
 	 public synchronized static Flywheel GrabInstance()
     {
 
