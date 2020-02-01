@@ -41,6 +41,12 @@ public class Intake extends Subsystem implements Thread{
         // TODO Auto-generated method stub
 
     }
+    
+    public void wantsIntake(boolean wantsIntake) {
+   	 	if (wantsIntake) {
+   	 		// drop intake
+   	 	}
+    }
 
     @Override
     public void disableSubsystem() {
