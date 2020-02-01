@@ -1,5 +1,7 @@
 package ca.team4519.frc2020.Subsystems;
 
+import ca.team4519.frc2020.Constants;
+import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 
