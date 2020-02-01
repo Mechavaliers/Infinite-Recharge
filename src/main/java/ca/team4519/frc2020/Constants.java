@@ -23,6 +23,11 @@ public class Constants {
     public static final boolean isRightDriveGrayhillFlipped = false;
 
     public static final int IntakeArmPot = 0;
+    //Flywheel
+    public static final int rightWheelNeo = 4;
+    public static final int leftWheelNeo = 5;
+    public static final int flywheelNeoCurrentLimit = 60;
+    
 
 
 
