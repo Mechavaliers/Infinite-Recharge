@@ -5,6 +5,8 @@ import ca.team4519.lib.Thread;
 
 public class Feeder extends Subsystem implements Thread{
 
+	 private static Feeder thisInstance;
+	
 	 public synchronized static Feeder GrabInstance()
     {
 
