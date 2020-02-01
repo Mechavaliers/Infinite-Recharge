@@ -1,5 +1,7 @@
 package ca.team4519.frc2020.Subsystems;
 
+import ca.team4519.frc2020.Constants;
+import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 
@@ -16,7 +18,10 @@ public class Flywheel extends Subsystem implements Thread{
 	 private final CANSparkMax leftWheelNeo;
 	 private final CANEncoder leftWheelNeoEncoder;
 	 
-	 
+     public interface Controllers {
+
+     }
+     
 	 public synchronized static Flywheel GrabInstance()
     {
 
@@ -28,7 +33,9 @@ public class Flywheel extends Subsystem implements Thread{
        return thisInstance;
 
     }
-	 
+     
+    private Controllers controller = null
+
 	 private Flywheel();
 	 {
 		 rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
