@@ -18,7 +18,10 @@ public class Flywheel extends Subsystem implements Thread{
 	 private final CANSparkMax leftWheelNeo;
 	 private final CANEncoder leftWheelNeoEncoder;
 	 
-	 
+     public interface Controllers {
+
+     }
+     
 	 public synchronized static Flywheel GrabInstance()
     {
 
@@ -30,7 +33,9 @@ public class Flywheel extends Subsystem implements Thread{
        return thisInstance;
 
     }
-	 
+     
+    private Controllers controller = null
+
 	 private Flywheel();
 	 {
 		 rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
