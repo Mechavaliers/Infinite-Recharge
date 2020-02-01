@@ -43,6 +43,8 @@ public class Flywheel extends Subsystem implements Thread{
 		 leftWheelNeo.follow(rightWheelNeo, true);
 		 
 		 leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
+		 
+		 
 	        
 	 }
 	
