@@ -17,12 +17,12 @@ public class IntakeLinkagePose
         this.angularVel = angularVel;
     }
 
-    public double angularPosition()
+    public double getAngularPosition()
     {
         return angularPos;
     }
 
-    public double angularVelocity()
+    public double getAngularVelocity()
     {
         return angularVel;
     }
