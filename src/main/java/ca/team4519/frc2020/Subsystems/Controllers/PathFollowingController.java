@@ -1,8 +1,8 @@
-package ca.team4519.frc2020.Subsystems.Controllers;
+package ca.team4519.frc2020.subsystems.controllers;
 
 import ca.team4519.frc2020.Gains;
-import ca.team4519.frc2020.Subsystems.Drivebase.AutoPaths;
-import ca.team4519.frc2020.Subsystems.Drivebase.Controllers;
+import ca.team4519.frc2020.subsystems.Drivebase.AutoPaths;
+import ca.team4519.frc2020.subsystems.Drivebase.Controllers;
 import ca.team4519.lib.DrivetrainOutput;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import jaci.pathfinder.Pathfinder;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class PathFollowingController implements Controllers {
 
-    private TrajectoryFollowingController controller;
+    private PathfinderTrajectoryFollowingController controller;
     private Trajectory.Config config;
     private File pathFile;
 
@@ -30,7 +30,7 @@ public class PathFollowingController implements Controllers {
 
         Trajectory trajectoryLoaded = Pathfinder.readFromCSV(pathFile);
 
-        controller = new TrajectoryFollowingController(
+        controller = new PathfinderTrajectoryFollowingController(
         Gains.Drive.Dist_P,
         Gains.Drive.Dist_I,
         Gains.Drive.Dist_D,
