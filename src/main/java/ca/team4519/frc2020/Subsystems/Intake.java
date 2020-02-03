@@ -1,4 +1,4 @@
-package ca.team4519.frc2020.Subsystems;
+package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
 import ca.team4519.lib.Subsystem;
@@ -12,6 +12,11 @@ public class Intake extends Subsystem implements Thread{
     //private final Vic;
 
     private final AnalogPotentiometer armPosition;
+
+    public interface Controllers
+    {
+        
+    }
 
     private Intake()
     {

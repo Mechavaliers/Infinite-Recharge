@@ -24,7 +24,7 @@ public class VelocityController implements Controllers {
         double dOut;
         double output;
 
-        kErr = target - (sensor.getRate() * tickConvert);
+        kErr = target - (1 /*sensor.getRate() * tickConvert*/); // TODO Fix null input source
 
         double prevError = 0;
 		double deltaError = prevError - kErr;

@@ -25,7 +25,7 @@ public class Gains{
 		public static double WheelSize_Inches = 6.250;
 		
 		
-		public static double Dist_P = 0.1;	//TODO Tune this
+		public static double Dist_P = 0.0;	//TODO Tune this
 		public static double Dist_I = 0.0;	//TODO tune this
 		public static double Dist_D = 0.0;	//TODO Tune this
 		public static double Dist_V = 1 / ROBOT_MAX_VELOCITY;			//CHANGE AT COMP
@@ -43,5 +43,37 @@ public class Gains{
 		public static double Turn_A = 0.0; //0.00225	//TODO Tune this
 		public static double Turn_F = 0.01; //TODO Tune This
 		public static double Turn_Tollerance = 0.0225; 
+	}
+
+	public static final class Intake {
+		private Intake() {}
+
+		public static double CONTROL_LOOP_TIME = 0.005; // 200hz
+
+		public static double IntakeSpeed = 0.0; //TODO Tune This
+	
+		public static double LinkagePot_MinVolage = 0.0; //TODO Tune This
+		public static double LinkagePot_MaxVoltage = 0.0; //TODO Tune This
+		public static double LinkagePot_MinAngle = 0.0; //TODO Tune This
+		public static double LinkagePot_MaxAngle = 0.0; //TODO Tune This
+
+		public static double LinkagePos_Stowed = 0.0; //TODO Tune This
+		public static double LinkagePos_Deployed = 0.0; //TODO Tune This
+		public static double LinkagePos_DeployedOnAngle = 0.0; //TODO Tune This
+
+		public static double LINKAGE_MAX_VELOCITY = 0.0; //TODO Tune This
+		public static double LINKAGE_MAX_ACCELERATION = 0.0; //TODO Tune This
+
+		public static double Linkage_P = 0.0; //TODO Tune This
+		public static double Linkage_I = 0.0; //TODO Tune This
+		public static double Linkage_D = 0.0; //TODO Tune This
+		public static double Linkage_V = 0.0; //TODO Tune This
+		public static double Linakge_A = 0.0; //TODO Tune This
+		public static double Linkage_Tollerance = 0.0; //TODO Tune This
+	}
+
+	public static final class Turret {
+		private Turret() {}
+
 	}
 }

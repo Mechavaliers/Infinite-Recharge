@@ -1,4 +1,4 @@
-package ca.team4519.frc2020.Subsystems;
+package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;

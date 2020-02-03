@@ -1,4 +1,4 @@
-package ca.team4519.frc2020.Subsystems;
+package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
@@ -34,9 +34,9 @@ public class Flywheel extends Subsystem implements Thread{
 
     }
      
-    private Controllers controller = null
+    private Controllers controller = null;
 
-	 private Flywheel();
+	 private Flywheel()
 	 {
 		 rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 rightWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
