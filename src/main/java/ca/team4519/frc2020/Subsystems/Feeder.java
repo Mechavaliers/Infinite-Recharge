@@ -5,11 +5,11 @@ import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
-//this sensor detects if there's a ball underneath the feeder, shoudl return some sort of distance and if distance is short, be ready for intake
-
-public class Feeder extends Subsystem implements Thread{
+public class Feeder extends Subsystem implements Thread
+{
 
     private Ultrasonic balldetector;
+    //TODO Initalize 2 motor controllers - TBD
 
     private static Feeder thisInstance;
 
@@ -25,9 +25,10 @@ public class Feeder extends Subsystem implements Thread{
 
     }
      
-    private Feeder() {
+    private Feeder()
+    {
    
-        balldetector = new Ultrasonic(0,1); //make a method that returns a boolean if less than this distance (Gains.Feeder). Everything here might be wrong, delete if necessary
+        balldetector = new Ultrasonic(0,1);
 
      }
         
@@ -41,39 +42,49 @@ public class Feeder extends Subsystem implements Thread{
         }
     
     }
-	
+    
+    public void intakeBall()
+    {
+        //TODO populate method with intake sequence logic
+    }
+
     @Override
-    public void loops() {
-        // TODO Auto-generated method stub
+    public void loops()
+    {
+        // TODO add any method that needs to be run in the robots main loop (200hz)
 
     }
 
     @Override
-    public void zeroSensors() {
-        // TODO Auto-generated method stub
+    public void zeroSensors()
+    {
+        // TODO reset/home any sensors in this subsystem
 
     }
 
     @Override
-    public void disableSubsystem() {
-        // TODO Auto-generated method stub
+    public void disableSubsystem()
+    {
+        // TODO disable all motor outputs
+    }
+
+    @Override
+    public void updateDashboard()
+    {
+        // TODO Feed dashboard
 
     }
 
     @Override
-    public void updateDashboard() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void feedLogger() {
-        // TODO Auto-generated method stub
+    public void feedLogger()
+    {
+        // TODO feed MechaLogger 
 
     }
     
     @Override
-    public void update() {
+    public void update()
+    {
         // TODO Auto-generated method stub
 
     }
