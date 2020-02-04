@@ -29,42 +29,42 @@ public class DrivebasePose
         this.angularVel = angularVel;
     }
 
-    public double robotDistance()
+    public double getRobotDistance()
     {
         return (leftDist + rightDist) / 2;
     }
 
-    public double robotVelocity()
+    public double getRobotVelocity()
     {
         return (leftVel + rightVel) / 2;
     }
 
-    public double leftDistance()
+    public double getLeftDistance()
     {
         return leftDist;
     }
 
-    public double rightDistance()
+    public double getRightDistance()
     {
         return rightDist;
     }
 
-    public double leftVelocity()
+    public double getLeftVelocity()
     {
         return leftVel;
     }
 
-    public double rightVelocity()
+    public double getRightVelocity()
     {
         return rightVel;
     }
 
-    public double angularPosition()
+    public double getAngularPosition()
     {
         return angularPos;
     }
 
-    public double angularVelocity()
+    public double getAngularVelocity()
     {
         return angularVel;
     }
