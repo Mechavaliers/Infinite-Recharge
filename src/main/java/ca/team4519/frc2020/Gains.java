@@ -76,4 +76,9 @@ public class Gains{
 		private Turret() {}
 
 	}
+	public static final class Feeder {
+		private Feeder() {}
+		public static double BallDetectorRange = 0.0; //TODO Tune This
+
+	}
 }
