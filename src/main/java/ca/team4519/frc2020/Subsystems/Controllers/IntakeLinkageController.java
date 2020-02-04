@@ -1,6 +1,7 @@
 package ca.team4519.frc2020.subsystems.controllers;
 
 import ca.team4519.frc2020.Gains;
+import ca.team4519.lib.IntakeLinkagePose;
 
 import com.team254.lib.trajectory.TrajectoryFollower;
 import com.team254.lib.trajectory.TrajectoryFollower.TrajectorySetpoint;
@@ -11,7 +12,7 @@ public class IntakeLinkageController implements Controllers{
 	
 	public TrajectoryFollowingController controller;
 	
-	public IntakeLinkageController(double startingPos, double goalPos, double maxVel) {
+	public IntakeLinkageController(IntakeLinkagePose startingPos, double goalPos, double maxVel) {
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
 		configuration.dt = Gains.Intake.CONTROL_LOOP_TIME;
 		configuration.max_acc = Gains.Intake.LINKAGE_MAX_ACCELERATION;
@@ -27,8 +28,8 @@ public class IntakeLinkageController implements Controllers{
 				configuration);
 		
 		TrajectorySetpoint startingPosition = new TrajectorySetpoint();
-		startingPosition.pos = startingPos.height();
-		startingPosition.vel = startingPos.getLiftVelocity();
+		startingPosition.pos = startingPos.getAngularPosition();
+		startingPosition.vel = startingPos.getAngularVelocity();
 		controller.setTarget(startingPosition, goalPos);
 	}
 
@@ -40,8 +41,8 @@ public class IntakeLinkageController implements Controllers{
 		return controller.getSetpoint();
 	}
 	
-	public double update(LiftPose pose) {
-		controller.update(pose.height(), pose.getLiftVelocity());
+	public double update(IntakeLinkagePose pose) {
+		controller.update(pose.getAngularPosition(), pose.getAngularVelocity());
 		return controller.get();
 		
 	}
