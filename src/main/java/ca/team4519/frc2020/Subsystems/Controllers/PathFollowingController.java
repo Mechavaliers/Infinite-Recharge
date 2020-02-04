@@ -3,6 +3,7 @@ package ca.team4519.frc2020.subsystems.controllers;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.subsystems.Drivebase.AutoPaths;
 import ca.team4519.frc2020.subsystems.Drivebase.Controllers;
+import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import jaci.pathfinder.Pathfinder;
@@ -46,8 +47,8 @@ public class PathFollowingController implements Controllers {
     }
 
     @Override
-    public DrivetrainOutput update(DifferentialDriveOdometry odometry) {
-        //controller.update(odometry.getPoseMeters(), ); //TODO Implement new 2016style pose controller
+    public DrivetrainOutput update(DrivebasePose pose) {
+        controller.update(1, 1); // update with reall variables
 
         return new DrivetrainOutput(controller.getLeft(), controller.getRight());
     }
