@@ -11,31 +11,9 @@ public class Feeder extends Subsystem implements Thread{
 
     private Ultrasonic balldetector;
 
-     private static Feeder thisInstance;
-     
-     private Feeder() {
-   
-        balldetector = new Ultrasonic(0,1); //make a method that returns a boolean if less than this distance (Gains.Feeder). Everything here might be wrong, delete if necessary
+    private static Feeder thisInstance;
 
-
-     }
-
-     public boolean checkDistance() {
-
-        double xdistance;
-        
-        xdistance = balldetector.getRangeInches();
-
-        if (xdistance >= Gains.Feeder.BallDetectorRange) {
-            return true;
-        }
-        else {
-            return false;
-        }
-
-        }
-	
-	 public synchronized static Feeder GrabInstance()
+    public synchronized static Feeder GrabInstance()
     {
 
        if(thisInstance == null)
@@ -45,7 +23,24 @@ public class Feeder extends Subsystem implements Thread{
 
        return thisInstance;
 
-   	 }
+    }
+     
+    private Feeder() {
+   
+        balldetector = new Ultrasonic(0,1); //make a method that returns a boolean if less than this distance (Gains.Feeder). Everything here might be wrong, delete if necessary
+
+     }
+        
+    public boolean checkDistance()
+    {    
+        if (balldetector.getRangeInches() >= Gains.Feeder.BallDetectorRange) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    
+    }
 	
     @Override
     public void loops() {
