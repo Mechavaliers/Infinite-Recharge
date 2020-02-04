@@ -2,6 +2,7 @@ package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
+import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
@@ -37,7 +38,7 @@ public class Drivebase extends Subsystem implements Thread
     private final Encoder leftDriveGrayhill;
     private final Encoder rightDriveGrayhill;
 
-    private final DifferentialDriveOdometry odometry;
+    private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
     private final Solenoid shifter;
 
@@ -49,7 +50,7 @@ public class Drivebase extends Subsystem implements Thread
     }
 
     public interface Controllers{
-        DrivetrainOutput update(DifferentialDriveOdometry odometry);
+        DrivetrainOutput update(DrivebasePose pose);
     }
 
 
@@ -100,17 +101,38 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveGrayhill = new Encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
         rightDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
 
-        odometry = new DifferentialDriveOdometry(getAngle());
-
         shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
         
     }
 
-    public DifferentialDriveOdometry getRobotPose(){
-        odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
-        return odometry;
+    public DrivebasePose getRobotPose() {
+        storedPose.reset(
+            getLeftDistance(), 
+            getRightDistance(), 
+            getLeftVelocity(), 
+            getRightVelocity(), 
+            navX.getAngle(), 
+            navX.getRate());
+            
+        return storedPose;
+    }
+
+    private double getLeftDistance() {
+        return (leftDriveNeoAEncoder.getPosition() + leftDriveNeoBEncoder.getPosition()) / 2;
+    }
+
+    private double getRightDistance() {
+        return (rightDriveNeoAEncoder.getPosition() + rightDriveNeoBEncoder.getPosition()) / 2;
+    }
+
+    private double getLeftVelocity() {
+        return (leftDriveNeoAEncoder.getVelocity() + leftDriveNeoBEncoder.getVelocity()) / 2;
+    }
+
+    private double getRightVelocity() {
+        return (rightDriveNeoAEncoder.getVelocity() + rightDriveNeoBEncoder.getVelocity()) / 2;
     }
 
     public void shift(boolean triggerShift)
