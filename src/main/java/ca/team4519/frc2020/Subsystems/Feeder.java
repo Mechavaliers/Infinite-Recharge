@@ -1,8 +1,10 @@
 package ca.team4519.frc2020.subsystems;
 
-import ca.team4519.lib.Subsystem;
 import ca.team4519.frc2020.Gains;
+
+import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
+
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Feeder extends Subsystem implements Thread
