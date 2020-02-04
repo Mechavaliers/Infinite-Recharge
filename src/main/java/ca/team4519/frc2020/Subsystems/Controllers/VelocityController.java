@@ -1,6 +1,6 @@
-package ca.team4519.frc2020.Subsystems.Controllers;
+package ca.team4519.frc2020.subsystems.controllers;
 
-import ca.team4519.frc2020.Subsystems.Flywheel.Controllers;
+import ca.team4519.frc2020.subsystems.Flywheel.Controllers;
 
 
 
