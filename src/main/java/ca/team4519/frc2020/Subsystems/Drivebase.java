@@ -35,9 +35,6 @@ public class Drivebase extends Subsystem implements Thread
     private final CANSparkMax leftDriveNeoB;
     private final CANEncoder leftDriveNeoBEncoder;
 
-    private final Encoder leftDriveGrayhill;
-    private final Encoder rightDriveGrayhill;
-
     private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
     private final Solenoid shifter;
@@ -95,11 +92,6 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoB.follow(rightDriveNeoA);
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
-
-        leftDriveGrayhill = new Encoder(Constants.leftDriveGrayhillA, Constants.leftDriveGrayhillB, Constants.isLeftDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
-        leftDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
-        rightDriveGrayhill = new Encoder(Constants.rightDriveGrayhillA, Constants.rightDriveGrayhillB, Constants.isRightDriveGrayhillFlipped, CounterBase.EncodingType.k4X);
-        rightDriveGrayhill.setDistancePerPulse(Gains.Drive.EncoderTicksPerRev);
 
         shifter = new Solenoid(Constants.shifter);
 
