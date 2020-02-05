@@ -13,7 +13,7 @@ import com.team254.lib.trajectory.TrajectoryFollower.TrajectorySetpoint;
 public class DriveLineController implements Controllers{
 
 	private TrajectoryFollowingController controller;
-	private TurningPID turningPIDLoop;
+	//private TurningPID turningPIDLoop;
 	
 	public DriveLineController(DrivebasePose startingPos, double goalPos, double maxVel){
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
@@ -35,11 +35,11 @@ public class DriveLineController implements Controllers{
 		startingPosition.vel = encoderVelocity(startingPos);
 		controller.setTarget(startingPosition, goalPos);
 		
-		turningPIDLoop = new TurningPID(
+		/*turningPIDLoop = new TurningPID(
 				Gains.Drive.DistTurn_P,
 				Gains.Drive.DistTurn_I,
 				Gains.Drive.DistTurn_D);
-		turningPIDLoop.setSetpoint(startingPos.getAngle());
+		turningPIDLoop.setSetpoint(startingPos.getAngle());*/
 		
 	}
 
@@ -56,7 +56,7 @@ public class DriveLineController implements Controllers{
 				(pose.getLeftDistance() + pose.getRightDistance()) / 2.0,
 				(pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0);
 		double power = -controller.get();
-		double turn = -turningPIDLoop.calculate(pose.getAngle());
+		double turn = /*-turningPIDLoop.calculate(pose.getAngle());*/ 1.5;
 		
 		return new DrivetrainOutput(power+turn, power-turn);
 	}

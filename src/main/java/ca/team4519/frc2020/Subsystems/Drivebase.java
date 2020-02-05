@@ -198,7 +198,7 @@ public class Drivebase extends Subsystem implements Thread
     {
         if(controller == null) return;
 
-        odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
+        //odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
         setLeftRightPower(controller.update(getRobotPose()));
     }
 
@@ -263,8 +263,8 @@ public class Drivebase extends Subsystem implements Thread
         }
         else
         {
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", rightDriveNeoBEncoder::getPosition);
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", rightDriveNeoBEncoder::getPosition);
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 1);
+            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 1);
         }
 
 
