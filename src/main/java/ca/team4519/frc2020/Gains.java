@@ -75,6 +75,15 @@ public class Gains{
 	public static final class Turret {
 		private Turret() {}
 
+		public static double TURRET_MAX_VELOCITY = 0.0; //TODO Tune This
+		public static double TURRET_MAX_ACCELERATION = 0.0; //TODO Tune This
+
+		public static double Turret_P = 0.0; //TODO Tune This
+		public static double Turret_I = 0.0; //TODO Tune This
+		public static double Turret_D = 0.0; //TODO Tune This
+		public static double Turret_V = 0.0; //TODO Tune This
+		public static double Turret_A = 0.0; //TODO Tune This
+		public static double Turret_Tollerance = 0.0; //TODO Tune This
 	}
 	public static final class Feeder {
 		private Feeder() {}
