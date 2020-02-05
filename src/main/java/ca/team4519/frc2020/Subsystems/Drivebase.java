@@ -197,9 +197,11 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void zeroSensors()
     {
-        rightDriveGrayhill.reset();
         rightDriveNeoAEncoder.setPosition(0.0);
-        leftDriveGrayhill.reset();
+        rightDriveNeoBEncoder.setPosition(0.0);
+        leftDriveNeoAEncoder.setPosition(0.0);
+        leftDriveNeoBEncoder.setPosition(0.0);
+
         navX.reset();
 
     }
