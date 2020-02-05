@@ -64,6 +64,20 @@ public class Turret extends Subsystem implements Thread{
 
     }
 
+    public boolean isTurretBoundHigh()
+    {
+        return turretLimitL.get();
+    }
+
+    public boolean isturretBoundLow()
+    {
+        return turretLimitR.get();
+    }
+
+    public boolean isTurretHome()
+    {
+        return turretLimitHome.get();
+    }
 
     public TurretPose getTurretPose()
     {
@@ -78,7 +92,7 @@ public class Turret extends Subsystem implements Thread{
 
     @Override
     public void loops() {
-        getTurret
+        getTurretPose();
 
     }
 
@@ -95,7 +109,7 @@ public class Turret extends Subsystem implements Thread{
         {
             controller = null;
         }
-        // TODO Auto-generated method stub
+        // TODO populate
 
     }
 
