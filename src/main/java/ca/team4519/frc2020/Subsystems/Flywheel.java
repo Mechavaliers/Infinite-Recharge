@@ -18,8 +18,8 @@ public class Flywheel extends Subsystem implements Thread{
 	 private final CANSparkMax leftWheelNeo;
 	 private final CANEncoder leftWheelNeoEncoder;
 	 
-     public interface Controllers {
-
+     public interface Controllers
+     {
      }
      
 	 public synchronized static Flywheel GrabInstance()
@@ -57,37 +57,37 @@ public class Flywheel extends Subsystem implements Thread{
 	
     @Override
     public void loops() {
-        // TODO Auto-generated method stub
+        // TODO anything that needs to be run at 200hz
 
     }
 
     @Override
     public void zeroSensors() {
-        // TODO Auto-generated method stub
+        // TODO reset count on all sensors
 
     }
 
     @Override
     public void disableSubsystem() {
-        // TODO Auto-generated method stub
+        // TODO kill subsystem on call of this method
 
     }
 
     @Override
     public void updateDashboard() {
-        // TODO Auto-generated method stub
+        // TODO feed Smartdashboard
 
     }
 
     @Override
     public void feedLogger() {
-        // TODO Auto-generated method stub
-
+        // TODO feed values to logger
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
+        feedLogger();
+        updateDashboard();
 
     }
 

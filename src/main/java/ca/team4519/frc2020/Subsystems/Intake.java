@@ -18,8 +18,6 @@ public class Intake extends Subsystem implements Thread
 
     private static Intake thisInstance;
 
-    //private final Vic;
-
     private final AnalogPotentiometer armPositionPot;
     private final Encoder armPositionEncoder;
     
