@@ -1,7 +1,7 @@
 package ca.team4519.frc2020.subsystems;
 
 import java.util.Locale.IsoCountryCode;
-
+import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.subsystems.controllers.TurretRotationController;
 import ca.team4519.lib.Subsystem;
@@ -21,6 +21,8 @@ public class Turret extends Subsystem implements Thread{
     private DigitalInput turretLimitR;
     private DigitalInput turretLimitHome;
     private TurretPose storedPose = new TurretPose(0.0, 0.0, 0.0, 0.0);
+    private double wantedAngle = 0.0;
+
 
     public synchronized static Turret grabInstance()
     {
@@ -82,12 +84,50 @@ public class Turret extends Subsystem implements Thread{
         return turretLimitHome.get();
     }
 
+    public double turretAngle() // t theta
+    {
+        return 8; //TODO update with real math
+    }
+
+    public double cameraToGoalAngle() // tx
+    {
+        return storedPose.getGoalOffset(); //difference between camera and goal
+    }
+
+    public double wantedAngleRetriever() {
+        return cameraToGoalAngle() - turretAngle();
+    }
+
+    public void snapToGoal(double robotHeading) {
+
+        double wantedAngle = wantedAngleRetriever();
+
+        if((Gains.Turret.turretLimitB <= wantedAngle) && (wantedAngle <= Gains.Turret.turretLimitC))
+        {
+            //aim to wantedAngle i think 
+            if ((Gains.Turret.turretLimitB - wantedAngle) < (Gains.Turret.turretLimitC - wantedAngle))
+            {
+            //aim swinging from B instead of C
+            }
+            else if((Gains.Turret.turretLimitB - wantedAngle) > (Gains.Turret.turretLimitC - wantedAngle))
+            {
+            //aim swinging from C instead of B
+            }
+        }
+        else
+        {
+            //snap home
+        }
+
+    } //end of method
+
+
     public TurretPose getTurretPose()
     {
         storedPose.reset(
             turretPositionEncoder.get(),
             turretPositionEncoder.getRate(),
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0),
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0), //1 retu
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)
         );
         return storedPose;
