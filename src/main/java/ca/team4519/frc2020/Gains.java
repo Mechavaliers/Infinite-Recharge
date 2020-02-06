@@ -84,6 +84,12 @@ public class Gains{
 		public static double Turret_V = 0.0; //TODO Tune This
 		public static double Turret_A = 0.0; //TODO Tune This
 		public static double Turret_Tollerance = 0.0; //TODO Tune This
+
+		 public static double turretLimitHome = 0.0; //TODO Tune This
+		 public static double turretLimitB = 0.0; //TODO Tune this
+		public static double turretLimitC = 0.0; //TODO Tune This
+
+
 	}
 	public static final class Feeder {
 		private Feeder() {}
