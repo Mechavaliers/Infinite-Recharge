@@ -1,5 +1,7 @@
 package ca.team4519.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import ca.team4519.frc2020.Gains;
 
 import ca.team4519.lib.Subsystem;
@@ -14,6 +16,8 @@ public class Feeder extends Subsystem implements Thread
     //TODO Initalize 2 motor controllers - TBD
 
     private static Feeder thisInstance;
+
+    private TalonSRX Feederx; //nicole
 
     public synchronized static Feeder GrabInstance()
     {
@@ -31,6 +35,7 @@ public class Feeder extends Subsystem implements Thread
     {
    
         balldetector = new Ultrasonic(0,1);
+        Feederx = new TalonSRX(Constants.feeder1, Constants.feeder2); //doesn't work
 
      }
         
