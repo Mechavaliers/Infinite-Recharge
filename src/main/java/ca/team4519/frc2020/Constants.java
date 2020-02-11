@@ -34,8 +34,7 @@ public class Constants {
 
     public static final int intakeLinkageEncoderA = 0;
     public static final int intakeLinkageEncoderB = 1;
-    
-    
-  
-
+    public static final int intakeLinkageWheel = 0;
+    public static final int feeder1 = 0; //nicole - don't know if this should go here
+    public static final int feeder2 = 0; //same as above, ok this isn't working
 }

@@ -85,9 +85,11 @@ public class Gains{
 		public static double Turret_A = 0.0; //TODO Tune This
 		public static double Turret_Tollerance = 0.0; //TODO Tune This
 
-		 public static double turretLimitHome = 0.0; //TODO Tune This
-		 public static double turretLimitB = 0.0; //TODO Tune this
-		public static double turretLimitC = 0.0; //TODO Tune This
+		public static double slope = 0.0; //TODO Tune This     (RawB-RawC)/(Th-Tl) <--from whiteboard
+		public static double turretHigh = 0.0; //TODO Tune this
+		public static double turretLow = 0.0; //TODO Tune This
+		public static double NegativeACtoAA = 0.0; //TODO Tune This
+		public static double PositiveABtoAA = 0.0; //TODO Tune This
 
 
 	}

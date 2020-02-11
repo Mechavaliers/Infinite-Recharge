@@ -1,6 +1,9 @@
 package ca.team4519.frc2020.subsystems;
 
 import java.util.Locale.IsoCountryCode;
+
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.subsystems.controllers.TurretRotationController;
@@ -22,6 +25,8 @@ public class Turret extends Subsystem implements Thread{
     private DigitalInput turretLimitHome;
     private TurretPose storedPose = new TurretPose(0.0, 0.0, 0.0, 0.0);
     private double wantedAngle = 0.0;
+
+    private VictorSPX turretPivot; //nicole
 
 
     public synchronized static Turret grabInstance()
@@ -45,6 +50,7 @@ public class Turret extends Subsystem implements Thread{
     private Turret()
     {
         turretPositionEncoder = new Encoder(Constants.turretEncoderA, Constants.turretEncoderB);
+        turretPivot = new VictorSPX(Constants.intakeLinkageWheel); //this is a motor, only takes a single number
         turretLimitL = new DigitalInput(Constants.turretLimitSwitchL);
         turretLimitR = new DigitalInput(Constants.turretLimitSwitchR);
         turretLimitHome = new  DigitalInput(Constants.turretHomeDetector);
@@ -94,29 +100,23 @@ public class Turret extends Subsystem implements Thread{
         return storedPose.getGoalOffset(); //difference between camera and goal
     }
 
-    public double wantedAngleRetriever() {
-        return cameraToGoalAngle() - turretAngle();
+    public double wantedAngleRetriever() { 
+        return cameraToGoalAngle() + turretAngle();
     }
 
-    public void snapToGoal(double robotHeading) {
+    public void snapToGoal() {
 
-        double wantedAngle = wantedAngleRetriever();
+        double wantedAngle = wantedAngleRetriever(); 
 
-        if((Gains.Turret.turretLimitB <= wantedAngle) && (wantedAngle <= Gains.Turret.turretLimitC))
+        if((wantedAngle <= Gains.Turret.NegativeACtoAA) || (wantedAngle >= Gains.Turret.PositiveABtoAA))
         {
-            //aim to wantedAngle i think 
-            if ((Gains.Turret.turretLimitB - wantedAngle) < (Gains.Turret.turretLimitC - wantedAngle))
-            {
-            //aim swinging from B instead of C
-            }
-            else if((Gains.Turret.turretLimitB - wantedAngle) > (Gains.Turret.turretLimitC - wantedAngle))
-            {
-            //aim swinging from C instead of B
-            }
+            //Possible dead zone
+            //TurretRotationController(getTurretPose(), (double) wantedAngle);
+           
         }
         else
         {
-            //snap home
+            //aim and fire to wantedangle
         }
 
     } //end of method
