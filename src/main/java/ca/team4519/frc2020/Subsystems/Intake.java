@@ -62,7 +62,7 @@ public class Intake extends Subsystem implements Thread
         // y = mx=b
         return (slope * armPositionPot.get() + offset);
     }
-
+                                                                                                                       
     public double getIntakeLinkageVelocity()
     {
         return armPositionEncoder.getRate();

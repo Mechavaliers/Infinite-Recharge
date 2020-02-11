@@ -3,6 +3,7 @@ package ca.team4519.frc2020.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Constants;
 
@@ -42,11 +43,11 @@ public class Feeder extends Subsystem implements Thread
     {
    
         balldetector = new Ultrasonic(0,1);
+
         Feederx = new TalonSRX(Constants.feeder1); //should it have 2 feeders?
         Feedery = new TalonSRX(Constants.feeder2); 
 
         //Feederz = new VictorSPX(Constants.feeder2); unsure if victorspx or talonsrx. Delete if unneeded
-
 
      }
         

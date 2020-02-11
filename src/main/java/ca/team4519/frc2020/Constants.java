@@ -21,7 +21,7 @@ public class Constants {
     public static final int rightWheelNeo = 3;
     public static final int leftWheelNeo = 2;
     public static final int flywheelNeoCurrentLimit = 60;
-    //Turret Sensors
+        //Turret Sensors
     public static final int turretEncoderA = 2;
     public static final int turretEncoderB = 3;
     public static final int turretLimitSwitchL = 0;
@@ -34,6 +34,7 @@ public class Constants {
 
     public static final int intakeLinkageEncoderA = 0;
     public static final int intakeLinkageEncoderB = 1;
+    //Feeder
     public static final int intakeLinkageWheel = 0;
     public static final int feeder1 = 0; //nicole - don't know if this should go here
     public static final int feeder2 = 0; //same as above, ok this isn't working
