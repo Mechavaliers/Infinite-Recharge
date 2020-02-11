@@ -1,9 +1,11 @@
 package ca.team4519.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
+import ca.team4519.frc2020.Constants;
 
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
@@ -19,6 +21,11 @@ public class Feeder extends Subsystem implements Thread
     private static Feeder thisInstance;
 
     private TalonSRX Feederx; //nicole
+
+    private TalonSRX Feedery; //nicole
+
+    //private VictorSPX Feederz; unsure if u wanted victorspx or talonsrx - ben said we had both. Delete if unneeded
+
 
     public synchronized static Feeder GrabInstance()
     {
@@ -36,7 +43,11 @@ public class Feeder extends Subsystem implements Thread
     {
    
         balldetector = new Ultrasonic(0,1);
-        Feederx = new TalonSRX(Constants.feeder1); //doesn't work
+
+        Feederx = new TalonSRX(Constants.feeder1); //should it have 2 feeders?
+        Feedery = new TalonSRX(Constants.feeder2); 
+
+        //Feederz = new VictorSPX(Constants.feeder2); unsure if victorspx or talonsrx. Delete if unneeded
 
      }
         

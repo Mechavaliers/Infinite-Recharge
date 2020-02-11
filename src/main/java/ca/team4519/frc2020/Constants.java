@@ -7,10 +7,10 @@ public class Constants {
     //Drivebase
     public static final int driveNeoCurrentLimit = 80; //In Amps
         //Drive Motors
-    public static final int leftDriveNeoA = 1;  
-    public static final int leftDriveNeoB = 0; 
-    public static final int rightDriveNeoA = 2;
-    public static final int rightDriveNeoB = 3;
+    public static final int leftDriveNeoA = 6;
+    public static final int leftDriveNeoB = 4;
+    public static final int rightDriveNeoA = 5;
+    public static final int rightDriveNeoB = 1;
         //Shifter
     public static final int shifter = 0;    
 
@@ -18,8 +18,8 @@ public class Constants {
     public static final boolean isRightDriveGrayhillFlipped = false;
 
     //Turret
-    public static final int rightWheelNeo = 4;
-    public static final int leftWheelNeo = 5;
+    public static final int rightWheelNeo = 3;
+    public static final int leftWheelNeo = 2;
     public static final int flywheelNeoCurrentLimit = 60;
         //Turret Sensors
     public static final int turretEncoderA = 2;
@@ -38,7 +38,4 @@ public class Constants {
     public static final int intakeLinkageWheel = 0;
     public static final int feeder1 = 0; //nicole - don't know if this should go here
     public static final int feeder2 = 0; //same as above, ok this isn't working
-
-
-
 }
