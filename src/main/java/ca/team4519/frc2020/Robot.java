@@ -10,6 +10,7 @@ public class Robot extends MechaTimedRobot
 
 
   Joystick driver = new Joystick(0);
+  Joystick operator1 = new Joystick(1);
   
   @Override
   public void robotInit()
