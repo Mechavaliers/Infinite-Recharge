@@ -15,8 +15,8 @@ public class TurretRotationController implements Controllers{
 	public TurretRotationController(TurretPose startingPos, double goalPos) {
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
 		configuration.dt = Gains.CONTROL_LOOP_TIME;
-		configuration.max_acc = Gains.Intake.LINKAGE_MAX_ACCELERATION;
-		configuration.max_vel = Gains.Intake.LINKAGE_MAX_VELOCITY;
+		configuration.max_acc = Gains.Turret.TURRET_MAX_VELOCITY;
+		configuration.max_vel = Gains.Turret.TURRET_MAX_VELOCITY;
 		
 		controller = new TrajectoryFollowingController(
 				Gains.Turret.Turret_P, 
