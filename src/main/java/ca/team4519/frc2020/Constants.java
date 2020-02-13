@@ -19,6 +19,7 @@ public class Constants
     public static final boolean isRightDriveGrayhillFlipped = false;
 
     //Turret
+    public static final int turretPivotMotor = 6; //TODO Get CANID of talonSRX
     public static final int rightWheelNeo = 2;
     public static final int leftWheelNeo = 3;
     public static final int flywheelNeoCurrentLimit = 60;
@@ -31,15 +32,12 @@ public class Constants
 
     //Intake
     public static final int intakeLinkageMotor = 0; //TODO Get CANID of talonSRX
-    public static final int IntakeArmPot = 0;
+    public static final int intakeLinkageEncoderA = 0; //TODO Get DIO_A for Encoder
+    public static final int intakeLinkageEncoderB = 1; //TODO Get DIO_B for Encoder
+    public static final int IntakeArmPot = 0; //TODO Get AnalogIn for Pot
+    public static final int intakeRoller = 0; //TODO Get CANID of talonSRX
 
-    public static final int intakeLinkageEncoderA = 0;
-    public static final int intakeLinkageEncoderB = 1;
     //Feeder
-    public static final int intakeLinkageWheel = 0;
-    public static final int feeder1 = 0; //nicole - don't know if this should go here
-    public static final int feeder2 = 0; //same as above, ok this isn't working
-
-    public static final int intakeRoller = 0; //idontevenknowanymore but probably goes to rollermotor
-
+    public static final int feeder1 = 0; //TODO Get CANID of talonSRX
+    public static final int feeder2 = 0; //TODO Get CANID of talonSRX
 }
