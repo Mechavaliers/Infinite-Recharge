@@ -12,16 +12,21 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Intake extends Subsystem implements Thread
 {
+
+    
+
+    private final TalonSRX intakeRoller; //new talon thing, unsure if correct
 
     private static Intake thisInstance;
 
     private final AnalogPotentiometer armPositionPot;
     private final Encoder armPositionEncoder;
     
-    private final TalonSRX intakeLinkageMotor;
+    private final VictorSPX intakeLinkageMotor;
 
     private IntakeLinkagePose storedPose = new IntakeLinkagePose(0,0);
     private boolean potRateFirstRun = true;
@@ -38,7 +43,10 @@ public class Intake extends Subsystem implements Thread
         armPositionPot = new AnalogPotentiometer(Constants.IntakeArmPot);
         armPositionEncoder = new Encoder(Constants.intakeLinkageEncoderA, Constants.intakeLinkageEncoderB);
 
-        intakeLinkageMotor = new TalonSRX(Constants.intakeLinkageMotor);
+        intakeLinkageMotor = new VictorSPX(Constants.intakeLinkageMotor);
+
+        intakeRoller = new TalonSRX(Constants.intakeRoller);
+
 
     }
 

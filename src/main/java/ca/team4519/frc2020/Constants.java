@@ -38,4 +38,10 @@ public class Constants {
     public static final int intakeLinkageWheel = 0;
     public static final int feeder1 = 0; //nicole - don't know if this should go here
     public static final int feeder2 = 0; //same as above, ok this isn't working
+
+    public static final int intakeRoller = 0; //idontevenknowanymore but probably goes to rollermotor
+
+
+
+
 }
