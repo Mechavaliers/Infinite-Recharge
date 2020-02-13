@@ -18,8 +18,8 @@ public class Constants {
     public static final boolean isRightDriveGrayhillFlipped = false;
 
     //Turret
-    public static final int rightWheelNeo = 3;
-    public static final int leftWheelNeo = 2;
+    public static final int rightWheelNeo = 2;
+    public static final int leftWheelNeo = 3;
     public static final int flywheelNeoCurrentLimit = 60;
         //Turret Sensors
     public static final int turretEncoderA = 2;
