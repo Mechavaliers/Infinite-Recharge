@@ -1,6 +1,7 @@
 package ca.team4519.frc2020;
 
-public class Constants {
+public class Constants
+{
 
     public static final double inchesToMeters = 0.0254;
 
@@ -40,8 +41,5 @@ public class Constants {
     public static final int feeder2 = 0; //same as above, ok this isn't working
 
     public static final int intakeRoller = 0; //idontevenknowanymore but probably goes to rollermotor
-
-
-
 
 }
