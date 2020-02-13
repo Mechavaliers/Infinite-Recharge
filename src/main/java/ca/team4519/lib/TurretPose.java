@@ -1,5 +1,6 @@
 package ca.team4519.lib;
 
+import ca.team4519.frc2020.Gains;
 
 public class TurretPose {
 
@@ -35,6 +36,12 @@ public class TurretPose {
     public double getVelocity()
     {
         return angularVel;
+    }
+
+    public double getConvertedValue()
+    {
+        //y=mx+B
+        return Gains.Turret.slope * getPosition() + Gains.Turret.offset;
     }
 
     public double getGoalOffset()
