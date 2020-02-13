@@ -17,7 +17,7 @@ public class DriveLineController implements Controllers{
 	
 	public DriveLineController(DrivebasePose startingPos, double goalPos, double maxVel){
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
-		configuration.dt = Gains.Drive.CONTROL_LOOP_TIME;
+		configuration.dt = Gains.CONTROL_LOOP_TIME;
 		configuration.max_acc = Gains.Drive.ROBOT_MAX_ACCELERATION;
 		configuration.max_vel = maxVel;
 		

@@ -2,17 +2,16 @@ package ca.team4519.frc2020;
 
 public class Gains{
 
+	public static double CONTROL_LOOP_TIME = 0.005;	//200hz
 	public static final class Drive {
 		private Drive() {}
 		
 		public static boolean Shifter_HIGH_GEAR = true;
 		public static boolean Shifter_LOW_GEAR = false;
-
-		public static double CONTROL_LOOP_TIME = 0.005;	// 5 Millisecond = 200hz
 		
 		public static double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static double PATH_TOLLERANCE = 0.25;	//TODO Update this
-		
+
 		//	Inches/Seconds
 		public static double ROBOT_MAX_VELOCITY= 180.0;			//
 		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
@@ -48,7 +47,7 @@ public class Gains{
 	public static final class Intake {
 		private Intake() {}
 
-		public static double CONTROL_LOOP_TIME = 0.005; // 200hz
+		public static double IntakeSpeed = 0.0;	//TODO Tune This
 
 		public static double IntakeSpeed = 0.0; //TODO Tune This
 	
