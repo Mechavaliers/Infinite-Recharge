@@ -3,6 +3,7 @@ package ca.team4519.frc2020.subsystems;
 import java.util.Locale.IsoCountryCode;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.team254.lib.trajectory.TrajectoryFollower;
 
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.Constants;
@@ -13,7 +14,6 @@ import ca.team4519.lib.TurretPose;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.networktables.*;
 
 public class Turret extends Subsystem implements Thread{
 
@@ -24,9 +24,8 @@ public class Turret extends Subsystem implements Thread{
     private DigitalInput turretLimitR;
     private DigitalInput turretLimitHome;
     private TurretPose storedPose = new TurretPose(0.0, 0.0, 0.0, 0.0);
-    private double wantedAngle = 0.0;
 
-    private VictorSPX turretPivot; //nicole
+    private VictorSPX turretPivot;
 
 
     public synchronized static Turret grabInstance()
@@ -50,7 +49,7 @@ public class Turret extends Subsystem implements Thread{
     private Turret()
     {
         turretPositionEncoder = new Encoder(Constants.turretEncoderA, Constants.turretEncoderB);
-        turretPivot = new VictorSPX(Constants.intakeLinkageWheel); //this is a motor, only takes a single number
+        turretPivot = new VictorSPX(Constants.turretPivotMotor);
         turretLimitL = new DigitalInput(Constants.turretLimitSwitchL);
         turretLimitR = new DigitalInput(Constants.turretLimitSwitchR);
         turretLimitHome = new  DigitalInput(Constants.turretHomeDetector);
@@ -59,21 +58,36 @@ public class Turret extends Subsystem implements Thread{
 
     }
 
-    public void wantAimedTurret()
+    //gets the controllers current setpoint, if the controller doesnt exist then it gets the turrets position
+    public TrajectoryFollower.TrajectorySetpoint getSetpoint() {
+		TrajectoryFollower.TrajectorySetpoint setpoint = null;
+		if (controller instanceof TurretRotationController) {
+			setpoint = ((TurretRotationController) controller).getSetpoint();
+		}else {
+			setpoint = new TrajectoryFollower.TrajectorySetpoint();
+			setpoint.pos = storedPose.getConvertedValue();
+		}
+		return setpoint;
+		
+	}
+
+    /**
+    *Safely re-aims the turret
+    *   Checks if aim controller is running
+    *       no? then create a new instance
+    *       yes? then just change the setpoint of the current controller
+    * @param targetPos The desired turret angle.
+    */
+    public void aimTurretAtPos(double targetPos)
     {
-        controller = new TurretRotationController(getTurretPose(), (double) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+
+        if(!(controller instanceof TurretRotationController))
+            {
+                controller = new TurretRotationController(getTurretPose(), targetPos);
+            }
+
+        ((TurretRotationController)controller).changeSetpoint(((TurretRotationController)controller).getSetpoint(), targetPos);
     }
-
-    public void aimControl()
-    {
-        getTurretPose();
-        if(storedPose.hasValidGoal())
-        {
-            wantAimedTurret();
-        }
-
-    }
-
 
     public boolean isTurretBoundHigh()
     {
@@ -90,9 +104,9 @@ public class Turret extends Subsystem implements Thread{
         return turretLimitHome.get();
     }
 
-    public double turretAngle() // t theta
+    public double turretAngle()
     {
-        return 8; //TODO update with real math
+        return storedPose.getConvertedValue();
     }
 
     public double cameraToGoalAngle() // tx
@@ -100,32 +114,62 @@ public class Turret extends Subsystem implements Thread{
         return storedPose.getGoalOffset(); //difference between camera and goal
     }
 
-    public double wantedAngleRetriever() { 
+    public double getWantedAngle() { 
         return cameraToGoalAngle() + turretAngle();
     }
 
-    public void snapToGoal() {
-
-        double wantedAngle = wantedAngleRetriever(); 
-
-        if((wantedAngle <= Gains.Turret.NegativeACtoAA) || (wantedAngle >= Gains.Turret.PositiveABtoAA))
+    //Master override of turret aim, will update control loop if operator assigns new intent
+    public void SetTurretIntent(boolean ForwardIntent, boolean RightIntent, boolean ReverseIntent, boolean LeftIntent)
+    {
+        if(ForwardIntent)
         {
-            //Possible dead zone
-            //TurretRotationController(getTurretPose(), (double) wantedAngle);
-           
+            aimTurretAtPos(Gains.Turret.Intent_ForwardConverted);
+        }
+        else if (RightIntent)
+        {
+            aimTurretAtPos(Gains.Turret.Intent_RightConverted);
+        }
+        else if (ReverseIntent)
+        {
+            aimTurretAtPos(Gains.Turret.Intent_ReverseConverted);
+        }
+        else if (LeftIntent)
+        {
+            aimTurretAtPos(Gains.Turret.Intent_LeftConverted);
+        }
+    }
+
+    public double getHomedAngle()
+    {
+       double encoderPos;
+
+        if(isTurretBoundHigh())
+        {
+            turretPositionEncoder.reset();
+            encoderPos = Gains.Turret.turretAngle_EncoderHigh;
+        }
+        else if (isTurretHome())
+        {
+            turretPositionEncoder.reset();
+            encoderPos = Gains.Turret.turretAngle_Zero;
+        }
+        else if (isturretBoundLow())
+        {
+           turretPositionEncoder.reset();
+           encoderPos = Gains.Turret.turretAngle_EncoderLow;
         }
         else
         {
-            //aim and fire to wantedangle
+            encoderPos = turretPositionEncoder.get();
         }
 
-    } //end of method
-
+        return encoderPos;
+    }
 
     public TurretPose getTurretPose()
     {
         storedPose.reset(
-            turretPositionEncoder.get(),
+            getHomedAngle(),
             turretPositionEncoder.getRate(),
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0), //1 retu
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)
@@ -136,6 +180,8 @@ public class Turret extends Subsystem implements Thread{
     @Override
     public void loops() {
         getTurretPose();
+
+        
 
     }
 

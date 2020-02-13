@@ -89,6 +89,7 @@ public class Gains{
 		public static double turretAngle_ConvertedLow = 0.0;	//TODO Tune This
 		public static double turretAngle_EncoderHigh = 0.0;	//TODO Tune this
 		public static double turretAngle_EncoderLow = 0.0;	//TODO Tune This
+		public static double turretAngle_Zero = 0.0;
 
 		public static double slope = (turretAngle_ConvertedHigh - turretAngle_ConvertedLow)/(turretAngle_EncoderHigh - turretAngle_EncoderLow);
 		public static double offset = (turretAngle_EncoderLow - slope * turretAngle_EncoderHigh);
