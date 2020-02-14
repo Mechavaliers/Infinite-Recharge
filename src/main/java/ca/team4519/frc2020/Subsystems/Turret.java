@@ -2,6 +2,7 @@ package ca.team4519.frc2020.subsystems;
 
 import java.util.Locale.IsoCountryCode;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
@@ -82,9 +83,9 @@ public class Turret extends Subsystem implements Thread{
     {
 
         if(!(controller instanceof TurretRotationController))
-            {
-                controller = new TurretRotationController(getTurretPose(), targetPos);
-            }
+        {
+            controller = new TurretRotationController(getTurretPose(), targetPos);
+        }
 
         ((TurretRotationController)controller).changeSetpoint(((TurretRotationController)controller).getSetpoint(), targetPos);
     }
@@ -166,6 +167,24 @@ public class Turret extends Subsystem implements Thread{
         return encoderPos;
     }
 
+    public void setPower(double power)
+    {
+        if(isTurretBoundHigh() || isturretBoundLow())
+        {
+            if(storedPose.getConvertedValue() >= Gains.Turret.turretAngle_ConvertedHigh)
+            {
+
+            }
+            else if (storedPose.getConvertedValue() <= Gains.Turret.turretAngle_ConvertedLow)
+            {
+
+            }
+        }
+
+        turretPivot.set(ControlMode.PercentOutput, power);
+
+    }
+
     public TurretPose getTurretPose()
     {
         storedPose.reset(
@@ -178,10 +197,13 @@ public class Turret extends Subsystem implements Thread{
     }
 
     @Override
-    public void loops() {
+    public void loops()
+    {
         getTurretPose();
 
-        
+        //if no controller is running, exit loop
+        if(controller == null) return;
+        setPower(controller.update(storedPose));
 
     }
 
