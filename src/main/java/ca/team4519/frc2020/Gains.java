@@ -107,4 +107,23 @@ public class Gains{
 		public static double BallDetectorRange = 0.0; //TODO Tune This if it even becomes a thing
 
 	}
+
+	public static final class PDP {
+		private PDP() {}
+
+		public static final int LeftDriveNeoA = 0;
+		public static final int LeftDriveNeoB = 0;
+		public static final int RightDriveNeoA = 0;
+		public static final int RightDriveNeoB = 0;
+
+		public static final int IntakeRollers = 0;
+		public static final int IntakePivot = 0;
+		public static final int FeederLower = 0;
+		public static final int FeederUpper = 0;
+
+		public static final int TurretPivot = 0;
+		public static final int LeftFlywheel = 0;
+		public static final int RightFlywheel = 0;
+		
+	}
 }
