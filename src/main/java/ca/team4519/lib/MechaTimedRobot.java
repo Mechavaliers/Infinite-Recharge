@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.RobotController;
  * <p>periodic() functions from the base class are called on an interval by a Notifier instance.
  */
 public class MechaTimedRobot extends MechaIterativeRobotBase {
-    public static final double kDefaultPeriod = Gains.Drive.CONTROL_LOOP_TIME;
+    public static final double kDefaultPeriod = Gains.CONTROL_LOOP_TIME;
 
     // The C pointer to the notifier object. We don't use it directly, it is
     // just passed to the JNI bindings.
