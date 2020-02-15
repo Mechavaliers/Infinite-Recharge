@@ -17,9 +17,11 @@ import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 
 public class Drivebase extends Subsystem implements Thread
 {
@@ -34,8 +36,9 @@ public class Drivebase extends Subsystem implements Thread
     private final CANEncoder leftDriveNeoAEncoder;
     private final CANSparkMax leftDriveNeoB;
     private final CANEncoder leftDriveNeoBEncoder;
+    private final DifferentialDriveOdometry pose2d = new DifferentialDriveOdometry(null);
 
-    private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
     private final Solenoid shifter;
 
@@ -96,7 +99,6 @@ public class Drivebase extends Subsystem implements Thread
         shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
-        
     }
 
     public DrivebasePose getRobotPose() {
@@ -106,8 +108,8 @@ public class Drivebase extends Subsystem implements Thread
             getLeftVelocity(), 
             getRightVelocity(), 
             navX.getAngle(), 
-            navX.getRate());
-            
+            navX.getRate(),
+            pose2d.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
         return storedPose;
     }
 

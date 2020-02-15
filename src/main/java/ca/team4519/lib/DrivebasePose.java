@@ -1,5 +1,7 @@
 package ca.team4519.lib;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+
 public class DrivebasePose
 {
     private double leftDist;
@@ -8,8 +10,9 @@ public class DrivebasePose
     private double rightVel;
     private double angularPos;
     private double angularVel;
+    private Pose2d pose;
 
-    public DrivebasePose(double leftDist, double rightDist, double leftVel, double rightVel, double angularPos, double angularVel)
+    public DrivebasePose(double leftDist, double rightDist, double leftVel, double rightVel, double angularPos, double angularVel, Pose2d pose)
     {
         this.leftDist = leftDist;
         this.rightDist = rightDist;
@@ -17,9 +20,10 @@ public class DrivebasePose
         this.rightVel = rightVel;
         this.angularPos = angularPos;
         this.angularVel = angularVel;
+        this.pose = pose;
     }
 
-    public void reset(double leftDist, double rightDist, double leftVel, double rightVel, double angularPos, double angularVel)
+    public void reset(double leftDist, double rightDist, double leftVel, double rightVel, double angularPos, double angularVel, Pose2d pose)
     {
         this.leftDist = leftDist;
         this.rightDist = rightDist;
@@ -27,6 +31,7 @@ public class DrivebasePose
         this.rightVel = rightVel;
         this.angularPos = angularPos;
         this.angularVel = angularVel;
+        this.pose = pose;
     }
 
     public double getRobotDistance()
@@ -67,6 +72,11 @@ public class DrivebasePose
     public double getAngularVelocity()
     {
         return angularVel;
+    }
+
+    public Pose2d getRobotPose2d()
+    {
+        return pose;
     }
 
 }
