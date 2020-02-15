@@ -1,7 +1,6 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
-import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
@@ -13,15 +12,11 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Units;
 
 public class Drivebase extends Subsystem implements Thread
 {
@@ -36,7 +31,7 @@ public class Drivebase extends Subsystem implements Thread
     private final CANEncoder leftDriveNeoAEncoder;
     private final CANSparkMax leftDriveNeoB;
     private final CANEncoder leftDriveNeoBEncoder;
-    private final DifferentialDriveOdometry pose2d = new DifferentialDriveOdometry(getAngle(), new Pose2d(0, 0, new Rotation2d()));
+    private final DifferentialDriveOdometry odometry;
 
     private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
@@ -96,11 +91,11 @@ public class Drivebase extends Subsystem implements Thread
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
 
+        odometry = new DifferentialDriveOdometry(getAngle());
+
        // shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
-
-        pose2d.update(Rotation2d.fromDegrees(0), Units.feetToMeters(0), Units.feetToMeters(0));
     }
 
     public DrivebasePose getRobotPose() {
@@ -111,7 +106,7 @@ public class Drivebase extends Subsystem implements Thread
             getRightVelocity(), 
             navX.getAngle(), 
             navX.getRate(),
-            pose2d.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
+            odometry.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
         return storedPose;
     }
 
@@ -186,7 +181,7 @@ public class Drivebase extends Subsystem implements Thread
 
     public Rotation2d getAngle()
     {
-        return Rotation2d.fromDegrees(30);
+        return Rotation2d.fromDegrees(navX.getAngle());
     }
 
     @Override
@@ -228,17 +223,15 @@ public class Drivebase extends Subsystem implements Thread
         SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
         SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
+        SmartDashboard.putNumber("Drivebase Angle", navX.getAngle());
 
         if(controller == null)
         {
-            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
-            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
-
+            SmartDashboard.putString("Drivebase ControllerOutput", controller.update(storedPose).toString());
         }
         else
         {
-            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
-            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
+            SmartDashboard.putString("Drivebase ControllerOutput", "No Controller");
         }
     }
 
@@ -248,21 +241,19 @@ public class Drivebase extends Subsystem implements Thread
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Velocity", leftDriveNeoAEncoder::getVelocity);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Velocity", leftDriveNeoBEncoder::getVelocity);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoAEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("RightDriveNeoA_Position", rightDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("Drivebase Angle", navX::getAngle);
 
         if(controller == null)
         {
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 0);
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 0);
+            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", controller.update(storedPose)::toString);
         }
         else
         {
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 1);
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 1);
+            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", () -> (String) "No controller");
         }
 
 
