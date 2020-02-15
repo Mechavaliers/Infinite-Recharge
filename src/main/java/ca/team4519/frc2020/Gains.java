@@ -52,14 +52,14 @@ public class Gains{
 
 		public static double IntakeSpeed = 0.0;	//TODO Tune This
 	
-		public static double LinkagePot_MinVolage = 0.0;	//TODO Tune This
-		public static double LinkagePot_MaxVoltage = 0.0;	//TODO Tune This
+		public static double LinkagePot_MinVolage = 0.337;	//TODO Tune This
+		public static double LinkagePot_MaxVoltage = 0.355;	//TODO Tune This
 		public static double LinkagePot_MinAngle = 0.0;	//TODO Tune This
-		public static double LinkagePot_MaxAngle = 0.0;	//TODO Tune This
+		public static double LinkagePot_MaxAngle = 90.0;	//TODO Tune This
 
-		public static double LinkagePos_Stowed = 0.0;	//TODO Tune This
-		public static double LinkagePos_Deployed = 0.0;	//TODO Tune This
-		public static double LinkagePos_DeployedOnAngle = 0.0;	//TODO Tune This
+		public static double LinkagePos_Stowed = 1.0;	//TODO Tune This
+		public static double LinkagePos_Deployed = 87.0;	//TODO Tune This
+		public static double LinkagePos_DeployedOnAngle = 45.0;	//TODO Tune This
 
 		public static double LINKAGE_MAX_VELOCITY = 0.0;	//TODO Tune This
 		public static double LINKAGE_MAX_ACCELERATION = 0.0;	//TODO Tune This
@@ -85,10 +85,10 @@ public class Gains{
 		public static double Turret_A = 0.0;	//TODO Tune This
 		public static double Turret_Tollerance = 0.0;	//TODO Tune This
 
-		public static double turretAngle_ConvertedHigh = 0.0;	//TODO Tune this
-		public static double turretAngle_ConvertedLow = 0.0;	//TODO Tune This
-		public static double turretAngle_EncoderHigh = 0.0;	//TODO Tune this
-		public static double turretAngle_EncoderLow = 0.0;	//TODO Tune This
+		public static double turretAngle_ConvertedHigh = -180.0;	//TODO Tune this
+		public static double turretAngle_ConvertedLow = 90.0;	//TODO Tune This
+		public static double turretAngle_EncoderHigh = 1465.0;	//TODO Tune this
+		public static double turretAngle_EncoderLow = -722.0;	//TODO Tune This
 		public static double turretAngle_Zero = 0.0;
 
 		public static double slope = (turretAngle_ConvertedHigh - turretAngle_ConvertedLow)/(turretAngle_EncoderHigh - turretAngle_EncoderLow);
