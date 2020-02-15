@@ -19,7 +19,7 @@ public class Constants
     public static final boolean isRightDriveGrayhillFlipped = false;
 
     //Turret
-    public static final int turretPivotMotor = 6; //TODO Get CANID of talonSRX
+    public static final int turretPivotMotor = 9; //TODO Get CANID of talonSRX
     public static final int rightWheelNeo = 2;
     public static final int leftWheelNeo = 3;
     public static final int flywheelNeoCurrentLimit = 60;
@@ -28,7 +28,7 @@ public class Constants
     public static final int turretEncoderB = 3;
     public static final int turretLimitSwitchL = 0;
     public static final int turretLimitSwitchR = 1;
-    public static final int turretHomeDetector = 2;
+    public static final int turretHomeDetector = 9;
 
     //Intake
     public static final int intakeLinkageMotor = 0; //TODO Get CANID of talonSRX
