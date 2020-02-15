@@ -10,4 +10,8 @@ public class DrivetrainOutput{
         this.leftOutput = left;
         this.rightOutput = right;
     }
+
+    public String ToString(){
+        return "Left: "+this.leftOutput+" Right: "+this.rightOutput;
+    }
 }
