@@ -4,6 +4,7 @@ import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -53,7 +54,18 @@ public class Flywheel extends Subsystem implements Thread{
 		 
 		 
 	        
-	 }
+     }
+     
+     public void testing(double input){
+         rightWheelNeo.set(input);
+         leftWheelNeo.set(-input);
+         
+     }
+
+     public void wantSpin()
+     {
+         //rightW
+     }
 	
     @Override
     public void loops() {
@@ -75,7 +87,8 @@ public class Flywheel extends Subsystem implements Thread{
 
     @Override
     public void updateDashboard() {
-        // TODO feed Smartdashboard
+        SmartDashboard.putNumber("leftWheel Velocity", leftWheelNeoEncoder.getVelocity());
+        SmartDashboard.putNumber("Right wheel Velocity", rightWheelNeoEncoder.getVelocity());
 
     }
 

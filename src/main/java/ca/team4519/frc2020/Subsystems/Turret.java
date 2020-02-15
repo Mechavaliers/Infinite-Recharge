@@ -25,7 +25,7 @@ public class Turret extends Subsystem implements Thread{
     private DigitalInput turretLimitHome;
     private TurretPose storedPose = new TurretPose(0.0, 0.0, 0.0, 0.0);
 
-    private VictorSPX turretPivot;
+    public VictorSPX turretPivot;
 
 
     public synchronized static Turret grabInstance()
@@ -168,7 +168,7 @@ public class Turret extends Subsystem implements Thread{
 
     public void setPower(double power)
     {
-        if(isTurretBoundHigh() || isturretBoundLow())
+      /*  if(isTurretBoundHigh() || isturretBoundLow())
         {
             if(storedPose.getConvertedValue() >= Gains.Turret.turretAngle_ConvertedHigh)
             {
@@ -178,8 +178,7 @@ public class Turret extends Subsystem implements Thread{
             {
 
             }
-        }
-
+        }*/
         turretPivot.set(ControlMode.PercentOutput, power);
 
     }
@@ -226,6 +225,8 @@ public class Turret extends Subsystem implements Thread{
     @Override
     public void updateDashboard() {
         SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.get());
+        //max vel is 500Ticks per second
+        SmartDashboard.putNumber("Turret Velocity", turretPositionEncoder.getRate());
         SmartDashboard.putBoolean("Turret Hall Effect Sensor", isTurretHome());
 
     }

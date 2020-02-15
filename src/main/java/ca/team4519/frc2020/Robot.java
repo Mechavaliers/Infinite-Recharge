@@ -1,5 +1,7 @@
 package ca.team4519.frc2020;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import ca.team4519.frc2020.auton.AutoMode;
 import ca.team4519.frc2020.auton.AutonRunner;
 import ca.team4519.frc2020.subsystems.Drivebase;
@@ -81,7 +83,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopInit()
   {
-
+    Drivebase.GrabInstance().zeroSensors();
   }
 
   @Override
@@ -93,6 +95,12 @@ public class Robot extends MechaTimedRobot
     //Drivebase.GrabInstance().update();
     Turret.grabInstance().update();
     Intake.GrabInstance().update();
+    Flywheel.GrabInstance().update();
+   // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
+    Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
+    Flywheel.GrabInstance().testing(driver.getRawAxis(3));
+    Feeder.GrabInstance().insertName(driver.getRawAxis(5));
+    Intake.GrabInstance().testing(driver.getRawAxis(1));
    // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 

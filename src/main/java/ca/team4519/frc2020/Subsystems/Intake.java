@@ -12,6 +12,7 @@ import ca.team4519.lib.IntakeLinkagePose;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -85,6 +86,12 @@ public class Intake extends Subsystem implements Thread
         }
 
         ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_Deployed);
+    }
+
+    public void testing(double input)
+    {
+        //Positive Stows - Negative Deploys
+        intakeLinkageMotor.set(ControlMode.PercentOutput, input);
     }
 
     public void wantStowIntake()

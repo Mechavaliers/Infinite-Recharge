@@ -1,5 +1,6 @@
 package ca.team4519.frc2020.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import ca.team4519.frc2020.Constants;
@@ -19,9 +20,9 @@ public class Feeder extends Subsystem implements Thread
 
     private static Feeder thisInstance;
 
-    private VictorSPX Feederx; 
+    private VictorSPX feederx; 
 
-    private VictorSPX Feedery; 
+    private VictorSPX feedery; 
 
 
 
@@ -42,8 +43,8 @@ public class Feeder extends Subsystem implements Thread
    
       //  balldetector = new Ultrasonic(1);
 
-        Feederx = new VictorSPX(Constants.feeder1); 
-        Feedery = new VictorSPX(Constants.feeder2); 
+        feederx = new VictorSPX(Constants.feeder1); 
+        feedery = new VictorSPX(Constants.feeder2); 
 
 
      }
@@ -59,6 +60,13 @@ public class Feeder extends Subsystem implements Thread
     
     }
     */
+
+    public void insertName(double input)
+    {
+     feederx.set(ControlMode.PercentOutput, input);
+     feedery.set(ControlMode.PercentOutput, input);
+    }
+
     public void intakeBall()
     {
         //TODO populate method with intake sequence logic
