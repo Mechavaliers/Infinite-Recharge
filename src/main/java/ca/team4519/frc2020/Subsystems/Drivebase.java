@@ -223,17 +223,15 @@ public class Drivebase extends Subsystem implements Thread
         SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
         SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
+        SmartDashboard.putNumber("Drivebase Angle", navX.getAngle());
 
         if(controller == null)
         {
-            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
-            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
-
+            SmartDashboard.putString("Drivebase ControllerOutput", controller.update(storedPose).toString());
         }
         else
         {
-            SmartDashboard.putNumber("Drivebase ControllerOutput left", 0);
-            SmartDashboard.putNumber("Drivebase ControllerOutput right", 0);
+            SmartDashboard.putString("Drivebase ControllerOutput", "No Controller");
         }
     }
 
@@ -243,21 +241,19 @@ public class Drivebase extends Subsystem implements Thread
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Velocity", leftDriveNeoAEncoder::getVelocity);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Velocity", leftDriveNeoBEncoder::getVelocity);
+        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", rightDriveNeoAEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("RightDriveNeoA_Position", rightDriveNeoAEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
+        MechaLogger.grabInstance().logThis_Double("Drivebase Angle", navX::getAngle);
 
         if(controller == null)
         {
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 0);
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 0);
+            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", controller.update(storedPose)::toString);
         }
         else
         {
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_left", () -> (double) 1);
-            MechaLogger.grabInstance().logThis_Double("Drivebase_ControllerOutput_right", () -> (double) 1);
+            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", () -> (String) "No controller");
         }
 
 
