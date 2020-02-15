@@ -1,7 +1,5 @@
 package ca.team4519.frc2020.subsystems;
 
-import java.util.Locale.IsoCountryCode;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.team254.lib.trajectory.TrajectoryFollower;
