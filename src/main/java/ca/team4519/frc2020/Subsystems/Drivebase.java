@@ -31,7 +31,7 @@ public class Drivebase extends Subsystem implements Thread
     private final CANEncoder leftDriveNeoAEncoder;
     private final CANSparkMax leftDriveNeoB;
     private final CANEncoder leftDriveNeoBEncoder;
-    private final DifferentialDriveOdometry pose2d = new DifferentialDriveOdometry(getAngle(), new Pose2d(0, 0, new Rotation2d()));
+    private final DifferentialDriveOdometry odometry;
 
     private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
@@ -91,11 +91,11 @@ public class Drivebase extends Subsystem implements Thread
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
 
+        odometry = new DifferentialDriveOdometry(getAngle());
+
        // shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
-
-        pose2d.update(Rotation2d.fromDegrees(0), Units.feetToMeters(0), Units.feetToMeters(0));
     }
 
     public DrivebasePose getRobotPose() {
@@ -106,7 +106,7 @@ public class Drivebase extends Subsystem implements Thread
             getRightVelocity(), 
             navX.getAngle(), 
             navX.getRate(),
-            pose2d.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
+            odometry.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
         return storedPose;
     }
 
@@ -181,7 +181,7 @@ public class Drivebase extends Subsystem implements Thread
 
     public Rotation2d getAngle()
     {
-        return Rotation2d.fromDegrees(30);
+        return Rotation2d.fromDegrees(navX.getAngle());
     }
 
     @Override
