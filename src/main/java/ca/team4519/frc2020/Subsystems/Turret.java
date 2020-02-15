@@ -13,6 +13,7 @@ import ca.team4519.lib.TurretPose;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Turret extends Subsystem implements Thread{
 
@@ -224,7 +225,8 @@ public class Turret extends Subsystem implements Thread{
 
     @Override
     public void updateDashboard() {
-        // TODO Auto-generated method stub
+        SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.get());
+        SmartDashboard.putBoolean("Turret Hall Effect Sensor", isTurretHome());
 
     }
 
@@ -236,7 +238,7 @@ public class Turret extends Subsystem implements Thread{
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
+        updateDashboard();
 
     }
 

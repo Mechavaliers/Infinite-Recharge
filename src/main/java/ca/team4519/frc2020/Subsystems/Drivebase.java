@@ -36,11 +36,11 @@ public class Drivebase extends Subsystem implements Thread
     private final CANEncoder leftDriveNeoAEncoder;
     private final CANSparkMax leftDriveNeoB;
     private final CANEncoder leftDriveNeoBEncoder;
-    private final DifferentialDriveOdometry pose2d = new DifferentialDriveOdometry(null);
+    private final DifferentialDriveOdometry pose2d = new DifferentialDriveOdometry(getAngle(), new Pose2d(0, 0, new Rotation2d()));
 
     private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
-    private final Solenoid shifter;
+   // private final Solenoid shifter;
 
     private final AHRS navX;
 
@@ -96,9 +96,11 @@ public class Drivebase extends Subsystem implements Thread
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
 
-        shifter = new Solenoid(Constants.shifter);
+       // shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
+
+        pose2d.update(Rotation2d.fromDegrees(0), Units.feetToMeters(0), Units.feetToMeters(0));
     }
 
     public DrivebasePose getRobotPose() {
@@ -128,7 +130,7 @@ public class Drivebase extends Subsystem implements Thread
     private double getRightVelocity() {
         return (rightDriveNeoAEncoder.getVelocity() + rightDriveNeoBEncoder.getVelocity()) / 2;
     }
-
+/*
     public void shift(boolean triggerShift)
     {
         if(triggerShift)
@@ -147,7 +149,7 @@ public class Drivebase extends Subsystem implements Thread
     {
         return (shifter.get() == Gains.Drive.Shifter_HIGH_GEAR);
     }
-
+*/
     public void setLeftRightPower(DrivetrainOutput power)
     {
         rightDriveNeoA.set(power.rightOutput);

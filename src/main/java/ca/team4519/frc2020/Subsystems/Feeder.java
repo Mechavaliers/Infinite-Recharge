@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class Feeder extends Subsystem implements Thread
 {
 
-    private Ultrasonic balldetector;
+   // private Ultrasonic balldetector;
     //TODO Initalize 2 motor controllers - TBD
 
     private static Feeder thisInstance;
@@ -40,7 +40,7 @@ public class Feeder extends Subsystem implements Thread
     private Feeder()
     {
    
-        balldetector = new Ultrasonic(0,1);
+      //  balldetector = new Ultrasonic(1);
 
         Feederx = new VictorSPX(Constants.feeder1); 
         Feedery = new VictorSPX(Constants.feeder2); 
@@ -48,7 +48,7 @@ public class Feeder extends Subsystem implements Thread
 
      }
         
-    public boolean checkDistance()
+   /* public boolean checkDistance()
     {    
         if (balldetector.getRangeInches() >= Gains.Feeder.BallDetectorRange) {
             return true;
@@ -58,7 +58,7 @@ public class Feeder extends Subsystem implements Thread
         }
     
     }
-    
+    */
     public void intakeBall()
     {
         //TODO populate method with intake sequence logic

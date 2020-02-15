@@ -87,6 +87,12 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
+
+      //  System.out.println("All Periodic Loop");
+  //  MechaLogger.grabInstance().saveLogs();
+    //Drivebase.GrabInstance().update();
+    Turret.grabInstance().update();
+    Intake.GrabInstance().update();
    // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
@@ -108,6 +114,8 @@ public class Robot extends MechaTimedRobot
     System.out.println("All Periodic Loop");
     MechaLogger.grabInstance().saveLogs();
     Drivebase.GrabInstance().update();
+    Turret.grabInstance().updateDashboard();
+    Intake.GrabInstance().updateDashboard();
   }
 
 }

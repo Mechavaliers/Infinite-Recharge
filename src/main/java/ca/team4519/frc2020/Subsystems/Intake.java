@@ -6,6 +6,7 @@ import ca.team4519.frc2020.subsystems.controllers.IntakeLinkageController;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.team4519.lib.IntakeLinkagePose;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -128,7 +129,7 @@ public class Intake extends Subsystem implements Thread
     @Override
     public void updateDashboard()
     {
-        // TODO Auto-generated method stub
+        SmartDashboard.putNumber("Arm Pot Raw Value", armPositionPot.get());
 
     }
 
@@ -142,7 +143,7 @@ public class Intake extends Subsystem implements Thread
     @Override
     public void update()
     {
-        // TODO Auto-generated method stub
+        updateDashboard();
 
     }
 
