@@ -16,6 +16,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 public class Turret extends Subsystem implements Thread{
 
     public static Turret thisInstance;
@@ -226,7 +229,9 @@ public class Turret extends Subsystem implements Thread{
 
     @Override
     public void updateDashboard() {
-        // TODO Auto-generated method stub
+
+        SmartDashboard.putNumber("Turret Position Rate", turretPositionEncoder.getRate());
+        SmartDashboard.putNumber("Turret Position", turretPositionEncoder.get()); 
 
     }
 

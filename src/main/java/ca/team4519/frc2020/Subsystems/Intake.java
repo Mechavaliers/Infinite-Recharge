@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Intake extends Subsystem implements Thread
 {
 
@@ -126,9 +128,10 @@ public class Intake extends Subsystem implements Thread
     }
 
     @Override
-    public void updateDashboard()
+    public void updateDashboard() //nicole - remove if needed. No controller here
     {
-        // TODO Auto-generated method stub
+        SmartDashboard.putNumber("Arm Position E Rate", armPositionEncoder.getRate()); 
+        SmartDashboard.putNumber("Arm Position P", armPositionPot.get());
 
     }
 

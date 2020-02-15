@@ -9,6 +9,8 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Flywheel extends Subsystem implements Thread{
 
 	 private static Flywheel thisInstance;
@@ -62,8 +64,10 @@ public class Flywheel extends Subsystem implements Thread{
     }
 
     @Override
-    public void zeroSensors() {
-        // TODO reset count on all sensors
+    public void zeroSensors() { //nicole - just guessing based off drivebase, remove if needed
+
+        rightWheelNeoEncoder.setPosition(0.0);
+        leftWheelNeoEncoder.setPosition(0.0);
 
     }
 
@@ -75,8 +79,23 @@ public class Flywheel extends Subsystem implements Thread{
 
     @Override
     public void updateDashboard() {
-        // TODO feed Smartdashboard
 
+        SmartDashboard.putNumber("Right Wheel Neo Velocity", rightWheelNeoEncoder.getVelocity());
+        SmartDashboard.putNumber("Right Wheel Neo Position", rightWheelNeoEncoder.getPosition());
+        SmartDashboard.putNumber("Left Wheel Neo Velocity", leftWheelNeoEncoder.getVelocity());
+        SmartDashboard.putNumber("Left Wheel Neo Position", leftWheelNeoEncoder.getPosition());
+
+        if(controller == null)
+        {
+            SmartDashboard.putNumber("Flywheel ControllerOutput left", 0);
+            SmartDashboard.putNumber("Flywheel ControllerOutput right", 0);
+
+        }
+        else
+        {
+            SmartDashboard.putNumber("Flywheel ControllerOutput left", 0);
+            SmartDashboard.putNumber("Flywheel ControllerOutput right", 0);
+        }
     }
 
     @Override
