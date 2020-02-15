@@ -42,7 +42,9 @@ public class Constants
     public static final int feeder1 = 0; //nicole - don't know if this should go here
     public static final int feeder2 = 0; //same as above, ok this isn't working
 
-     //Elevator
-    public static final int elevatormov = 0; 
+     //Climber
+    public static final int winchMotorL = 0;    //TODO Update with actual canid
+    public static final int winchMotorR = 6;    //TODO Update with actual canid
+    public static final int hookRelease = 0;    //TODO Update with actual canid
 
 }

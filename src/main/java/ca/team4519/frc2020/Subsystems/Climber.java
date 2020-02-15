@@ -7,33 +7,31 @@ import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class Elevator extends Subsystem implements Thread{
-	
-    private static Elevator thisInstance;
+public class Climber extends Subsystem implements Thread {
+
+    private static Climber thisInstance;
 
     private Solenoid releaseHook;
-    
-    private TalonSRX Elevatormotor; 
-	
-	public synchronized static Elevator GrabInstance()
-    {
 
-        if(thisInstance == null)
-        {
-            thisInstance = new Elevator();
+    private TalonSRX winchMotorL;
+    private TalonSRX winchMotorR;
+
+    public synchronized static Climber GrabInstance() {
+
+        if (thisInstance == null) {
+            thisInstance = new Climber();
         }
 
         return thisInstance;
 
     }
 
-    private Elevator()
+    private Climber()
     {
    
-        releaseHook = new Solenoid(1);
-
-        Elevatormotor = new TalonSRX(Constants.elevatormov); 
-
+        releaseHook = new Solenoid(Constants.hookRelease);
+        winchMotorL = new TalonSRX(Constants.winchMotorL); 
+        winchMotorR = new TalonSRX(Constants.winchMotorR);
      }
 
      public void wantHook(boolean hook) //nicole - solenoid
