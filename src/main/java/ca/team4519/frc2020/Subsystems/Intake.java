@@ -88,7 +88,7 @@ public class Intake extends Subsystem implements Thread
         ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_Deployed);
     }
 
-    public void testing(double input)
+    public void setPower(double input)
     {
         //Positive Stows - Negative Deploys
         intakeLinkageMotor.set(ControlMode.PercentOutput, input);
@@ -96,14 +96,22 @@ public class Intake extends Subsystem implements Thread
 
     public void wantStowIntake()
     {
-        controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_Stowed);
+        if(!(controller instanceof IntakeLinkageController))
+        {
+            controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_Stowed);
+        }
+
+        ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_Stowed);
     }
 
-    public void wantsIntake(boolean wantsIntake)
+    public void wantAngledIntake()
     {
-   	 	if (wantsIntake) {
-   	 		// drop intake
-   	 	}
+        if(!(controller instanceof IntakeLinkageController))
+        {
+            controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_DeployedOnAngle);
+        }
+
+        ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_DeployedOnAngle);
     }
 
     public IntakeLinkagePose getIntakePose()
@@ -115,7 +123,7 @@ public class Intake extends Subsystem implements Thread
     @Override
     public void loops()
     {
-        // TODO Auto-generated method stub
+        setPower(controller.update(storedPose));
 
     }
 
