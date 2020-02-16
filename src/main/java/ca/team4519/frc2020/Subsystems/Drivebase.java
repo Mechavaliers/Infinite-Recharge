@@ -75,7 +75,7 @@ public class Drivebase extends Subsystem implements Thread
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
         rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev;
+        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
         rightDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
