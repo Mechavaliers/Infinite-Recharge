@@ -19,7 +19,7 @@ public class Constants
     public static final int turretPivotMotor = 9; //TODO Get CANID of talonSRX
     public static final int rightWheelNeo = 2;
     public static final int leftWheelNeo = 3;
-    public static final int flywheelNeoCurrentLimit = 60;
+    public static final int flywheelNeoCurrentLimit = 90;
         //Turret Sensors
     public static final int turretEncoderA = 0;
     public static final int turretEncoderB = 1;
