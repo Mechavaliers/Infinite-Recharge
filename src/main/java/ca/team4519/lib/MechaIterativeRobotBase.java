@@ -201,6 +201,7 @@ public abstract class MechaIterativeRobotBase extends RobotBase {
     protected void loopFunc() {
         m_watchdog.reset();
         allPeriodic();
+        m_watchdog.addEpoch("allPeriodic()");
         // Call the appropriate function depending upon the current robot mode
         if (isDisabled()) {
             // Call DisabledInit() if we are now just entering disabled mode from either a different mode
