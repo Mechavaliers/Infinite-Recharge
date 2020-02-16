@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends MechaTimedRobot
 {
-  MultiThreader autonLoop = new MultiThreader("100Hz - Auto Loop", 1.0 / 100.0);
+  MultiThreader autonLoop = new MultiThreader("200Hz - Auto Loop", 1.0 / 200.0);
   MultiThreader telepLoop = new MultiThreader("200Hz - TeleopLoop",1.0 / 200.0);
 
   AutonRunner autonLoopRunner = new AutonRunner();
@@ -89,7 +89,6 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
-
     Turret.grabInstance().update();
     Intake.GrabInstance().update();
     Flywheel.GrabInstance().update();
