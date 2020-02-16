@@ -21,11 +21,10 @@ public class FlywheelController implements Controllers{
 
 
 	public DrivetrainOutput update(DrivebasePose pose) {
-		controller.calculate(measurement)
-		double power = -controller.get();
-		double turn = /*-turningPIDLoop.calculate(pose.getAngle());*/ 1.5;
+
+		double power = controller.calculate(5);
 		
-		return new DrivetrainOutput(power+turn, power-turn);
+		return new DrivetrainOutput(power, power);
 	}
 	
 }
