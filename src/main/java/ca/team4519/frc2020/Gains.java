@@ -2,7 +2,8 @@ package ca.team4519.frc2020;
 
 public class Gains{
 
-	public static double CONTROL_LOOP_TIME = 0.005;	//200hz
+	public static double CONTROL_LOOP_TIME_SECONDS = 0.005;	//200hz
+	public static double CONTROL_LOOP_TIME_MILLISECOND = 5;	//Neos require this conversion
 	public static double NEO_TicksPerRev = 42.0;
 
 	public static final class Drive {
