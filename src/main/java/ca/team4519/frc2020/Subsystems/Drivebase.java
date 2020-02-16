@@ -2,6 +2,8 @@ package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
+import ca.team4519.frc2020.subsystems.controllers.DriveLineController;
+import ca.team4519.frc2020.subsystems.controllers.DrivebaseLockController;
 import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
@@ -12,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -121,6 +124,26 @@ public class Drivebase extends Subsystem implements Thread
             navX.getRate(),
             odometry.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
         return storedPose;
+    }
+
+    
+    public void wantDriveLine(double target, double maxVelocity)
+    {
+        double maxVel = Math.min(maxVelocity, Gains.Drive.ROBOT_MAX_VELOCITY);
+        controller = new DriveLineController(getRobotPose(), target, maxVel);
+    }
+
+    private void wantDriveLine(double target)
+    {
+        wantDriveLine(target, Gains.Drive.ROBOT_MAX_VELOCITY);
+    }
+
+    private void wantHoldPos()
+    {
+        DrivebasePose poseToHold = getRobotPose();
+
+        controller = new DrivebaseLockController(poseToHold);
+
     }
 
     private double getLeftDistance() {
