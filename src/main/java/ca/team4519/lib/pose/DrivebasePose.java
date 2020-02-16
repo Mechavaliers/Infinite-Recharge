@@ -1,4 +1,4 @@
-package ca.team4519.lib;
+package ca.team4519.lib.pose;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 
