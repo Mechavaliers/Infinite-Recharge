@@ -90,9 +90,6 @@ public class Robot extends MechaTimedRobot
   public void teleopPeriodic()
   {
 
-      //  System.out.println("All Periodic Loop");
-  //  MechaLogger.grabInstance().saveLogs();
-    //Drivebase.GrabInstance().update();
     Turret.grabInstance().update();
     Intake.GrabInstance().update();
     Flywheel.GrabInstance().update();
@@ -119,11 +116,12 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
-    System.out.println("All Periodic Loop");
+    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
     MechaLogger.grabInstance().saveLogs();
     Drivebase.GrabInstance().update();
-    Turret.grabInstance().updateDashboard();
-    Intake.GrabInstance().updateDashboard();
+    Turret.grabInstance().update();
+    Intake.GrabInstance().update();
+    Flywheel.GrabInstance().update();
   }
 
 }
