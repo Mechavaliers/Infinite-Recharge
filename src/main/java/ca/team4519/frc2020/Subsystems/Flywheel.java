@@ -81,7 +81,8 @@ public class Flywheel extends Subsystem implements Thread{
 
     @Override
     public void disableSubsystem() {
-        // TODO kill subsystem on call of this method
+        rightWheelNeo.disable();
+        leftWheelNeo.disable();
 
     }
 
