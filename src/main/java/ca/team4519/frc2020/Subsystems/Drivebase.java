@@ -72,6 +72,8 @@ public class Drivebase extends Subsystem implements Thread
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
         rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev;
+        rightDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -80,12 +82,17 @@ public class Drivebase extends Subsystem implements Thread
 
         rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
         rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        
+        rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
+
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         leftDriveNeoAEncoder = new CANEncoder(leftDriveNeoA);
+        leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -93,6 +100,9 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoB.follow(rightDriveNeoA);
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
+        leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         odometry = new DifferentialDriveOdometry(getAngle());
 
