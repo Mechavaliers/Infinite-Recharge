@@ -93,7 +93,7 @@ public class Robot extends MechaTimedRobot
     Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
     Flywheel.GrabInstance().testing(driver.getRawAxis(3));
     Feeder.GrabInstance().insertName(driver.getRawAxis(5));
-    Intake.GrabInstance().testing(driver.getRawAxis(1));
+    Intake.GrabInstance().setPower(driver.getRawAxis(1));
    // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
