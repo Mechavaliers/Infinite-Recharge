@@ -89,9 +89,6 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
-    Turret.grabInstance().update();
-    Intake.GrabInstance().update();
-    Flywheel.GrabInstance().update();
    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
     Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
     Flywheel.GrabInstance().testing(driver.getRawAxis(3));
