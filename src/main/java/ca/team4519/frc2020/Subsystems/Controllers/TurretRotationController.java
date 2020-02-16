@@ -1,7 +1,7 @@
 package ca.team4519.frc2020.subsystems.controllers;
 
 import ca.team4519.frc2020.Gains;
-import ca.team4519.lib.TurretPose;
+import ca.team4519.lib.pose.TurretPose;
 
 import com.team254.lib.trajectory.TrajectoryFollower;
 import com.team254.lib.trajectory.TrajectoryFollower.TrajectorySetpoint;
@@ -45,6 +45,5 @@ public class TurretRotationController implements Controllers{
 		controller.update(pose.getPosition(), pose.getVelocity());
 		return controller.get();
 		
-	}
-	
+	}	
 }

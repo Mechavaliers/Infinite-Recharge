@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.subsystems.Drivebase.Controllers;
-import ca.team4519.lib.DrivebasePose;
+import ca.team4519.lib.pose.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.controller.RamseteController;
