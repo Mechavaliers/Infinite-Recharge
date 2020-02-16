@@ -15,8 +15,8 @@ public class Gains{
 		public static double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static double PATH_TOLLERANCE = 0.25;	//TODO Update this
 
-		public static double NEO_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the high gear ratio in here, only used in auto...for now?
-		
+		public static double NEO_HIGH_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the high gear ratio in here, only used in auto...for now?
+		public static double NEO_LOW_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the low gear ratio in here - For drivebase lock
 		//	Inches/Seconds
 		public static double ROBOT_MAX_VELOCITY= 180.0;			//
 		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
@@ -25,8 +25,9 @@ public class Gains{
 		public static double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
 		public static double Wheelbase_Width = 21.868502;	//Inches
 		public static double Wheelbase_Length = 39.25; 	//TODO Update this
-		public static double WheelSize_Inches = 6.250;
-		public static double EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_CorrectedTicksPerRev);	
+		public static double WheelSize_Inches = 6.250; //TODO Measure wheel OD
+		public static double HIGH_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_HIGH_CorrectedTicksPerRev);	
+		public static double LOW_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_LOW_CorrectedTicksPerRev);
 	
 		public static double Dist_P = 0.0;	//TODO Tune this
 		public static double Dist_I = 0.0;	//TODO tune this

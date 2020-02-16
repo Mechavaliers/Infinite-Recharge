@@ -1,6 +1,7 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
+import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
@@ -70,6 +71,7 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
+        rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -77,7 +79,8 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveNeoB.follow(rightDriveNeoA);
 
         rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
-
+        rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
