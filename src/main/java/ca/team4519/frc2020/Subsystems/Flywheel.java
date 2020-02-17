@@ -21,6 +21,7 @@ public class Flywheel extends Subsystem implements Thread{
 	 
      public interface Controllers
      {
+         double update(double rpm);
      }
      
 	 public synchronized static Flywheel GrabInstance()
