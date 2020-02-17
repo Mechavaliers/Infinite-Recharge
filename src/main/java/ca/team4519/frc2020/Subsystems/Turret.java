@@ -9,7 +9,7 @@ import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.subsystems.controllers.TurretRotationController;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
-import ca.team4519.lib.TurretPose;
+import ca.team4519.lib.pose.TurretPose;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;

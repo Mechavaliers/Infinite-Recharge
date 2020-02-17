@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.subsystems.Drivebase.Controllers;
-import ca.team4519.lib.DrivebasePose;
+import ca.team4519.lib.pose.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -44,7 +44,7 @@ public class PathFollowerController implements Controllers {
 
 	@Override
 	public DrivetrainOutput update(DrivebasePose pose) {
-        time += Gains.CONTROL_LOOP_TIME;
+        time += Gains.CONTROL_LOOP_TIME_SECONDS;
         Trajectory.State goal = trajectory.sample(time);
         controller.calculate(pose.getRobotPose2d(), goal);
         SmartDashboard.putNumber("time tracker - PathFollowerController.java", time);

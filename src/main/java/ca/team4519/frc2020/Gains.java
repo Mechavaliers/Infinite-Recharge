@@ -2,8 +2,9 @@ package ca.team4519.frc2020;
 
 public class Gains{
 
-	public static final double CONTROL_LOOP_TIME = 0.005;	//200hz
-	public static final double NEO_TicksPerRev = 42.0;
+	public static double CONTROL_LOOP_TIME_SECONDS = 0.005;	//200hz
+	public static int CONTROL_LOOP_TIME_MILLISECOND = 5;	//Neos require this conversion
+	public static double NEO_TicksPerRev = 42.0;
 
 	public static final class Drive {
 		private Drive() {}
@@ -14,18 +15,19 @@ public class Gains{
 		public static final double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static final double PATH_TOLLERANCE = 0.25;	//TODO Update this
 
-		public static final double NEO_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the high gear ratio in here, only used in auto...for now?
-		
+		public static double NEO_HIGH_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the high gear ratio in here, only used in auto...for now?
+		public static double NEO_LOW_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the low gear ratio in here - For drivebase lock
 		//	Inches/Seconds
-		public static final double ROBOT_MAX_VELOCITY= 180.0;			//
-		public static final double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
-		public static final double ROBOT_MAX_JERK = 23; //TOT UPDATE THis
-		public static final double ROBOT_MAX_ROTATIONAL_VELOCITY = 360.0;	//TODO Update this
-		public static final double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
-		public static final double Wheelbase_Width = 21.868502;	//Inches
-		public static final double Wheelbase_Length = 39.25; 	//TODO Update this
-		public static final double WheelSize_Inches = 6.250;
-		public static final double EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_CorrectedTicksPerRev);	
+		public static double ROBOT_MAX_VELOCITY= 180.0;			//
+		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
+		public static double ROBOT_MAX_JERK = 23; //TOT UPDATE THis
+		public static double ROBOT_MAX_ROTATIONAL_VELOCITY = 360.0;	//TODO Update this
+		public static double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
+		public static double Wheelbase_Width = 21.868502;	//Inches
+		public static double Wheelbase_Length = 39.25; 	//TODO Update this
+		public static double WheelSize_Inches = 6.250; //TODO Measure wheel OD
+		public static double HIGH_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_HIGH_CorrectedTicksPerRev);	
+		public static double LOW_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_LOW_CorrectedTicksPerRev);
 	
 		public static final double Dist_P = 0.0;	//TODO Tune this
 		public static final double Dist_I = 0.0;	//TODO tune this
