@@ -1,4 +1,4 @@
-package ca.team4519.lib;
+package ca.team4519.lib.pose;
 
 import ca.team4519.frc2020.Gains;
 
