@@ -12,7 +12,7 @@ public class FlywheelController implements Controllers{
 	
     public FlywheelController(double goalRPM)
     {
-        controller = new PIDController(Gains.Flywheel.Flywheel_P, Gains.Flywheel.Flywheel_I, Gains.Flywheel.Flywheel_D, Gains.CONTROL_LOOP_TIME);
+        controller = new PIDController(Gains.Flywheel.Flywheel_P, Gains.Flywheel.Flywheel_I, Gains.Flywheel.Flywheel_D, Gains.CONTROL_LOOP_TIME_SECONDS);
         controller.setSetpoint(goalRPM);
     }
 

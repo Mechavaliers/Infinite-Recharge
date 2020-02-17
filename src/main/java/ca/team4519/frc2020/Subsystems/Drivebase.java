@@ -4,7 +4,7 @@ import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.subsystems.controllers.DriveLineController;
 import ca.team4519.frc2020.subsystems.controllers.DrivebaseLockController;
-import ca.team4519.lib.DrivebasePose;
+import ca.team4519.lib.pose.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
