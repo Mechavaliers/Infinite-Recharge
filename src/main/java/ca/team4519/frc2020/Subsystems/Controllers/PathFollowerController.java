@@ -44,7 +44,7 @@ public class PathFollowerController implements Controllers {
 
 	@Override
 	public DrivetrainOutput update(DrivebasePose pose) {
-        time += Gains.CONTROL_LOOP_TIME;
+        time += Gains.CONTROL_LOOP_TIME_SECONDS;
         Trajectory.State goal = trajectory.sample(time);
         controller.calculate(pose.getRobotPose2d(), goal);
         SmartDashboard.putNumber("time tracker - PathFollowerController.java", time);

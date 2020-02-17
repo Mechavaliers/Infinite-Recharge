@@ -1,7 +1,10 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
-import ca.team4519.lib.pose.DrivebasePose;
+import ca.team4519.frc2020.Gains;
+import ca.team4519.frc2020.subsystems.controllers.DriveLineController;
+import ca.team4519.frc2020.subsystems.controllers.DrivebaseLockController;
+import ca.team4519.lib.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
 import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
@@ -11,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -70,6 +74,9 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
+        rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -77,12 +84,18 @@ public class Drivebase extends Subsystem implements Thread
         rightDriveNeoB.follow(rightDriveNeoA);
 
         rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
+        rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         leftDriveNeoAEncoder = new CANEncoder(leftDriveNeoA);
+        leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -90,6 +103,9 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoB.follow(rightDriveNeoA);
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
+        leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         odometry = new DifferentialDriveOdometry(getAngle());
 
@@ -108,6 +124,26 @@ public class Drivebase extends Subsystem implements Thread
             navX.getRate(),
             odometry.update(Rotation2d.fromDegrees(navX.getAngle()), getLeftDistance(), getRightDistance()));          
         return storedPose;
+    }
+
+    
+    public void wantDriveLine(double target, double maxVelocity)
+    {
+        double maxVel = Math.min(maxVelocity, Gains.Drive.ROBOT_MAX_VELOCITY);
+        controller = new DriveLineController(getRobotPose(), target, maxVel);
+    }
+
+    private void wantDriveLine(double target)
+    {
+        wantDriveLine(target, Gains.Drive.ROBOT_MAX_VELOCITY);
+    }
+
+    private void wantHoldPos()
+    {
+        DrivebasePose poseToHold = getRobotPose();
+
+        controller = new DrivebaseLockController(poseToHold);
+
     }
 
     private double getLeftDistance() {

@@ -1,25 +1,26 @@
 package ca.team4519.frc2020.subsystems.controllers;
 
 import ca.team4519.frc2020.Gains;
-//import ca.team4519.lib.pid.TurningPID;
 import ca.team4519.lib.DrivetrainOutput;
-import ca.team4519.lib.pose.DrivebasePose;
+import ca.team4519.lib.DrivebasePose;
 import ca.team4519.frc2020.subsystems.Drivebase.Controllers;
 
 import com.team254.lib.trajectory.TrajectoryFollower;
 import com.team254.lib.trajectory.TrajectoryFollower.TrajectorySetpoint;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 
-public class DriveLineController implements Controllers{
+
+public class DrivebaseLockController implements Controllers{
 
 	private TrajectoryFollowingController controller;
-	//private TurningPID turningPIDLoop;
+	private PIDController turningPIDLoop;
 	
-	public DriveLineController(DrivebasePose startingPos, double goalPos, double maxVel){
+	public DrivebaseLockController(DrivebasePose poseToHold){
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
 		configuration.dt = Gains.CONTROL_LOOP_TIME_SECONDS;
 		configuration.max_acc = Gains.Drive.ROBOT_MAX_ACCELERATION;
-		configuration.max_vel = maxVel;
+		configuration.max_vel = Gains.Drive.ROBOT_MAX_VELOCITY;
 		
 		controller = new TrajectoryFollowingController(
 				Gains.Drive.Dist_P, 
@@ -31,32 +32,22 @@ public class DriveLineController implements Controllers{
 				configuration);
 		
 		TrajectorySetpoint startingPosition = new TrajectorySetpoint();
-		startingPosition.pos = encoderDistance(startingPos);
-		startingPosition.vel = encoderVelocity(startingPos);
-		controller.setTarget(startingPosition, goalPos);
+		startingPosition.pos = poseToHold.getRobotDistance();
+		startingPosition.vel = poseToHold.getRobotVelocity();
+		controller.setTarget(startingPosition, poseToHold.getRobotDistance());
 		
-		/*turningPIDLoop = new TurningPID(
+		turningPIDLoop = new PIDController(
 				Gains.Drive.DistTurn_P,
 				Gains.Drive.DistTurn_I,
-				Gains.Drive.DistTurn_D);
-		turningPIDLoop.setSetpoint(startingPos.getAngle());*/
-		
-	}
-
-	public static double encoderDistance(DrivebasePose pose){
-		return (pose.getLeftDistance() + pose.getRightDistance()) / 2.0;
-	}
-
-	public static double encoderVelocity(DrivebasePose pose){
-		return (pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0;
+                Gains.Drive.DistTurn_D,
+                Gains.CONTROL_LOOP_TIME_SECONDS);
+		turningPIDLoop.setSetpoint(poseToHold.getAngularPosition());		
 	}
 
 	public DrivetrainOutput update(DrivebasePose pose) {
-		controller.update(
-				(pose.getLeftDistance() + pose.getRightDistance()) / 2.0,
-				(pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0);
+		controller.update(pose.getRobotDistance(), pose.getRightVelocity());
 		double power = controller.get();
-		double turn = /*-turningPIDLoop.calculate(pose.getAngle());*/ 1.5;
+		double turn = turningPIDLoop.calculate(pose.getAngularPosition());;
 		
 		return new DrivetrainOutput(power+turn, power-turn);
 	}

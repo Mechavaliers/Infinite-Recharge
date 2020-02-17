@@ -14,7 +14,7 @@ public class IntakeLinkageController implements Controllers{
 	
 	public IntakeLinkageController(IntakeLinkagePose startingPos, double goalPos) {
 		TrajectoryFollower.TrajectoryConfig configuration = new TrajectoryFollower.TrajectoryConfig();
-		configuration.dt = Gains.CONTROL_LOOP_TIME;
+		configuration.dt = Gains.CONTROL_LOOP_TIME_SECONDS;
 		configuration.max_acc = Gains.Intake.LINKAGE_MAX_ACCELERATION;
 		configuration.max_vel = Gains.Intake.LINKAGE_MAX_VELOCITY;
 		

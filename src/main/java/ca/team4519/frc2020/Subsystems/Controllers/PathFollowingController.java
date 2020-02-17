@@ -24,7 +24,7 @@ public class PathFollowingController implements Controllers {
 
         config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
         Trajectory.Config.SAMPLES_HIGH,
-        Gains.CONTROL_LOOP_TIME,
+        Gains.CONTROL_LOOP_TIME_SECONDS,
         Gains.Drive.ROBOT_MAX_VELOCITY,
         maxVel,
         Gains.Drive.ROBOT_MAX_JERK);
