@@ -133,12 +133,12 @@ public class Drivebase extends Subsystem implements Thread
         controller = new DriveLineController(getRobotPose(), target, maxVel);
     }
 
-    private void wantDriveLine(double target)
+    public void wantDriveLine(double target)
     {
         wantDriveLine(target, Gains.Drive.ROBOT_MAX_VELOCITY);
     }
 
-    private void wantHoldPos()
+    public void wantHoldPos()
     {
         DrivebasePose poseToHold = getRobotPose();
 
@@ -261,7 +261,7 @@ public class Drivebase extends Subsystem implements Thread
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
         SmartDashboard.putNumber("Drivebase Angle", navX.getAngle());
 
-        if(controller == null)
+        if(controller != null)
         {
             SmartDashboard.putString("Drivebase ControllerOutput", controller.update(storedPose).toString());
         }
@@ -283,7 +283,7 @@ public class Drivebase extends Subsystem implements Thread
         MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
         MechaLogger.grabInstance().logThis_Double("Drivebase Angle", navX::getAngle);
 
-        if(controller == null)
+        if(controller != null)
         {
             MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", controller.update(storedPose)::toString);
         }
