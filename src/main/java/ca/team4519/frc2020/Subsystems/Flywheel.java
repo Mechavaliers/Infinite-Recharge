@@ -1,7 +1,6 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
-import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,14 +25,12 @@ public class Flywheel extends Subsystem implements Thread{
      
 	 public synchronized static Flywheel GrabInstance()
     {
-
        if(thisInstance == null)
        {
            thisInstance = new Flywheel();
        }
 
        return thisInstance;
-
     }
      
     private Controllers controller = null;
@@ -51,10 +48,7 @@ public class Flywheel extends Subsystem implements Thread{
 		 leftWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
 		 leftWheelNeo.follow(rightWheelNeo, true);
 		 
-		 leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
-		 
-		 
-	        
+		 leftWheelNeoEncoder = new CANEncoder(leftWheelNeo); 
      }
      
      public void testing(double input){
@@ -70,7 +64,8 @@ public class Flywheel extends Subsystem implements Thread{
 	
     @Override
     public void loops() {
-        // TODO anything that needs to be run at 200hz
+        if(controller != null) return;
+        rightWheelNeo.set(controller.update(rightWheelNeoEncoder.getVelocity()));
 
     }
 
