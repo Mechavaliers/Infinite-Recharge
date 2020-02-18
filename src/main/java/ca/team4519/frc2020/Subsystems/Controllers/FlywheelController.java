@@ -17,9 +17,9 @@ public class FlywheelController implements Controllers{
     }
 
     @Override
-    public double update(double rpm)
+    public double update(double currentRpm)
     {
-        return controller.calculate(rpm);
+        return controller.calculate(currentRpm);
     }
 	
 }
