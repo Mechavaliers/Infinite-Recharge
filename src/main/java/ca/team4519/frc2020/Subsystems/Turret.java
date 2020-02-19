@@ -25,6 +25,10 @@ public class Turret extends Subsystem implements Thread{
     private DigitalInput turretLimitHome;
     private TurretPose storedPose = new TurretPose(0.0, 0.0, 0.0, 0.0);
 
+    private double lastVel = 0;
+	private double accel = 0;
+	private double maxAccel = accel;
+
     public VictorSPX turretPivot;
 
 
@@ -221,6 +225,16 @@ public class Turret extends Subsystem implements Thread{
         // TODO populate
 
     }
+
+        public void getAccel() {
+            double curVel = Math.abs(turretPositionEncoder.getRate());
+            double dv = curVel - lastVel;
+            lastVel = curVel;
+            double _accel = dv/Gains.CONTROL_LOOP_TIME_SECONDS;
+            accel = _accel;
+            maxAccel = (Math.abs(accel) > Math.abs(maxAccel))? accel : maxAccel;
+        }
+
 
     @Override
     public void updateDashboard() {
