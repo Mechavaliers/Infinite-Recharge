@@ -123,6 +123,10 @@ public class Intake extends Subsystem implements Thread
     @Override
     public void loops()
     {
+        getIntakePose();
+        if (controller != null) {
+            return;
+        }
         setPower(controller.update(storedPose));
     }
 
