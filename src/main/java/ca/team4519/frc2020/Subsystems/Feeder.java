@@ -45,6 +45,7 @@ public class Feeder extends Subsystem implements Thread
 
         feederx = new VictorSPX(Constants.feeder1); 
         feedery = new VictorSPX(Constants.feeder2); 
+        feedery.setInverted(true);
 
 
      }
