@@ -68,7 +68,6 @@ public class Drivebase extends Subsystem implements Thread
 
     private Drivebase()
     {
-        //lol hello
         rightDriveNeoA = new CANSparkMax(Constants.rightDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
