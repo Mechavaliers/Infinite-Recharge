@@ -241,6 +241,8 @@ public class Turret extends Subsystem implements Thread{
         SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.get());
         //max vel is 500Ticks per second
         SmartDashboard.putNumber("Turret Velocity", turretPositionEncoder.getRate());
+        SmartDashboard.putNumber("Turret Acceleration", accel);
+        SmartDashboard.putNumber("Turret Max Acceleration", maxAccel);
         SmartDashboard.putBoolean("Turret Hall Effect Sensor", isTurretHome());
 
     }
