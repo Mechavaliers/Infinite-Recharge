@@ -59,7 +59,7 @@ public class MechaLogger {
             }
             else
             {
-                file = Paths.get(logDirectory+"poo");
+                file = Paths.get(logDirectory+"testingLog.csv");
             }
         }
         catch(Exception e)
