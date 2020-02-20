@@ -64,7 +64,7 @@ public class Flywheel extends Subsystem implements Thread{
 	
     @Override
     public void loops() {
-        if(controller != null) return;
+        if(controller == null) return;
         rightWheelNeo.set(controller.update(rightWheelNeoEncoder.getVelocity()));
 
     }
