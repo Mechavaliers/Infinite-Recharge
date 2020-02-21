@@ -110,6 +110,7 @@ public class Gains{
 		public static final double Flywheel_P = 0.0;	//TODO Tune this
 		public static final double Flywheel_I = 0.0;	//TODO Tune This
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
+		public static final double ShotRPM = 7; //TODO Tune This
 	}
 
 	public static final class Feeder {
