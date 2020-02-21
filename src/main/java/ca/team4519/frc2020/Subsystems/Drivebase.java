@@ -106,7 +106,7 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
         leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
-        odometry = new DifferentialDriveOdometry(getAngle());
+        odometry = new DifferentialDriveOdometry(new Rotation2d().fromDegrees(0));
 
        // shifter = new Solenoid(Constants.shifter);
 
