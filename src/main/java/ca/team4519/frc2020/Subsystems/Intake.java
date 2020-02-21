@@ -46,6 +46,7 @@ public class Intake extends Subsystem implements Thread
         armPositionEncoder = new Encoder(Constants.intakeLinkageEncoderA, Constants.intakeLinkageEncoderB);
 
         intakeLinkageMotor = new VictorSPX(Constants.intakeLinkageMotor);
+        intakeLinkageMotor.setInverted(true); //sets + to deploy and - to stow
 
         intakeRoller = new TalonSRX(Constants.intakeRoller);
 
@@ -90,7 +91,6 @@ public class Intake extends Subsystem implements Thread
 
     public void setPower(double input)
     {
-        //Positive Stows - Negative Deploys
         intakeLinkageMotor.set(ControlMode.PercentOutput, input);
     }
 
