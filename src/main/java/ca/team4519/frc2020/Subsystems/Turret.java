@@ -239,7 +239,7 @@ public class Turret extends Subsystem implements Thread{
     @Override
     public void updateDashboard() {
         SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.get());
-        //max vel is 500Ticks per second
+        //max vel is 500Ticks per second then it was 5000
         SmartDashboard.putNumber("Turret Velocity", turretPositionEncoder.getRate());
         SmartDashboard.putNumber("Turret Acceleration", accel);
         SmartDashboard.putNumber("Turret Max Acceleration", maxAccel);
