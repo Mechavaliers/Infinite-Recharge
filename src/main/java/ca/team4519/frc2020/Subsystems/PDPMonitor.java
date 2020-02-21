@@ -3,6 +3,7 @@ package ca.team4519.frc2020.subsystems;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.lib.MechaLogger;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PDPMonitor {
 
@@ -135,8 +136,31 @@ public class PDPMonitor {
 
     }
 
+    public void updateDashboard()
+    {
+        SmartDashboard.putNumber("PDP_Total_Current", getTotalCurrent());
+        SmartDashboard.putNumber("Robot_Voltage", getVoltage());
+        SmartDashboard.putNumber("Robot_Power", getTotalPower());
+        SmartDashboard.putNumber("LeftDriveNeoA_Current", getLeftDriveNeoA_Current());
+        SmartDashboard.putNumber("LeftDriveNeoB_Current", getLeftDriveNeoB_Current());
+        SmartDashboard.putNumber("LeftDriveTotal_Current", getLeftDriveMotorsTotalCurrent());
+        SmartDashboard.putNumber("RightDriveNeoA_Current", getRightDriveNeoA_Current());
+        SmartDashboard.putNumber("RightDriveNeoB_Current", getRightDriveNeoB_Current());
+        SmartDashboard.putNumber("RightDriveTotal_Current", getRightDriveMotorsTotalCurrent());
+        SmartDashboard.putNumber("DrivebaseTotal_Current", getDrivebaseTotalCurrent());
+        SmartDashboard.putNumber("RightFlywheel_Current", getRightFlywheel_Current());
+        SmartDashboard.putNumber("LeftFlywheel_Current", getLeftFlywheel_Current());
+        SmartDashboard.putNumber("FlywheelTotal_Current", getFlywheelTotalCurrent());
+        SmartDashboard.putNumber("IntakeRoller_Current", getIntakeRoller_Current());
+        SmartDashboard.putNumber("IntakePivot_Current", getIntakePivot_Current());
+        SmartDashboard.putNumber("LowerFeeder_Current", getLowerFeeder_Current());
+        SmartDashboard.putNumber("UpperFeederCurrent", getUpperFeeder_Current());
+        SmartDashboard.putNumber("TurretPivot_Current", getTurretPivot_Current());
+    }
+
     public void update()
     {
+        updateDashboard();
         FeedLogger();
     }
 }
