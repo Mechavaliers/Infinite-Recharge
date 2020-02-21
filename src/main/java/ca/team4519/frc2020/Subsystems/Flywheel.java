@@ -1,6 +1,9 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
+import ca.team4519.frc2020.Gains;
+import ca.team4519.frc2020.subsystems.controllers.FlywheelController;
+import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,18 +40,23 @@ public class Flywheel extends Subsystem implements Thread{
 
 	 private Flywheel()
 	 {
-		 rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+         rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 rightWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
 		 rightWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
 		 
-		 rightWheelNeoEncoder = new CANEncoder(rightWheelNeo);
+         rightWheelNeoEncoder = new CANEncoder(rightWheelNeo);
+         rightWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
+         rightWheelNeoEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 		 
 		 leftWheelNeo = new CANSparkMax(Constants.leftWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
 		 leftWheelNeo.follow(rightWheelNeo, true);
 		 
-		 leftWheelNeoEncoder = new CANEncoder(leftWheelNeo); 
+         leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
+         leftWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
+         leftWheelNeoEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND); 
      }
      
      public void testing(double input){
@@ -57,9 +65,14 @@ public class Flywheel extends Subsystem implements Thread{
          
      }
 
-     public void wantSpin()
+     public void wantFlywheel()
      {
-         //rightW
+        controller = new FlywheelController(Gains.Flywheel.ShotRPM);
+     }
+
+     public void wantOff()
+     {
+        controller = null;
      }
 	
     @Override
@@ -70,15 +83,14 @@ public class Flywheel extends Subsystem implements Thread{
     }
 
     @Override
-    public void zeroSensors() {
-        // TODO reset count on all sensors
-
+    public void zeroSensors() {//We have nothing to clear here... this might change later?
     }
 
     @Override
     public void disableSubsystem() {
         rightWheelNeo.disable();
         leftWheelNeo.disable();
+        if (controller != null) controller = null;
 
     }
 
@@ -91,7 +103,8 @@ public class Flywheel extends Subsystem implements Thread{
 
     @Override
     public void feedLogger() {
-        // TODO feed values to logger
+        MechaLogger.grabInstance().logThis_Double("LeftFlywheel_Velocity", leftWheelNeoEncoder::getVelocity);
+        MechaLogger.grabInstance().logThis_Double("RightFlywheel_Velocity", rightWheelNeoEncoder::getVelocity);
     }
 
     @Override
