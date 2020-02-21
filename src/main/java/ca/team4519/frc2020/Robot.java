@@ -8,6 +8,7 @@ import ca.team4519.frc2020.subsystems.Drivebase;
 import ca.team4519.frc2020.subsystems.Feeder;
 import ca.team4519.frc2020.subsystems.Flywheel;
 import ca.team4519.frc2020.subsystems.Intake;
+import ca.team4519.frc2020.subsystems.PDPMonitor;
 import ca.team4519.frc2020.subsystems.Turret;
 import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.MechaTimedRobot;
@@ -20,6 +21,7 @@ public class Robot extends MechaTimedRobot
 {
   MultiThreader autonLoop = new MultiThreader("200Hz - Auto Loop", 1.0 / 200.0);
   MultiThreader telepLoop = new MultiThreader("200Hz - TeleopLoop",1.0 / 200.0);
+  MultiThreader updateLoop = new MultiThreader("50Hz - Feedback Loop", 1.0 / 50.0);
 
   AutonRunner autonLoopRunner = new AutonRunner();
 
@@ -41,6 +43,7 @@ public class Robot extends MechaTimedRobot
     telepLoop.addThread(Feeder.GrabInstance());
     telepLoop.addThread(Turret.grabInstance());
     telepLoop.addThread(Flywheel.GrabInstance());
+    //updateLoop.addThread(thread);
 
     auton.addOption("test", null);
     SmartDashboard.putData(auton);
@@ -118,6 +121,7 @@ public class Robot extends MechaTimedRobot
     Turret.grabInstance().update();
     Intake.GrabInstance().update();
     Flywheel.GrabInstance().update();
+    PDPMonitor.GrabInstance().update();
   }
 
 }
