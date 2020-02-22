@@ -87,6 +87,7 @@ public class Robot extends MechaTimedRobot
   {
     Drivebase.GrabInstance().zeroSensors();
     telepLoop.start();
+    Intake.GrabInstance().wantStowIntake();
   }
 
   @Override
@@ -95,8 +96,12 @@ public class Robot extends MechaTimedRobot
    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
     Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
     Flywheel.GrabInstance().testing(driver.getRawAxis(3));
-    Feeder.GrabInstance().insertName(driver.getRawAxis(5));
-    Intake.GrabInstance().setPower(driver.getRawAxis(1));
+    Feeder.GrabInstance().insertName(driver.getRawButton(2));
+    if(driver.getRawButton(4)) Flywheel.GrabInstance().wantFlywheel();
+    if(driver.getRawButton(3)) Flywheel.GrabInstance().wantOff();
+    if(driver.getRawButton(5)) Intake.GrabInstance().wantStowIntake();
+    if(driver.getRawButton(6)) Intake.GrabInstance().wantDeployIntake();
+    Intake.GrabInstance().wantIntake(driver.getRawAxis(1));
    // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
@@ -115,7 +120,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
-    MechaLogger.grabInstance().saveLogs();
+   // MechaLogger.grabInstance().saveLogs();
     Drivebase.GrabInstance().update();
     Turret.grabInstance().update();
     Intake.GrabInstance().update();

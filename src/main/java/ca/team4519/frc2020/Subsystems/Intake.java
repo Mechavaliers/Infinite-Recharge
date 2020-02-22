@@ -43,6 +43,7 @@ public class Intake extends Subsystem implements Thread
     private Intake()
     {
         armPositionPot = new AnalogPotentiometer(Constants.IntakeArmPot);
+        
         armPositionEncoder = new Encoder(Constants.intakeLinkageEncoderA, Constants.intakeLinkageEncoderB);
 
         intakeLinkageMotor = new VictorSPX(Constants.intakeLinkageMotor);
@@ -90,8 +91,14 @@ public class Intake extends Subsystem implements Thread
     }
 
     public void setPower(double input)
-    {
+    {   
+        SmartDashboard.putNumber("Intake Controller Output", input);
         intakeLinkageMotor.set(ControlMode.PercentOutput, input);
+    }
+
+    public void wantIntake(double input){
+            intakeRoller.set(ControlMode.PercentOutput, input/2);
+
     }
 
     public void wantStowIntake()
@@ -124,10 +131,10 @@ public class Intake extends Subsystem implements Thread
     public void loops()
     {
         getIntakePose();
-        if (controller != null) {
+        if (controller == null) {
             return;
         }
-        setPower(controller.update(storedPose));
+        //setPower(controller.update(storedPose));
     }
 
     @Override
@@ -148,7 +155,7 @@ public class Intake extends Subsystem implements Thread
     public void updateDashboard()
     {
         SmartDashboard.putNumber("Arm Pot Raw Value", armPositionPot.get());
-
+        SmartDashboard.putNumber("Arm Pot Converted Value", getPotConvertedValue());
     }
 
     @Override

@@ -4,7 +4,7 @@ public class Gains{
 
 	public static double CONTROL_LOOP_TIME_SECONDS = 0.005;	//200hz
 	public static int CONTROL_LOOP_TIME_MILLISECOND = 5;	//Neos require this conversion
-	public static double NEO_TicksPerRev = 42.0;
+	public static double NEO_TicksPerRev = 1/42.0;
 
 	public static final class Drive {
 		private Drive() {}
@@ -54,22 +54,22 @@ public class Gains{
 
 		public static final double IntakeSpeed = 0.0;	//TODO Tune This
 	
-		public static final double LinkagePot_MinVolage = 0.337;	//TODO Tune This
-		public static final double LinkagePot_MaxVoltage = 0.355;	//TODO Tune This
+		public static final double LinkagePot_MinVolage = 0.330;	//TODO Tune This
+		public static final double LinkagePot_MaxVoltage = 0.349;	//TODO Tune This
 		public static final double LinkagePot_MinAngle = 0.0;	//TODO Tune This
-		public static final double LinkagePot_MaxAngle = 90.0;	//TODO Tune This
+		public static final double LinkagePot_MaxAngle = 100.0;	//TODO Tune This
 
-		public static final double LinkagePos_Stowed = 1.0;	//TODO Tune This
-		public static final double LinkagePos_Deployed = 87.0;	//TODO Tune This
+		public static final double LinkagePos_Stowed = -2.0;	//TODO Tune This
+		public static final double LinkagePos_Deployed = 70.0;	//TODO Tune This
 		public static final double LinkagePos_DeployedOnAngle = 45.0;	//TODO Tune This
 
 		public static final double LINKAGE_MAX_VELOCITY = 0.0;	//TODO Tune This
 		public static final double LINKAGE_MAX_ACCELERATION = 0.0;	//TODO Tune This
 
-		public static final double Linkage_P = 0.0;	//TODO Tune This
+		public static final double Linkage_P = 0.015;	//TODO Tune This
 		public static final double Linkage_I = 0.0;	//TODO Tune This
 		public static final double Linkage_D = 0.0;	//TODO Tune This
-		public static final double Linkage_V = 0.0;	//TODO Tune This
+		public static final double Linkage_V = 0.001;	//TODO Tune This
 		public static final double Linakge_A = 0.0;	//TODO Tune This
 		public static final double Linkage_Tollerance = 0.0;	//TODO Tune This
 	}
@@ -107,10 +107,10 @@ public class Gains{
 	{
 		private Flywheel() {}
 
-		public static final double Flywheel_P = 0.0;	//TODO Tune this
-		public static final double Flywheel_I = 0.0;	//TODO Tune This
+		public static final double Flywheel_P = 0.001;	//TODO Tune this
+		public static final double Flywheel_I = 0.225;	//TODO Tune This
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
-		public static final double ShotRPM = 7; //TODO Tune This
+		public static final double ShotRPM = 100; //TODO Tune This
 	}
 
 	public static final class Feeder {
@@ -122,19 +122,19 @@ public class Gains{
 	public static final class PDP {
 		private PDP() {}
 
-		public static final int LeftDriveNeoA = 0;	//TODO Tune This
-		public static final int LeftDriveNeoB = 0;	//TODO Tune This
-		public static final int RightDriveNeoA = 0;	//TODO Tune This
-		public static final int RightDriveNeoB = 0;	//TODO Tune This
+		public static final int LeftDriveNeoA = 2;
+		public static final int LeftDriveNeoB = 1;
+		public static final int RightDriveNeoA = 13;
+		public static final int RightDriveNeoB = 14;
 
-		public static final int IntakeRollers = 0;	//TODO Tune This
-		public static final int IntakePivot = 0;	//TODO Tune This
-		public static final int FeederLower = 0;	//TODO Tune This
-		public static final int FeederUpper = 0;	//TODO Tune This
+		public static final int IntakeRollers = 0;
+		public static final int IntakePivot = 15;
+		public static final int FeederLower = 4;
+		public static final int FeederUpper = 11;
 
-		public static final int TurretPivot = 0;	//TODO Tune This
-		public static final int LeftFlywheel = 0;	//TODO Tune This
-		public static final int RightFlywheel = 0;	//TODO Tune This
+		public static final int TurretPivot = 10;
+		public static final int LeftFlywheel = 3;	//TODO Tune This
+		public static final int RightFlywheel = 12;	//TODO Tune This
 		
 	}
 }

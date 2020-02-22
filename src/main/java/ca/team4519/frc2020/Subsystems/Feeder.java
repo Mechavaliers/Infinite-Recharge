@@ -62,10 +62,15 @@ public class Feeder extends Subsystem implements Thread
     }
     */
 
-    public void insertName(double input)
-    {
-     feederx.set(ControlMode.PercentOutput, input);
-     feedery.set(ControlMode.PercentOutput, input);
+    public void insertName(boolean feed)
+    {if(feed){
+        feederx.set(ControlMode.PercentOutput, -0.4);
+     feedery.set(ControlMode.PercentOutput, -0.4);
+    }else{
+        feederx.set(ControlMode.PercentOutput, 0.0);
+     feedery.set(ControlMode.PercentOutput, 0.0);
+    }
+     
     }
 
     public void intakeBall()

@@ -43,7 +43,7 @@ public class IntakeLinkageController implements Controllers{
 	
 	public double update(IntakeLinkagePose pose) {
 		controller.update(pose.getAngularPosition(), pose.getAngularVelocity());
-		return controller.get();
+		return -controller.get();
 		
 	}
 	

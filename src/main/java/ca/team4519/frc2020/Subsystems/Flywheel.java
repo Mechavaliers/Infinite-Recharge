@@ -47,21 +47,19 @@ public class Flywheel extends Subsystem implements Thread{
 		 
          rightWheelNeoEncoder = new CANEncoder(rightWheelNeo);
          rightWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
-         rightWheelNeoEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 		 
 		 leftWheelNeo = new CANSparkMax(Constants.leftWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
-		 leftWheelNeo.follow(rightWheelNeo, true);
 		 
          leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
-         leftWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
-         leftWheelNeoEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND); 
+         leftWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev); 
      }
      
      public void testing(double input){
-         rightWheelNeo.set(input);
-         leftWheelNeo.set(-input);
+         rightWheelNeo.set(-input);
+         leftWheelNeo.set(input);
+         SmartDashboard.putNumber("Flywheel Controller ouput", input);
          
      }
 
@@ -78,7 +76,7 @@ public class Flywheel extends Subsystem implements Thread{
     @Override
     public void loops() {
         if(controller == null) return;
-        rightWheelNeo.set(controller.update(rightWheelNeoEncoder.getVelocity()));
+        testing(controller.update(rightWheelNeoEncoder.getVelocity()));
 
     }
 
@@ -98,7 +96,6 @@ public class Flywheel extends Subsystem implements Thread{
     public void updateDashboard() {
         SmartDashboard.putNumber("leftWheel Velocity", leftWheelNeoEncoder.getVelocity());
         SmartDashboard.putNumber("Right wheel Velocity", rightWheelNeoEncoder.getVelocity());
-
     }
 
     @Override
