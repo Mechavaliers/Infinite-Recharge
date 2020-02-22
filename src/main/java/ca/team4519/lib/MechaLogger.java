@@ -33,6 +33,9 @@ public class MechaLogger {
     private MechaLogger()
     {
         File usb1 = new File("/media/sda/");
+        if(usb1 .exists()){
+            logDirectory = "/media/sda1/logs/";
+        }
 
     }
 
@@ -61,6 +64,11 @@ public class MechaLogger {
             {
                 file = Paths.get(logDirectory+"testingLog.csv");
             }
+            if(Files.exists(file)){
+                Files.delete(file);
+            }
+            Files.createFile(file);
+            saveTitles();
         }
         catch(Exception e)
         {
