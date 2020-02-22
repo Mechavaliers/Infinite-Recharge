@@ -67,7 +67,7 @@ public class Flywheel extends Subsystem implements Thread{
 
      public void wantFlywheel()
      {
-        controller = new FlywheelController(Gains.Flywheel.ShotRPM);
+        controller = new FlywheelController(Gains.Flywheel.ShotRPM); //makes it spin
      }
 
      public void wantOff()
@@ -78,8 +78,12 @@ public class Flywheel extends Subsystem implements Thread{
     @Override
     public void loops() {
         if(controller == null) return;
-        rightWheelNeo.set(controller.update(rightWheelNeoEncoder.getVelocity()));
+        rightWheelNeo.set(controller.update(rightWheelNeoEncoder.getVelocity())); 
 
+    }
+
+    public double getFlywheelSpeed() {
+        return rightWheelNeoEncoder.getVelocity(); //always use right motor when getting these values
     }
 
     @Override
