@@ -78,6 +78,7 @@ public class Robot extends MechaTimedRobot
     // i.e. disabledPeriodic -> autoInit -> autoPeriodic -> disabledInit -> teleopInit -> so on and so forth
 
     //we kill any active control loops so they dont keep going when the robot is re-enabled
+    Turret.grabInstance().disableSubsystem();
     autonLoop.stop();
     telepLoop.stop();
   }
@@ -86,23 +87,32 @@ public class Robot extends MechaTimedRobot
   public void teleopInit()
   {
     Drivebase.GrabInstance().zeroSensors();
+    //Turret.grabInstance().zeroSensors();
+    System.out.println("teleinit1");
     telepLoop.start();
     Intake.GrabInstance().wantStowIntake();
+    
   }
 
   @Override
   public void teleopPeriodic()
   {
    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
-    Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
-    Flywheel.GrabInstance().testing(driver.getRawAxis(3));
-    Feeder.GrabInstance().insertName(driver.getRawButton(2));
-    if(driver.getRawButton(4)) Flywheel.GrabInstance().wantFlywheel();
-    if(driver.getRawButton(3)) Flywheel.GrabInstance().wantOff();
-    if(driver.getRawButton(5)) Intake.GrabInstance().wantStowIntake();
-    if(driver.getRawButton(6)) Intake.GrabInstance().wantDeployIntake();
-    Intake.GrabInstance().wantIntake(driver.getRawAxis(1));
-   // Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
+   // Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
+    //Flywheel.GrabInstance().testing(driver.getRawAxis(3));
+    Feeder.GrabInstance().insertName(operator1.getRawButton(6));
+    if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantFlywheel();
+    if(operator1.getRawButton(11))
+    {
+      System.out.println("off wanted");
+      Flywheel.GrabInstance().wantOff();
+    }
+    if(operator1.getRawButton(8)) Intake.GrabInstance().wantStowIntake();
+    if(operator1.getRawButton(9)) Intake.GrabInstance().wantDeployIntake();
+   // if(operator1.getRawButton(7)) Intake.GrabInstance().wantIntake();
+    Intake.GrabInstance().wantIntake(operator1.getRawButton(7));
+    Turret.grabInstance().SetTurretIntent(operator1.getRawButton(3), operator1.getRawButton(5), operator1.getRawButton(2), operator1.getRawButton(4), operator1.getRawButton(10));
+    Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
   @Override

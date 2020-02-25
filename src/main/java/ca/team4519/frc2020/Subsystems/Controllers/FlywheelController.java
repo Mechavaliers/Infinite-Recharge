@@ -19,7 +19,7 @@ public class FlywheelController implements Controllers{
     @Override
     public double update(double currentRpm)
     {
-        return -controller.calculate(currentRpm);
+        return -(controller.calculate(currentRpm) + Gains.Flywheel.Flywheel_F);
     }
 	
 }

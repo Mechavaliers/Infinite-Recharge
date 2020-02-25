@@ -6,6 +6,8 @@ import ca.team4519.lib.pose.TurretPose;
 import com.team254.lib.trajectory.TrajectoryFollower;
 import com.team254.lib.trajectory.TrajectoryFollower.TrajectorySetpoint;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import ca.team4519.frc2020.subsystems.Turret.Controllers;
 
 public class TurretRotationController implements Controllers{
@@ -43,6 +45,7 @@ public class TurretRotationController implements Controllers{
 	
 	public double update(TurretPose pose) {
 		controller.update(pose.getPosition(), pose.getVelocity());
+		SmartDashboard.putNumber("Turret Controller Output",controller.get());
 		return controller.get();
 		
 	}	

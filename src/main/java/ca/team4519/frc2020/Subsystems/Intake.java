@@ -96,8 +96,15 @@ public class Intake extends Subsystem implements Thread
         intakeLinkageMotor.set(ControlMode.PercentOutput, input);
     }
 
-    public void wantIntake(double input){
-            intakeRoller.set(ControlMode.PercentOutput, input/2);
+    public void wantIntake(boolean on){
+        if(on){
+            intakeRoller.set(ControlMode.PercentOutput, 0.25);
+        }
+        else 
+        {
+            intakeRoller.set(ControlMode.PercentOutput, 0.0);
+        }
+            
 
     }
 
@@ -134,7 +141,7 @@ public class Intake extends Subsystem implements Thread
         if (controller == null) {
             return;
         }
-        //setPower(controller.update(storedPose));
+       // setPower(controller.update(storedPose));
     }
 
     @Override

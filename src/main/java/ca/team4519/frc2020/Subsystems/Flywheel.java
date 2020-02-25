@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 public class Flywheel extends Subsystem implements Thread{
 
@@ -43,14 +44,16 @@ public class Flywheel extends Subsystem implements Thread{
 
          rightWheelNeo = new CANSparkMax(Constants.rightWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 rightWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
-		 rightWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
+         rightWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
+         rightWheelNeo.setIdleMode(IdleMode.kCoast);
 		 
          rightWheelNeoEncoder = new CANEncoder(rightWheelNeo);
          rightWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
 		 
 		 leftWheelNeo = new CANSparkMax(Constants.leftWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
-		 leftWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
+         leftWheelNeo.setSmartCurrentLimit(Constants.flywheelNeoCurrentLimit);
+         leftWheelNeo.setIdleMode(IdleMode.kCoast);
 		 
          leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
          leftWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev); 
@@ -70,7 +73,7 @@ public class Flywheel extends Subsystem implements Thread{
 
      public void wantOff()
      {
-        controller = null;
+        controller = new FlywheelController(0);
      }
 	
     @Override

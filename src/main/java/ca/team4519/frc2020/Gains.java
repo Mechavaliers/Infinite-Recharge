@@ -54,19 +54,19 @@ public class Gains{
 
 		public static final double IntakeSpeed = 0.0;	//TODO Tune This
 	
-		public static final double LinkagePot_MinVolage = 0.330;	//TODO Tune This
-		public static final double LinkagePot_MaxVoltage = 0.349;	//TODO Tune This
+		public static final double LinkagePot_MinVolage = 0.283;	//TODO Tune This
+		public static final double LinkagePot_MaxVoltage = 0.302;	//TODO Tune This
 		public static final double LinkagePot_MinAngle = 0.0;	//TODO Tune This
 		public static final double LinkagePot_MaxAngle = 100.0;	//TODO Tune This
 
 		public static final double LinkagePos_Stowed = -2.0;	//TODO Tune This
-		public static final double LinkagePos_Deployed = 70.0;	//TODO Tune This
+		public static final double LinkagePos_Deployed = 85.0;	//TODO Tune This
 		public static final double LinkagePos_DeployedOnAngle = 45.0;	//TODO Tune This
 
 		public static final double LINKAGE_MAX_VELOCITY = 0.0;	//TODO Tune This
 		public static final double LINKAGE_MAX_ACCELERATION = 0.0;	//TODO Tune This
 
-		public static final double Linkage_P = 0.015;	//TODO Tune This
+		public static final double Linkage_P = 0.005;	//TODO Tune This
 		public static final double Linkage_I = 0.0;	//TODO Tune This
 		public static final double Linkage_D = 0.0;	//TODO Tune This
 		public static final double Linkage_V = 0.001;	//TODO Tune This
@@ -80,7 +80,7 @@ public class Gains{
 		public static final double TURRET_MAX_VELOCITY = 0.0;	//TODO Tune This
 		public static final double TURRET_MAX_ACCELERATION = 0.0;	//TODO Tune This
 
-		public static final double Turret_P = 0.0;	//TODO Tune This
+		public static final double Turret_P = 0.00525;	//TODO Tune This
 		public static final double Turret_I = 0.0;	//TODO Tune This
 		public static final double Turret_D = 0.0;	//TODO Tune This
 		public static final double Turret_V = 0.0;	//TODO Tune This
@@ -89,28 +89,29 @@ public class Gains{
 
 		public static final double turretAngle_ConvertedHigh = -180.0;	//TODO Tune this
 		public static final double turretAngle_ConvertedLow = 90.0;	//TODO Tune This
-		public static final double turretAngle_EncoderHigh = 1465.0;	//TODO Tune this
-		public static final double turretAngle_EncoderLow = -722.0;	//TODO Tune This
+		public static final double turretAngle_EncoderHigh = 1500.0;	//TODO Tune this
+		public static final double turretAngle_EncoderLow = -675.0;	//TODO Tune This -675
 		public static final double turretAngle_Zero = 0.0;
 
 		public static final double slope = (turretAngle_ConvertedHigh - turretAngle_ConvertedLow)/(turretAngle_EncoderHigh - turretAngle_EncoderLow);
 		public static final double offset = (turretAngle_EncoderLow - slope * turretAngle_EncoderHigh);
 
 
-		public static final double Intent_RightConverted = 6;	//TODO Get Value from turret after its calibrated
-		public static final double Intent_ForwardConverted = 5;	//TODO Get Value from turret after its calibrated
-		public static final double Intent_ReverseConverted = 56;	//TODO Get Value from turret after its calibrated
-		public static final double Intent_LeftConverted = 65;
+		public static final double Intent_RightConverted = 90;	//TODO Get Value from turret after its calibrated
+		public static final double Intent_ForwardConverted = 0;	//TODO Get Value from turret after its calibrated
+		public static final double Intent_ReverseConverted = 175;	//TODO Get Value from turret after its calibrated
+		public static final double Intent_LeftConverted = -90 ;
 	}
 
 	public static final class Flywheel
 	{
 		private Flywheel() {}
 
-		public static final double Flywheel_P = 0.001;	//TODO Tune this
-		public static final double Flywheel_I = 0.225;	//TODO Tune This
+		public static final double Flywheel_P = 0.0;	//TODO Tune this
+		public static final double Flywheel_I = 0.03825;	//TODO Tune This 0.035
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
-		public static final double ShotRPM = 100; //TODO Tune This
+		public static final double Flywheel_F = 0.75;
+		public static final double ShotRPM = 125; //TODO Tune This
 	}
 
 	public static final class Feeder {

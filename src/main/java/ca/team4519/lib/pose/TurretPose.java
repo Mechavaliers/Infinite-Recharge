@@ -41,7 +41,7 @@ public class TurretPose {
     public double getConvertedValue()
     {
         //y=mx+B
-        return Gains.Turret.slope * getPosition() + Gains.Turret.offset;
+        return Gains.Turret.slope * angularPos + Gains.Turret.offset;
     }
 
     public double getGoalOffset()

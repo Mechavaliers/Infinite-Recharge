@@ -99,7 +99,7 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
-        leftDriveNeoB.follow(rightDriveNeoA);
+        leftDriveNeoB.follow(leftDriveNeoA);
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
         leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
@@ -188,8 +188,8 @@ public class Drivebase extends Subsystem implements Thread
 
     public DrivetrainOutput arcade(double throttle, double turn)
     {
-		throttle = (Math.abs(throttle) > Math.abs(0.03))? throttle : 0.0;
-		turn = (Math.abs(turn) > Math.abs(0.03))? turn : 0.0;
+		throttle = (Math.abs(throttle) > Math.abs(0.04))? throttle : 0.0;
+		turn = (Math.abs(turn) > Math.abs(0.04))? turn : 0.0;
 
         double finalThrottle = throttle;
         double finalTurn = turn;
@@ -201,7 +201,7 @@ public class Drivebase extends Subsystem implements Thread
 		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Right", () -> right);
 		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Left", () -> left);
 
-		return new DrivetrainOutput(left, right);
+		return new DrivetrainOutput(left, -right);
     }
 
     public double getLeftDistanceMeters()

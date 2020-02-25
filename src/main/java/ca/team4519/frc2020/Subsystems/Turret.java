@@ -2,6 +2,7 @@ package ca.team4519.frc2020.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.EncoderType;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
 import ca.team4519.frc2020.Gains;
@@ -13,6 +14,7 @@ import ca.team4519.lib.pose.TurretPose;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Turret extends Subsystem implements Thread{
@@ -52,7 +54,8 @@ public class Turret extends Subsystem implements Thread{
 
     private Turret()
     {
-        turretPositionEncoder = new Encoder(Constants.turretEncoderA, Constants.turretEncoderB);
+        turretPositionEncoder = new Encoder(Constants.turretEncoderA, Constants.turretEncoderB, false, EncodingType.k4X);
+        turretPositionEncoder.setDistancePerPulse(1/8.05555555555);
         turretPivot = new VictorSPX(Constants.turretPivotMotor);
         turretLimitL = new DigitalInput(Constants.turretLimitSwitchL);
         turretLimitR = new DigitalInput(Constants.turretLimitSwitchR);
@@ -105,25 +108,25 @@ public class Turret extends Subsystem implements Thread{
 
     public boolean isTurretHome()
     {
-        return turretLimitHome.get();
+        return !turretLimitHome.get();
     }
 
     public double turretAngle()
     {
-        return storedPose.getConvertedValue();
+        return storedPose.getPosition();
     }
 
     public double cameraToGoalAngle() // tx
     {
-        return storedPose.getGoalOffset(); //difference between camera and goal
+        return -NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0); //difference between camera and goal
     }
 
     public double getWantedAngle() { 
-        return cameraToGoalAngle() + turretAngle();
+        return cameraToGoalAngle() - turretAngle();
     }
 
     //Master override of turret aim, will update control loop if operator assigns new intent
-    public void SetTurretIntent(boolean ForwardIntent, boolean RightIntent, boolean ReverseIntent, boolean LeftIntent)
+    public void SetTurretIntent(boolean ForwardIntent, boolean RightIntent, boolean ReverseIntent, boolean LeftIntent, boolean autoaim)
     {
         if(ForwardIntent)
         {
@@ -141,30 +144,30 @@ public class Turret extends Subsystem implements Thread{
         {
             aimTurretAtPos(Gains.Turret.Intent_LeftConverted);
         }
+        else if (autoaim)
+        {
+            aimTurretAtPos(getWantedAngle());
+        }
+
+     /*   if( NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1 )
+        {
+           // System.out.println("we out here");
+            aimTurretAtPos(-NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+        }*/
+
     }
 
     public double getHomedAngle()
     {
        double encoderPos;
-
-        if(isTurretBoundHigh())
-        {
-            turretPositionEncoder.reset();
-            encoderPos = Gains.Turret.turretAngle_EncoderHigh;
-        }
-        else if (isTurretHome())
+         if (isTurretHome())
         {
             turretPositionEncoder.reset();
             encoderPos = Gains.Turret.turretAngle_Zero;
         }
-        else if (isturretBoundLow())
-        {
-           turretPositionEncoder.reset();
-           encoderPos = Gains.Turret.turretAngle_EncoderLow;
-        }
         else
         {
-            encoderPos = turretPositionEncoder.get();
+            encoderPos = turretPositionEncoder.getDistance();
         }
 
         return encoderPos;
@@ -193,7 +196,7 @@ public class Turret extends Subsystem implements Thread{
             getHomedAngle(),
             turretPositionEncoder.getRate(),
             NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0), //1 retu
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) //invert this
         );
         return storedPose;
     }
@@ -201,6 +204,7 @@ public class Turret extends Subsystem implements Thread{
     @Override
     public void loops()
     {
+        getAccel();
         getTurretPose();
 
         //if no controller is running, exit loop
@@ -212,7 +216,6 @@ public class Turret extends Subsystem implements Thread{
     @Override
     public void zeroSensors() {
         // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -238,12 +241,15 @@ public class Turret extends Subsystem implements Thread{
 
     @Override
     public void updateDashboard() {
-        SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.get());
+        SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.getDistance());
         //max vel is 500Ticks per second then it was 5000
         SmartDashboard.putNumber("Turret Velocity", turretPositionEncoder.getRate());
+        SmartDashboard.putNumber("Turret Converted Value", ((Gains.Turret.slope * turretPositionEncoder.get() - Gains.Turret.offset))-160);
         SmartDashboard.putNumber("Turret Acceleration", accel);
         SmartDashboard.putNumber("Turret Max Acceleration", maxAccel);
         SmartDashboard.putBoolean("Turret Hall Effect Sensor", isTurretHome());
+        SmartDashboard.putNumber("Camera angle to goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+        SmartDashboard.putNumber("Camera has valid goal?",  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
 
     }
 
