@@ -11,6 +11,7 @@ public class DrivebasePose
     private double angularPos;
     private double angularVel;
     private Pose2d pose;
+	public Object navX;
 
     public DrivebasePose(double leftDist, double rightDist, double leftVel, double rightVel, double angularPos, double angularVel, Pose2d pose)
     {
