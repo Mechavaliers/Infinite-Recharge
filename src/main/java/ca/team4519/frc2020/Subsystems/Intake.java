@@ -1,15 +1,12 @@
 package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.frc2020.Constants;
-import ca.team4519.frc2020.Gains;
-import ca.team4519.frc2020.subsystems.controllers.IntakeLinkageController;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import ca.team4519.lib.IntakeLinkagePose;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -25,14 +22,9 @@ public class Intake extends Subsystem implements Thread
     private final TalonSRX intakeRoller; 
 
     private static Intake thisInstance;
-
-    private final AnalogPotentiometer armPositionPot;
-    private final Encoder armPositionEncoder;
     
     private final VictorSPX intakeLinkageMotor;
 
-    private IntakeLinkagePose storedPose = new IntakeLinkagePose(0,0);
-    private boolean potRateFirstRun = true;
 
     private Controllers controller = null;
 
@@ -43,10 +35,6 @@ public class Intake extends Subsystem implements Thread
 
     private Intake()
     {
-        armPositionPot = new AnalogPotentiometer(Constants.IntakeArmPot);
-        
-        armPositionEncoder = new Encoder(Constants.intakeLinkageEncoderA, Constants.intakeLinkageEncoderB);
-
         intakeLinkageMotor = new VictorSPX(Constants.intakeLinkageMotor);
         intakeLinkageMotor.setInverted(true); //sets + to deploy and - to stow
 
@@ -69,30 +57,6 @@ public class Intake extends Subsystem implements Thread
 
     }
 
-    public double getPotConvertedValue()
-    {
-        final double slope = (Gains.Intake.LinkagePot_MaxAngle - Gains.Intake.LinkagePot_MinAngle) / (Gains.Intake.LinkagePot_MaxVoltage - Gains.Intake.LinkagePot_MinVolage);
-        //this is our b value
-        final double offset = Gains.Intake.LinkagePot_MinAngle - slope * Gains.Intake.LinkagePot_MinVolage;
-        // y = mx=b
-        return (slope * armPositionPot.get() + offset);
-    }
-                                                                                                                       
-    public double getIntakeLinkageVelocity()
-    {
-        return armPositionEncoder.getRate();
-    }
-
-    public void wantDeployIntake()
-    {
-        if(!(controller instanceof IntakeLinkageController))
-        {
-            controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_Deployed);
-        }
-
-        ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_Deployed);
-    }
-
     public void setPower(double input)
     {   
         SmartDashboard.putNumber("Intake Controller Output", input);
@@ -102,48 +66,21 @@ public class Intake extends Subsystem implements Thread
     public void wantIntake(boolean on){
         if(on){
             intakeRoller.set(ControlMode.PercentOutput, 0.25);
+            intakePivot.set(true);
         }
         else 
         {
             intakeRoller.set(ControlMode.PercentOutput, 0.0);
+            intakePivot.set(false);
         }
             
 
     }
 
-    public void wantStowIntake()
-    {
-        if(!(controller instanceof IntakeLinkageController))
-        {
-            controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_Stowed);
-        }
-
-        ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_Stowed);
-    }
-
-    public void wantAngledIntake()
-    {
-        if(!(controller instanceof IntakeLinkageController))
-        {
-            controller = new IntakeLinkageController(getIntakePose(), Gains.Intake.LinkagePos_DeployedOnAngle);
-        }
-
-        ((IntakeLinkageController)controller).changeSetpoint(((IntakeLinkageController)controller).getSetpoint(), Gains.Intake.LinkagePos_DeployedOnAngle);
-    }
-
-    public IntakeLinkagePose getIntakePose()
-    {
-        storedPose.reset(getPotConvertedValue(), getIntakeLinkageVelocity());
-        return storedPose;
-    }
-
     @Override
     public void loops()
     {
-        getIntakePose();
-        if (controller == null) {
-            return;
-        }
+
        // setPower(controller.update(storedPose));
     }
 

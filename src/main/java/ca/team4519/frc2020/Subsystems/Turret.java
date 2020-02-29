@@ -122,7 +122,7 @@ public class Turret extends Subsystem implements Thread{
     }
 
     public double getWantedAngle() { 
-        return cameraToGoalAngle() - turretAngle();
+        return cameraToGoalAngle() + turretAngle();
     }
 
     //Master override of turret aim, will update control loop if operator assigns new intent
@@ -186,6 +186,13 @@ public class Turret extends Subsystem implements Thread{
 
             }
         }*/
+
+        if(power > 0.5){
+            power = 0.5;
+        }else if(power < -0.5){
+            power = -0.5;
+        }
+
         turretPivot.set(ControlMode.PercentOutput, power);
 
     }
