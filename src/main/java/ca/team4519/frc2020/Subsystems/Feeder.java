@@ -104,19 +104,4 @@ public class Feeder extends Subsystem implements Thread
         // TODO Feed dashboard
 
     }
-
-    @Override
-    public void feedLogger()
-    {
-        // TODO feed MechaLogger 
-
-    }
-    
-    @Override
-    public void update()
-    {
-        // TODO Auto-generated method stub
-
-    }
-
 }

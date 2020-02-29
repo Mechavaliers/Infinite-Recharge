@@ -6,9 +6,5 @@ public abstract class Subsystem {
 
     public abstract void disableSubsystem();
 
-    public abstract void updateDashboard();
-    public abstract void feedLogger();
-
-    public abstract void update();
-    
+    public abstract void updateDashboard();    
 }

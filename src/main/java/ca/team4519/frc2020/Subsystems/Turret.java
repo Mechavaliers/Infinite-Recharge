@@ -252,17 +252,4 @@ public class Turret extends Subsystem implements Thread{
         SmartDashboard.putNumber("Camera has valid goal?",  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
 
     }
-
-    @Override
-    public void feedLogger() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update() {
-        updateDashboard();
-
-    }
-
 }

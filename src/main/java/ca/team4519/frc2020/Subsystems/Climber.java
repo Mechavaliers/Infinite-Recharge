@@ -84,16 +84,4 @@ public class Climber extends Subsystem implements Thread {
         // TODO Auto-generated method stub
 
     }
-
-    @Override
-    public void feedLogger() {
-        // TODO Auto-generated method stub
-
-    }
-    
-    @Override
-    public void update() {
-        // TODO Auto-generated method stub
-
-    }
 }

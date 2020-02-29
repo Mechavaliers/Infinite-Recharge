@@ -164,22 +164,6 @@ public class Intake extends Subsystem implements Thread
     @Override
     public void updateDashboard()
     {
-        SmartDashboard.putNumber("Arm Pot Raw Value", armPositionPot.get());
-        SmartDashboard.putNumber("Arm Pot Converted Value", getPotConvertedValue());
-    }
-
-    @Override
-    public void feedLogger()
-    {
-        // TODO Auto-generated method stub
 
     }
-
-    @Override
-    public void update()
-    {
-        updateDashboard();
-
-    }
-
 }

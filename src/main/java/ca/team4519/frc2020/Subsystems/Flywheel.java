@@ -3,7 +3,6 @@ package ca.team4519.frc2020.subsystems;
 import ca.team4519.frc2020.Constants;
 import ca.team4519.frc2020.Gains;
 import ca.team4519.frc2020.subsystems.controllers.FlywheelController;
-import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -104,18 +103,4 @@ public class Flywheel extends Subsystem implements Thread{
         SmartDashboard.putNumber("leftWheel Velocity", leftWheelNeoEncoder.getVelocity());
         SmartDashboard.putNumber("Right wheel Velocity", rightWheelNeoEncoder.getVelocity());
     }
-
-    @Override
-    public void feedLogger() {
-        MechaLogger.grabInstance().logThis_Double("LeftFlywheel_Velocity", leftWheelNeoEncoder::getVelocity);
-        MechaLogger.grabInstance().logThis_Double("RightFlywheel_Velocity", rightWheelNeoEncoder::getVelocity);
-    }
-
-    @Override
-    public void update() {
-        feedLogger();
-        updateDashboard();
-
-    }
-
 }

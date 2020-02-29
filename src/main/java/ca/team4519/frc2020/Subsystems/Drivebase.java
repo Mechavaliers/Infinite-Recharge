@@ -6,7 +6,6 @@ import ca.team4519.frc2020.subsystems.controllers.DriveLineController;
 import ca.team4519.frc2020.subsystems.controllers.DrivebaseLockController;
 import ca.team4519.lib.pose.DrivebasePose;
 import ca.team4519.lib.DrivetrainOutput;
-import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
 
@@ -188,16 +187,9 @@ public class Drivebase extends Subsystem implements Thread
     {
 		throttle = (Math.abs(throttle) > Math.abs(0.04))? throttle : 0.0;
 		turn = (Math.abs(turn) > Math.abs(0.04))? turn : 0.0;
-
-        double finalThrottle = throttle;
-        double finalTurn = turn;
-        MechaLogger.grabInstance().logThis_Double("RawInput_Throttle", () -> finalThrottle);
-        MechaLogger.grabInstance().logThis_Double("RawInput_Turn", () -> finalTurn);
 		
 		double right = throttle + turn;
 		double left = throttle - turn;
-		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Right", () -> right);
-		MechaLogger.grabInstance().logThis_Double("ArcadeOutput_Left", () -> left);
 
 		return new DrivetrainOutput(left, -right);
     }
@@ -267,41 +259,4 @@ public class Drivebase extends Subsystem implements Thread
             SmartDashboard.putString("Drivebase ControllerOutput", "No Controller");
         }
     }
-
-    @Override
-    public void feedLogger()
-    {
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Velocity", leftDriveNeoAEncoder::getVelocity);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Velocity", leftDriveNeoBEncoder::getVelocity);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoA_Position", leftDriveNeoAEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("LeftDriveNeoB_Position", leftDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("RightDriveNeoA_Position", rightDriveNeoAEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("RightDriveNeoB_Position", rightDriveNeoBEncoder::getPosition);
-        MechaLogger.grabInstance().logThis_Double("Drivebase Angle", navX::getAngle);
-
-        if(controller != null)
-        {
-            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", controller.update(storedPose)::toString);
-        }
-        else
-        {
-            MechaLogger.grabInstance().logThis_String("Drivebase_ControllerOutput", () -> (String) "No controller");
-        }
-
-
-    }
-
-    @Override
-    public void update()
-    {
-      updateDashboard();
-      feedLogger();
-    }
-
-    public void test()
-    {
-
-    }
-
 }

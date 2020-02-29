@@ -11,9 +11,9 @@ import ca.team4519.frc2020.subsystems.Flywheel;
 import ca.team4519.frc2020.subsystems.Intake;
 import ca.team4519.frc2020.subsystems.PDPMonitor;
 import ca.team4519.frc2020.subsystems.Turret;
-import ca.team4519.lib.MechaLogger;
 import ca.team4519.lib.MechaTimedRobot;
 import ca.team4519.lib.MultiThreader;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -133,12 +133,11 @@ public class Robot extends MechaTimedRobot
   @Override
   public void allPeriodic()
   {
-   // MechaLogger.grabInstance().saveLogs();
-    Drivebase.GrabInstance().update();
-    Turret.grabInstance().update();
-    Intake.GrabInstance().update();
-    Flywheel.GrabInstance().update();
-    PDPMonitor.GrabInstance().update();
+    Drivebase.GrabInstance().updateDashboard();;
+    Turret.grabInstance().updateDashboard();
+    Intake.GrabInstance().updateDashboard();
+    Flywheel.GrabInstance().updateDashboard();
+    PDPMonitor.GrabInstance().updateDashboard();
   }
 
 }
