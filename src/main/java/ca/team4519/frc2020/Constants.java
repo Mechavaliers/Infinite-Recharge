@@ -33,6 +33,8 @@ public class Constants
     public static final int intakeLinkageEncoderB = 3; //TODO Get DIO_B for Encoder
     public static final int IntakeArmPot = 0; //TODO Get AnalogIn for Pot
     public static final int intakeRoller = 11; //TODO Get CANID of talonSRX
+    public static final int intakePivot = 1; //TODO probably - nicole
+
 
     //Feeder
     public static final int intakeLinkageWheel = 0;
@@ -42,6 +44,8 @@ public class Constants
      //Climber
     public static final int winchMotorL = 0;    //TODO Update with actual canid
     public static final int winchMotorR = 6;    //TODO Update with actual canid
-    public static final int hookRelease = 0;    //TODO Update with actual canid
+    public static final int lockReleaseL = 2;         //TODO Update with actual canid
+	public static final int lockReleaseR = 3;         //TODO Update with actual canid
+
 
 }
