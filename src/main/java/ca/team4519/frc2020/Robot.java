@@ -3,6 +3,7 @@ package ca.team4519.frc2020;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import ca.team4519.frc2020.auton.AutoMode;
+import ca.team4519.lib.AirPressureSensor; 
 import ca.team4519.frc2020.auton.AutonRunner;
 import ca.team4519.frc2020.subsystems.Drivebase;
 import ca.team4519.frc2020.subsystems.Feeder;
@@ -27,6 +28,8 @@ public class Robot extends MechaTimedRobot
   SendableChooser<AutoMode> auton = new SendableChooser<AutoMode>();
   Joystick driver = new Joystick(0);
   Joystick operator1 = new Joystick(1);
+
+  AirPressureSensor airPressure = new AirPressureSensor(0);
   
   @Override
   public void robotInit()

@@ -39,7 +39,7 @@ public class Drivebase extends Subsystem implements Thread
 
     private DrivebasePose storedPose = new DrivebasePose(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, null);
 
-   // private final Solenoid shifter;
+    private final Solenoid shifter;
 
     private final AHRS navX;
 
@@ -108,7 +108,7 @@ public class Drivebase extends Subsystem implements Thread
 
         odometry = new DifferentialDriveOdometry(new Rotation2d().fromDegrees(0));
 
-       // shifter = new Solenoid(Constants.shifter);
+        shifter = new Solenoid(Constants.shifter);
 
         navX = new AHRS(SerialPort.Port.kMXP);
     }
@@ -160,18 +160,16 @@ public class Drivebase extends Subsystem implements Thread
     private double getRightVelocity() {
         return (rightDriveNeoAEncoder.getVelocity() + rightDriveNeoBEncoder.getVelocity()) / 2;
     }
-/*
+
     public void shift(boolean triggerShift)
     {
         if(triggerShift)
         {
             shifter.set(Gains.Drive.Shifter_LOW_GEAR);
-            MechaLogger.grabInstance().logThis_Bool("ShifterHighGear", () -> Gains.Drive.Shifter_LOW_GEAR);
         }
         else
         {
             shifter.set(Gains.Drive.Shifter_HIGH_GEAR);
-            MechaLogger.grabInstance().logThis_Bool("ShifterHighGear", () -> Gains.Drive.Shifter_HIGH_GEAR);
         }
     }
 
@@ -179,7 +177,7 @@ public class Drivebase extends Subsystem implements Thread
     {
         return (shifter.get() == Gains.Drive.Shifter_HIGH_GEAR);
     }
-*/
+
     public void setLeftRightPower(DrivetrainOutput power)
     {
         rightDriveNeoA.set(power.rightOutput);

@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class Intake extends Subsystem implements Thread
 {
 
-    
+    private Solenoid intakePivot;
 
-    private final TalonSRX intakeRoller; //new talon thing, unsure if correct
+    private final TalonSRX intakeRoller; 
 
     private static Intake thisInstance;
 
@@ -49,6 +50,8 @@ public class Intake extends Subsystem implements Thread
         intakeLinkageMotor.setInverted(true); //sets + to deploy and - to stow
 
         intakeRoller = new TalonSRX(Constants.intakeRoller);
+
+        intakePivot = new Solenoid(Constants.intakePivot); //nicole - check cause new
 
 
     }
