@@ -66,7 +66,7 @@ public class Turret extends Subsystem implements Thread
 			setpoint = ((TurretRotationController) controller).getSetpoint();
 		}else {
 			setpoint = new TrajectoryFollower.TrajectorySetpoint();
-			setpoint.pos = storedPose.getConvertedValue();
+			setpoint.pos = storedPose.getPosition();
 		}
 		return setpoint;
 		

@@ -38,12 +38,6 @@ public class TurretPose {
         return angularVel;
     }
 
-    public double getConvertedValue()
-    {
-        //y=mx+B
-        return Gains.Turret.slope * angularPos + Gains.Turret.offset;
-    }
-
     public double getGoalOffset()
     {
         return goalOffset;
