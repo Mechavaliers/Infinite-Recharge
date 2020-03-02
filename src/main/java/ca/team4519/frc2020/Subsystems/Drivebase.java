@@ -13,7 +13,6 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -105,7 +104,7 @@ public class Drivebase extends Subsystem implements Thread
         leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
         leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
-        odometry = new DifferentialDriveOdometry(new Rotation2d().fromDegrees(0));
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
         shifter = new Solenoid(Constants.shifter);
 

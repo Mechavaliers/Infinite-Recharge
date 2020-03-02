@@ -81,7 +81,10 @@ public class Robot extends MechaTimedRobot
     // i.e. disabledPeriodic -> autoInit -> autoPeriodic -> disabledInit -> teleopInit -> so on and so forth
 
     //we kill any active control loops so they dont keep going when the robot is re-enabled
+    Drivebase.GrabInstance().disableSubsystem();
+    Feeder.GrabInstance().disableSubsystem();
     Turret.grabInstance().disableSubsystem();
+    Flywheel.GrabInstance().disableSubsystem();
     autonLoop.stop();
     telepLoop.stop();
   }
@@ -91,7 +94,6 @@ public class Robot extends MechaTimedRobot
   {
     Drivebase.GrabInstance().zeroSensors();
     //Turret.grabInstance().zeroSensors();
-    System.out.println("teleinit1");
     telepLoop.start();
     
   }
@@ -100,18 +102,16 @@ public class Robot extends MechaTimedRobot
   public void teleopPeriodic()
   {
    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
-   Turret.grabInstance().setPower(operator1.getRawAxis(0));
-    Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, driver.getRawAxis(0));
+  // Turret.grabInstance().setPower(operator1.getRawAxis(0));
+   // Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, operator1.getRawAxis(0));
     //Flywheel.GrabInstance().testing(driver.getRawAxis(3));
-    Feeder.GrabInstance().insertName(operator1.getRawButton(6));
+
+    Feeder.GrabInstance().autoIndex(driver.getRawButton(1));
     if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantFlywheel();
-    if(operator1.getRawButton(11))
-    {
-      System.out.println("off wanted");
-      Flywheel.GrabInstance().wantOff();
-    }
-    Intake.GrabInstance().wantIntake(operator1.getRawButton(7));
-    //Turret.grabInstance().SetTurretIntent(operator1.getRawButton(3), operator1.getRawButton(5), operator1.getRawButton(2), operator1.getRawButton(4), operator1.getRawButton(10));
+    if(operator1.getRawButton(11)) Flywheel.GrabInstance().wantOff();
+
+    Intake.GrabInstance().wantIntake(operator1.getRawButton(7), Feeder.GrabInstance().getBallCount());
+    Turret.grabInstance().SetTurretIntent(operator1, operator1.getRawButton(3), operator1.getRawButton(5), operator1.getRawButton(2), operator1.getRawButton(4), operator1.getRawButton(10));
     Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
   }
 
@@ -134,6 +134,7 @@ public class Robot extends MechaTimedRobot
     Turret.grabInstance().updateDashboard();
     Intake.GrabInstance().updateDashboard();
     Flywheel.GrabInstance().updateDashboard();
+    Feeder.GrabInstance().updateDashboard();
     PDPMonitor.GrabInstance().updateDashboard();
   }
 

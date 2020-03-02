@@ -63,9 +63,9 @@ public class Intake extends Subsystem implements Thread
         intakeLinkageMotor.set(ControlMode.PercentOutput, input);
     }
 
-    public void wantIntake(boolean on){
-        if(on){
-            intakeRoller.set(ControlMode.PercentOutput, 0.25);
+    public void wantIntake(boolean on, int ballCount){
+        if(on && ballCount != 5){
+            intakeRoller.set(ControlMode.PercentOutput, 0.8);
             intakePivot.set(true);
         }
         else 

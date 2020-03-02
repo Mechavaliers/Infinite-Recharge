@@ -29,9 +29,6 @@ public class Constants
 
     //Intake
     public static final int intakeLinkageMotor = 8; //TODO Get CANID of talonSRX
-    public static final int intakeLinkageEncoderA = 2; //TODO Get DIO_A for Encoder
-    public static final int intakeLinkageEncoderB = 3; //TODO Get DIO_B for Encoder
-    public static final int IntakeArmPot = 0; //TODO Get AnalogIn for Pot
     public static final int intakeRoller = 11; //TODO Get CANID of talonSRX
     public static final int intakePivot = 1; //TODO probably - nicole
 
@@ -40,6 +37,7 @@ public class Constants
     public static final int intakeLinkageWheel = 0;
     public static final int feeder1 = 10; //nicole - don't know if this should go here
     public static final int feeder2 = 7; //same as above, ok this isn't working uuper?
+    public static final int ballDetector = 2;
 
      //Climber
     public static final int winchMotorL = 0;    //TODO Update with actual canid

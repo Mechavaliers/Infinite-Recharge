@@ -47,7 +47,6 @@ public class Flywheel extends Subsystem implements Thread{
          rightWheelNeo.setIdleMode(IdleMode.kCoast);
 		 
          rightWheelNeoEncoder = new CANEncoder(rightWheelNeo);
-         rightWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev);
 		 
 		 leftWheelNeo = new CANSparkMax(Constants.leftWheelNeo, CANSparkMaxLowLevel.MotorType.kBrushless);
 		 leftWheelNeo.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -55,7 +54,6 @@ public class Flywheel extends Subsystem implements Thread{
          leftWheelNeo.setIdleMode(IdleMode.kCoast);
 		 
          leftWheelNeoEncoder = new CANEncoder(leftWheelNeo);
-         leftWheelNeoEncoder.setVelocityConversionFactor(Gains.NEO_TicksPerRev); 
      }
      
      public void testing(double input){
@@ -72,7 +70,7 @@ public class Flywheel extends Subsystem implements Thread{
 
      public void wantOff()
      {
-        controller = new FlywheelController(0);
+        controller = new FlywheelController(Gains.Flywheel.Brake);
      }
 	
     @Override

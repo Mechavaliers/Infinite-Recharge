@@ -11,6 +11,6 @@ public class WaitForTurretAngle extends TimeoutTask {
 	
 	@Override
 	public boolean done() {
-		return (turret.turretAngle() >= goalAngle);
+		return (turret.getHomedAngle() >= goalAngle);
 	}
 }

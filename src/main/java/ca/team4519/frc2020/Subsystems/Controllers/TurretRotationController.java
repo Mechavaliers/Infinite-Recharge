@@ -46,7 +46,13 @@ public class TurretRotationController implements Controllers{
 	public double update(TurretPose pose) {
 		controller.update(pose.getPosition(), pose.getVelocity());
 		SmartDashboard.putNumber("Turret Controller Output",controller.get());
-		return controller.get();
-		
+
+		if(controller.get() >= 0.5){
+			return 0.5;
+		}else if(controller.get() <= -0.5){
+			return -0.5;
+		}else{
+			return controller.get();
+		}		
 	}	
 }

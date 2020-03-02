@@ -77,29 +77,27 @@ public class Gains{
 	public static final class Turret {
 		private Turret() {}
 
-		public static final double TURRET_MAX_VELOCITY = 0.0;	//TODO Tune This
-		public static final double TURRET_MAX_ACCELERATION = 0.0;	//TODO Tune This
+		public static final double TURRET_MAX_VELOCITY = 500.0;	//500
+		public static final double TURRET_MAX_ACCELERATION = 20000.0;	//20000
 
-		public static final double Turret_P = 0.00525;	//TODO Tune This
+		public static final double Turret_P = 0.02;	//TODO Tune This
 		public static final double Turret_I = 0.0;	//TODO Tune This
 		public static final double Turret_D = 0.0;	//TODO Tune This
-		public static final double Turret_V = 0.0;	//TODO Tune This
-		public static final double Turret_A = 0.0;	//TODO Tune This
-		public static final double Turret_Tollerance = 0.0;	//TODO Tune This
+		public static final double Turret_V = 1/TURRET_MAX_VELOCITY;
+		public static final double Turret_A = 1/TURRET_MAX_ACCELERATION;
+		public static final double Turret_Tollerance = 0.0;
 
-		public static final double turretAngle_ConvertedHigh = -180.0;	//TODO Tune this
-		public static final double turretAngle_ConvertedLow = 90.0;	//TODO Tune This
-		public static final double turretAngle_EncoderHigh = 1500.0;	//TODO Tune this
-		public static final double turretAngle_EncoderLow = -675.0;	//TODO Tune This -675
-		public static final double turretAngle_Zero = 0.0;
+		public static final double topAngle = 0;
+		public static final double topRightAngle = 45;
+		public static final double rightAngle = 90;
+		public static final double bottomRightAngle = 135;
+		public static final double bottomAngle = 180;
+		public static final double leftAngle = -90;
+		public static final double topLeftAngle = -45;
 
-		public static final double slope = (turretAngle_ConvertedHigh - turretAngle_ConvertedLow)/(turretAngle_EncoderHigh - turretAngle_EncoderLow);
-		public static final double offset = (turretAngle_EncoderLow - slope * turretAngle_EncoderHigh);
-
-
-		public static final double Intent_RightConverted = 90;	//TODO Get Value from turret after its calibrated
-		public static final double Intent_ForwardConverted = 0;	//TODO Get Value from turret after its calibrated
-		public static final double Intent_ReverseConverted = 175;	//TODO Get Value from turret after its calibrated
+		public static final double Intent_RightConverted = 90;
+		public static final double Intent_ForwardConverted = 0;
+		public static final double Intent_ReverseConverted = 175;
 		public static final double Intent_LeftConverted = -90 ;
 	}
 
@@ -112,11 +110,13 @@ public class Gains{
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
 		public static final double Flywheel_F = 0.75;
 		public static final double ShotRPM = 125; //TODO Tune This
+		public static final double Brake = 0;
 	}
 
 	public static final class Feeder {
 		private Feeder() {}
 		public static final double BallDetectorRange = 0.0; //TODO Tune This if it even becomes a thing
+		public static final double IndexTime = 0.625;
 
 	}
 
