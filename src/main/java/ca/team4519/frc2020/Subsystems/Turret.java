@@ -66,7 +66,7 @@ public class Turret extends Subsystem implements Thread
 			setpoint = ((TurretRotationController) controller).getSetpoint();
 		}else {
 			setpoint = new TrajectoryFollower.TrajectorySetpoint();
-			setpoint.pos = storedPose.getPosition();
+			setpoint.pos = storedPose.getPosition();  
 		}
 		return setpoint;
 		
@@ -106,7 +106,7 @@ public class Turret extends Subsystem implements Thread
     }
 
     //Master control of turret aim, will update control loop if operator assigns new intent
-    public void SetTurretIntent(Joystick input, boolean ForwardIntent, boolean RightIntent, boolean ReverseIntent, boolean LeftIntent, boolean autoaim)
+    public void SetTurretIntent(Joystick input)
     {
         switch (input.getPOV()) {
             case 0:
@@ -147,7 +147,7 @@ public class Turret extends Subsystem implements Thread
             default:
                 break;
         }
-
+/*
         if(ForwardIntent)
         {
             aimTurretAtPos(Gains.Turret.Intent_ForwardConverted);
@@ -167,7 +167,7 @@ public class Turret extends Subsystem implements Thread
         else if (autoaim)
         {
             aimTurretAtPos(getWantedAngle());
-        }
+        }*/
     }
 
     public double getHomedAngle()
