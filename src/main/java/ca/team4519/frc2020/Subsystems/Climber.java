@@ -51,24 +51,43 @@ public class Climber extends Subsystem implements Thread
     {
         climbLockR.set(true);
     }
+
+    public void wantUnlockAll()
+    {
+        climbLockL.set(true);
+        climbLockR.set(true);
+    }
+
+    public void wantLockAll()
+    {
+        climbLockR.set(false);
+        climbLockL.set(false);
+    }
+
     public void setLeftPower(double power)
     {
-        winchMotorL.set((Math.abs(power) > Math.abs(0.04))? power : 0.0);
+        winchMotorL.set((Math.abs(power) > Math.abs(0.1))? power : 0.0);
     }
 
     public void setRightPower(double power)
     {
-        winchMotorR.set((Math.abs(power) > Math.abs(0.04))? power : 0.0);
+        winchMotorR.set((Math.abs(power) > Math.abs(0.1))? -power : 0.0);
+    }
+
+    public void setLeftRightPower(double power)
+    {
+        setLeftPower(power);
+
+        winchMotorL.set((Math.abs(power) > Math.abs(0.1))? power : 0.0);
+        winchMotorR.set((Math.abs(power) > Math.abs(0.1))? -power : 0.0);
     }
 
     public void climberControl(double leftInput, double rightInput, boolean unlockLeft, boolean unlockRight) //booleans are axis, doubles are buttons
     {    
        if(unlockLeft && unlockRight)
        {
-           wantUnlockL();
-           wantLockR();
-           setLeftPower(leftInput);
-           setRightPower(rightInput);
+           wantUnlockAll();
+           setLeftRightPower(leftInput);
        }
        else if(unlockLeft && !unlockRight)
        {
@@ -84,8 +103,7 @@ public class Climber extends Subsystem implements Thread
        }
        else
        {
-            wantLockL();
-            wantLockR();
+            wantLockAll();
        }
     }
 
