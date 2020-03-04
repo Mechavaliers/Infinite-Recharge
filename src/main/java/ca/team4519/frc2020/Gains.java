@@ -15,8 +15,8 @@ public class Gains{
 		public static final double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static final double PATH_TOLLERANCE = 0.25;	//TODO Update this
 
-		public static double NEO_HIGH_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the high gear ratio in here, only used in auto...for now?
-		public static double NEO_LOW_CorrectedTicksPerRev = NEO_TicksPerRev + 5; // TODO Put the low gear ratio in here - For drivebase lock
+		public static double NEO_HIGH_CorrectedTicksPerRev = 355/18.85; // 355/18.85
+		public static double NEO_LOW_CorrectedTicksPerRev = 820/18.85; //820/18.85
 		//	Inches/Seconds
 		public static double ROBOT_MAX_VELOCITY= 180.0;			//
 		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
@@ -105,18 +105,18 @@ public class Gains{
 	{
 		private Flywheel() {}
 
-		public static final double Flywheel_P = 0.0;	//TODO Tune this
-		public static final double Flywheel_I = 0.03825;	//TODO Tune This 0.035
+		public static final double Flywheel_P = 0.000275;	//TODO Tune this
+		public static final double Flywheel_I = 0.0001;	//TODO Tune This 0.001362585825
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
-		public static final double Flywheel_F = 0.75;
-		public static final double ShotRPM = 125; //TODO Tune This
+		public static final double Flywheel_F = 0.8; //0.8
+		public static final double ShotRPM = 5000; //TODO Tune This
 		public static final double Brake = 0;
 	}
 
 	public static final class Feeder {
 		private Feeder() {}
 		public static final double BallDetectorRange = 0.0; //TODO Tune This if it even becomes a thing
-		public static final double IndexTime = 0.625;
+		public static final double IndexTime = 0.075;
 
 	}
 

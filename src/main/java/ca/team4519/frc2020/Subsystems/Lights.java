@@ -2,9 +2,42 @@ package ca.team4519.frc2020.subsystems;
 
 import ca.team4519.lib.Subsystem;
 import ca.team4519.lib.Thread;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Lights extends Subsystem implements Thread
 {
+    private static Lights thisInstance;
+    private final Solenoid lights;
+
+    public synchronized static Lights GrabInstance()
+    {
+        if (thisInstance == null) thisInstance = new Lights();
+        return thisInstance;
+    }
+
+    private Lights()
+    {
+        lights = new Solenoid(5);
+    }
+
+    public void blinkController(int ballCount)
+    {
+        if(ballCount == 5)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                lights.set(!lights.get());    
+            }
+        }
+    }
+
+    public void wantBlink()
+    {
+        lights.set(!lights.get());
+        Timer.delay(0.5);
+        lights.set(!lights.get());
+    }
 
     @Override
     public void zeroSensors() {
@@ -26,7 +59,7 @@ public class Lights extends Subsystem implements Thread
 
     @Override
     public void loops() {
-        // TODO Auto-generated method stub
+        //blinkController(Feeder.GrabInstance().getBallCount());
 
     }
 
