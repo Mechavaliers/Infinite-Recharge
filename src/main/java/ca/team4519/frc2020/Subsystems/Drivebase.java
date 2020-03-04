@@ -164,10 +164,26 @@ public class Drivebase extends Subsystem implements Thread
         if(triggerShift)
         {
             shifter.set(Gains.Drive.Shifter_LOW_GEAR);
+            rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
         }
         else
         {
             shifter.set(Gains.Drive.Shifter_HIGH_GEAR);
+            rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
         }
     }
 
