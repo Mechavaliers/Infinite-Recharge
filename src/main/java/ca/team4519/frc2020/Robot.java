@@ -2,13 +2,16 @@ package ca.team4519.frc2020;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import ca.team4519.frc2020.Gains.Drive;
 import ca.team4519.frc2020.auton.AutoMode;
 import ca.team4519.lib.AirPressureSensor; 
 import ca.team4519.frc2020.auton.AutonRunner;
+import ca.team4519.frc2020.subsystems.Climber;
 import ca.team4519.frc2020.subsystems.Drivebase;
 import ca.team4519.frc2020.subsystems.Feeder;
 import ca.team4519.frc2020.subsystems.Flywheel;
 import ca.team4519.frc2020.subsystems.Intake;
+import ca.team4519.frc2020.subsystems.Lights;
 import ca.team4519.frc2020.subsystems.PDPMonitor;
 import ca.team4519.frc2020.subsystems.Turret;
 import ca.team4519.lib.MechaTimedRobot;
@@ -92,6 +95,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopInit()
   {
+    //Lights.GrabInstance().wantBlink();
     Drivebase.GrabInstance().zeroSensors();
     //Turret.grabInstance().zeroSensors();
     telepLoop.start();
@@ -101,18 +105,22 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
+    //Lights.GrabInstance().wantBlink();
    // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
   // Turret.grabInstance().setPower(operator1.getRawAxis(0));
    // Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, operator1.getRawAxis(0));
     //Flywheel.GrabInstance().testing(driver.getRawAxis(3));
 
     Feeder.GrabInstance().autoIndex(driver.getRawButton(1));
-    if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantFlywheel();
-    if(operator1.getRawButton(11)) Flywheel.GrabInstance().wantOff();
-
-    Intake.GrabInstance().wantIntake(operator1.getRawButton(7), Feeder.GrabInstance().getBallCount());
-    Turret.grabInstance().SetTurretIntent(operator1, operator1.getRawButton(3), operator1.getRawButton(5), operator1.getRawButton(2), operator1.getRawButton(4), operator1.getRawButton(10));
+    if(operator1.getRawButton(2)) Flywheel.GrabInstance().wantFlywheel();
+    if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantOff();
+    //Intake.GrabInstance().setPower(operator1.getRawAxis(4)); //Wheel of fortune
+    Intake.GrabInstance().wantIntake(operator1.getRawButton(3), Feeder.GrabInstance().getBallCount());
+    Turret.grabInstance().SetTurretIntent(operator1);
     Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
+    Drivebase.GrabInstance().shift(driver.getRawButton(5));
+
+    //Climber.GrabInstance().climberControl(operator1.getRawAxis(1), operator1.getRawAxis(5), operator1.getRawButton(5), operator1.getRawButton(6));
   }
 
   @Override
