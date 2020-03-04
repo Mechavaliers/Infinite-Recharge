@@ -64,9 +64,9 @@ public class Feeder extends Subsystem implements Thread
 
         switch (ballCount) {
             case 1:
-                feederx.set(ControlMode.PercentOutput, -0.3);
+                feederx.set(ControlMode.PercentOutput, -1.0);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime);
+                Timer.delay(Gains.Feeder.IndexTime/5);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
@@ -78,16 +78,16 @@ public class Feeder extends Subsystem implements Thread
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 3:
-                feederx.set(ControlMode.PercentOutput, -0.5);
+                feederx.set(ControlMode.PercentOutput, -0.3);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime-0.25);
+                Timer.delay(Gains.Feeder.IndexTime);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 4:
                 feederx.set(ControlMode.PercentOutput, -0.5);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime-0.25);
+                Timer.delay(Gains.Feeder.IndexTime);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
