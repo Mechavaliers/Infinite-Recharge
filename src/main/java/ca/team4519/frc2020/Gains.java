@@ -9,25 +9,23 @@ public class Gains{
 	public static final class Drive {
 		private Drive() {}
 		
-		public static final boolean Shifter_HIGH_GEAR = true;
-		public static final boolean Shifter_LOW_GEAR = false;
+		public static final boolean Shifter_HIGH_GEAR = false;
+		public static final boolean Shifter_LOW_GEAR = true;
 		
 		public static final double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static final double PATH_TOLLERANCE = 0.25;	//TODO Update this
 
-		public static double NEO_HIGH_CorrectedTicksPerRev = 355/18.85; // 355/18.85
-		public static double NEO_LOW_CorrectedTicksPerRev = 820/18.85; //820/18.85
+		public static double NEO_HIGH_CorrectedTicksPerRev = (Math.PI*6)/9; // 355/18.85
+		public static double NEO_LOW_CorrectedTicksPerRev = 1; //820/18.85
 		//	Inches/Seconds
-		public static double ROBOT_MAX_VELOCITY= 180.0;			//
-		public static double ROBOT_MAX_ACCELERATION = 45.0;	//TODO Update this
+		public static double ROBOT_MAX_VELOCITY= 5500;			//
+		public static double ROBOT_MAX_ACCELERATION = 0.0;	//TODO Update this
 		public static double ROBOT_MAX_JERK = 23; //TOT UPDATE THis
 		public static double ROBOT_MAX_ROTATIONAL_VELOCITY = 360.0;	//TODO Update this
 		public static double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
 		public static double Wheelbase_Width = 21.868502;	//Inches
 		public static double Wheelbase_Length = 39.25; 	//TODO Update this
 		public static double WheelSize_Inches = 6.250; //TODO Measure wheel OD
-		public static double HIGH_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_HIGH_CorrectedTicksPerRev);	
-		public static double LOW_EncoderTicksPerRev =(( 2 * Math.PI * WheelSize_Inches ) / NEO_LOW_CorrectedTicksPerRev);
 	
 		public static final double Dist_P = 0.0;	//TODO Tune this
 		public static final double Dist_I = 0.0;	//TODO tune this
@@ -63,7 +61,7 @@ public class Gains{
 		public static final double LinkagePos_Deployed = 85.0;	//TODO Tune This
 		public static final double LinkagePos_DeployedOnAngle = 45.0;	//TODO Tune This
 
-		public static final double LINKAGE_MAX_VELOCITY = 0.0;	//TODO Tune This
+		public static final double LINKAGE_MAX_VELOCITY = 7500;	//TODO Tune This
 		public static final double LINKAGE_MAX_ACCELERATION = 0.0;	//TODO Tune This
 
 		public static final double Linkage_P = 0.005;	//TODO Tune This
@@ -80,7 +78,7 @@ public class Gains{
 		public static final double TURRET_MAX_VELOCITY = 500.0;	//500
 		public static final double TURRET_MAX_ACCELERATION = 20000.0;	//20000
 
-		public static final double Turret_P = 0.02;	//TODO Tune This
+		public static final double Turret_P = 0.0225;	//TODO Tune This
 		public static final double Turret_I = 0.0;	//TODO Tune This
 		public static final double Turret_D = 0.0;	//TODO Tune This
 		public static final double Turret_V = 1/TURRET_MAX_VELOCITY;
@@ -108,7 +106,7 @@ public class Gains{
 		public static final double Flywheel_P = 0.000275;	//TODO Tune this
 		public static final double Flywheel_I = 0.0001;	//TODO Tune This 0.001362585825
 		public static final double Flywheel_D = 0.0;	//TODO Tune This
-		public static final double Flywheel_F = 0.8; //0.8
+		public static final double Flywheel_F = 0.9; //0.8
 		public static final double ShotRPM = 5000; //TODO Tune This
 		public static final double Brake = 0;
 	}

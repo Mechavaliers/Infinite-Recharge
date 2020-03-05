@@ -67,41 +67,45 @@ public class Drivebase extends Subsystem implements Thread
     private Drivebase()
     {
         rightDriveNeoA = new CANSparkMax(Constants.rightDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightDriveNeoA.setInverted(false);
         rightDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
-        rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
+        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
         rightDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
+        rightDriveNeoB.setInverted(false);
         rightDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
         rightDriveNeoB.follow(rightDriveNeoA);
 
         rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
-        rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
+        rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
         rightDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftDriveNeoA.setInverted(true);
         leftDriveNeoA.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
 
         leftDriveNeoAEncoder = new CANEncoder(leftDriveNeoA);
-        leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
+        leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
         leftDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
+        leftDriveNeoB.setInverted(true);
         leftDriveNeoB.setMotorType(CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setSmartCurrentLimit(Constants.driveNeoCurrentLimit);
         leftDriveNeoB.follow(leftDriveNeoA);
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
-        leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-        leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+        leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
+        leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
         leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
@@ -164,26 +168,26 @@ public class Drivebase extends Subsystem implements Thread
         if(triggerShift)
         {
             shifter.set(Gains.Drive.Shifter_LOW_GEAR);
-            rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+         /*   rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
             leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
-            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.LOW_EncoderTicksPerRev);*/
         }
         else
         {
             shifter.set(Gains.Drive.Shifter_HIGH_GEAR);
-            rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+          /*  rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
             leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
-            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);
+            leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.HIGH_EncoderTicksPerRev);*/
         }
     }
 
@@ -194,8 +198,8 @@ public class Drivebase extends Subsystem implements Thread
 
     public void setLeftRightPower(DrivetrainOutput power)
     {
+        leftDriveNeoA.set(-power.leftOutput);
         rightDriveNeoA.set(power.rightOutput);
-        leftDriveNeoA.set(power.leftOutput);
     }
 
     public DrivetrainOutput arcade(double throttle, double turn)
@@ -227,10 +231,14 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void loops()
     {
+      //  if (controller instanceof TurretRotationController) {
+		//	setpoint = ((TurretRotationController) controller).getSetpoint();
+		//}
+        getRobotPose();
         if(controller == null) return;
 
         //odometry.update(getAngle(), getLeftDistanceMeters(), getRightDistanceMeters());
-        setLeftRightPower(controller.update(getRobotPose()));
+        setLeftRightPower(controller.update(storedPose));
     }
 
     @Override

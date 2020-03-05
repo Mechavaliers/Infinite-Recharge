@@ -55,8 +55,8 @@ public class DriveLineController implements Controllers{
 		controller.update(
 				(pose.getLeftDistance() + pose.getRightDistance()) / 2.0,
 				(pose.getLeftVelocity() + pose.getRightVelocity()) / 2.0);
-		double power = controller.get();
-		double turn = /*-turningPIDLoop.calculate(pose.getAngle());*/ 1.5;
+		double power = -controller.get();
+		double turn = /*-turningPIDLoop.calculate(pose.getAngle());*/ 0;
 		
 		return new DrivetrainOutput(power+turn, power-turn);
 	}
