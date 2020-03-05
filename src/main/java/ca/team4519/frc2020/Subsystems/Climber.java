@@ -69,14 +69,23 @@ public class Climber extends Subsystem implements Thread
         winchMotorL.set((Math.abs(power) > Math.abs(0.1))? power : 0.0);
     }
 
+    public void setLeftOff()
+    {
+        winchMotorL.set(0.0);
+    }
+
     public void setRightPower(double power)
     {
         winchMotorR.set((Math.abs(power) > Math.abs(0.1))? -power : 0.0);
     }
 
+    public void setRightOff()
+    {
+        winchMotorR.set(0.0);
+    }
+
     public void setLeftRightPower(double power)
     {
-        setLeftPower(power);
 
         winchMotorL.set((Math.abs(power) > Math.abs(0.1))? power : 0.0);
         winchMotorR.set((Math.abs(power) > Math.abs(0.1))? -power : 0.0);
@@ -94,16 +103,20 @@ public class Climber extends Subsystem implements Thread
             wantLockR();
             wantUnlockL();
             setLeftPower(leftInput);
+            setRightOff();
        }
        else if(unlockRight && !unlockLeft)
        {
             wantLockL();
             wantUnlockR();
             setRightPower(rightInput);
+            setLeftOff();
        }
        else
        {
             wantLockAll();
+            setRightOff();
+            setLeftOff();
        }
     }
 

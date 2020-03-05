@@ -122,7 +122,7 @@ public class Robot extends MechaTimedRobot
     Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
     Drivebase.GrabInstance().shift(driver.getRawButton(5));
 
-    //Climber.GrabInstance().climberControl(operator1.getRawAxis(1), operator1.getRawAxis(5), operator1.getRawButton(5), operator1.getRawButton(6));
+    Climber.GrabInstance().climberControl(operator1.getRawAxis(1), operator1.getRawAxis(5), operator1.getRawButton(5), operator1.getRawButton(6));
   }
 
   @Override
