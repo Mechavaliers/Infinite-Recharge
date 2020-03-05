@@ -32,6 +32,16 @@ public class Lights extends Subsystem implements Thread
         }
     }
 
+    public void wantOn()
+    {
+        lights.set(true);
+    }
+
+    public void wantOff()
+    {
+        lights.set(false);
+    }
+
     public void wantBlink()
     {
         lights.set(!lights.get());
@@ -60,6 +70,7 @@ public class Lights extends Subsystem implements Thread
     @Override
     public void loops() {
         //blinkController(Feeder.GrabInstance().getBallCount());
+
 
     }
 
