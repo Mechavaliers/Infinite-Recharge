@@ -117,7 +117,7 @@ public class Robot extends MechaTimedRobot
     if(operator1.getRawButton(2)) Flywheel.GrabInstance().wantFlywheel();
     if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantOff();
     //Intake.GrabInstance().setPower(operator1.getRawAxis(4)); //Wheel of fortune
-    Intake.GrabInstance().wantIntake(operator1.getRawButton(3), Feeder.GrabInstance().getBallCount());
+    Intake.GrabInstance().wantIntake(operator1.getRawButton(3), operator1.getRawButton(4), Feeder.GrabInstance().getBallCount());
     Turret.grabInstance().SetTurretIntent(operator1);
     Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
     Drivebase.GrabInstance().shift(driver.getRawButton(5));
