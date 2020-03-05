@@ -24,6 +24,7 @@ public class Feeder extends Subsystem implements Thread
     private final DigitalInput ballDetector;
 
     private boolean toggle = false;
+    private boolean safeReverse = true;
     private int ballCount = 0;
 
     public synchronized static Feeder GrabInstance()
@@ -66,37 +67,41 @@ public class Feeder extends Subsystem implements Thread
             case 1:
                 feederx.set(ControlMode.PercentOutput, -1.0);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime/5);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 2:
-                feederx.set(ControlMode.PercentOutput, -0.3);
+                feederx.set(ControlMode.PercentOutput, -1.0);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 3:
-                feederx.set(ControlMode.PercentOutput, -0.3);
+                feederx.set(ControlMode.PercentOutput, -1.0);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 4:
-                feederx.set(ControlMode.PercentOutput, -0.5);
+                feederx.set(ControlMode.PercentOutput, -1.0);
                 feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
                 break;
             case 5:
-                feederx.set(ControlMode.PercentOutput, -0.3);
-                feedery.set(ControlMode.PercentOutput, -0.3);
-                Timer.delay(Gains.Feeder.IndexTime);
+                feederx.set(ControlMode.PercentOutput, -1.0);
+                feedery.set(ControlMode.PercentOutput, -0.2);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
+                feederx.set(ControlMode.PercentOutput, 0.375);
+                feedery.set(ControlMode.PercentOutput, 0.375);
+                Timer.delay(Gains.Feeder.IndexTime+0.0625);
                 feederx.set(ControlMode.PercentOutput, 0.0);
                 feedery.set(ControlMode.PercentOutput, 0.0);
+                Lights.GrabInstance().wantBlink();
                 break;
             default:
                 feederx.set(ControlMode.PercentOutput, 0.0);
@@ -132,17 +137,11 @@ public class Feeder extends Subsystem implements Thread
             feederx.set(ControlMode.PercentOutput, 0.0);
             feedery.set(ControlMode.PercentOutput, 0.0);  
             indexToggle(handoffReady());
-            if(ballCount == 5){
-                feederx.set(ControlMode.PercentOutput, 0.2);
-                feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(0.250);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);  
-            }
          }
          else if(wantShoot)
          {
              ballCount = 0;
+             safeReverse = true;
              feederx.set(ControlMode.PercentOutput, -0.4);
              feedery.set(ControlMode.PercentOutput, -0.4);
          }
@@ -173,6 +172,7 @@ public class Feeder extends Subsystem implements Thread
     {
         SmartDashboard.putBoolean("Handoff Ready", handoffReady());
         SmartDashboard.putNumber("Ball Count", ballCount);
+        SmartDashboard.putBoolean("SafeReverse", safeReverse);
 
     }
 }
