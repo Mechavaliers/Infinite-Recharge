@@ -6,6 +6,7 @@ import ca.team4519.frc2020.Gains.Drive;
 import ca.team4519.frc2020.auton.AutoMode;
 import ca.team4519.lib.AirPressureSensor; 
 import ca.team4519.frc2020.auton.AutonRunner;
+import ca.team4519.frc2020.auton.modes.TestMode;
 import ca.team4519.frc2020.subsystems.Climber;
 import ca.team4519.frc2020.subsystems.Drivebase;
 import ca.team4519.frc2020.subsystems.Feeder;
@@ -58,8 +59,9 @@ public class Robot extends MechaTimedRobot
   @Override
   public void autonomousInit()
   {
+    //Drivebase.GrabInstance().zeroSensors();
     //Get the selected mode from the dashboard
-    AutoMode mode = auton.getSelected();
+    AutoMode mode = new TestMode();//auton.getSelected();
     //Then feed the selected mode to our auto loop runner
     autonLoopRunner.selectAuto(mode);
     //start our auton control loops
