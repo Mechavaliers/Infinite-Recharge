@@ -11,7 +11,7 @@ public class WaitForBall extends TimeoutTask {
 	
 	@Override
 	public boolean done() {
-		return (feeder.getBallCount() == startBall + 1);
+		return (feeder.getBallCount() == (startBall + 1));
     }
     
     @Override

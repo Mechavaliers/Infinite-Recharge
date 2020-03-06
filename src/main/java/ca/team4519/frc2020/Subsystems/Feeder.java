@@ -17,9 +17,9 @@ public class Feeder extends Subsystem implements Thread
 
     private static Feeder thisInstance;
 
-    private VictorSPX feederx; 
+    private final VictorSPX upperFeeder;
 
-    private VictorSPX feedery; 
+    private final VictorSPX lowerFeeder;
 
     private final DigitalInput ballDetector;
 
@@ -27,144 +27,163 @@ public class Feeder extends Subsystem implements Thread
     private boolean safeReverse = true;
     private int ballCount = 0;
 
-    public synchronized static Feeder GrabInstance()
-    {
+    public synchronized static Feeder GrabInstance() {
 
-       if(thisInstance == null) thisInstance = new Feeder();
-       return thisInstance;
+        if (thisInstance == null)
+            thisInstance = new Feeder();
+        return thisInstance;
     }
-     
-    private Feeder()
-    {
 
-        feederx = new VictorSPX(Constants.feeder1); 
-        feedery = new VictorSPX(Constants.feeder2); 
-        feedery.setInverted(true);
+    private Feeder() {
+
+        upperFeeder = new VictorSPX(Constants.feeder1);
+        lowerFeeder = new VictorSPX(Constants.feeder2);
+        lowerFeeder.setInverted(true);
 
         ballDetector = new DigitalInput(Constants.ballDetector);
 
-     }
+    }
 
-    public boolean handoffReady()
-    {
+    public boolean handoffReady() {
         return !ballDetector.get();
     }
 
-    public void insertName(boolean feed)
-    {if(feed){
-        feederx.set(ControlMode.PercentOutput, -0.4);
-     feedery.set(ControlMode.PercentOutput, -0.4);
-    }else{
-        feederx.set(ControlMode.PercentOutput, 0.0);
-     feedery.set(ControlMode.PercentOutput, 0.0);
-    }
-     
+    public void insertName(final boolean feed) {
+        if (feed) {
+            upperFeeder.set(ControlMode.PercentOutput, -0.4);
+            lowerFeeder.set(ControlMode.PercentOutput, -0.4);
+        } else {
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+        }
+
     }
 
-    public void indexOne(){
+    public void indexOne() {
 
         switch (ballCount) {
-            case 1:
-                feederx.set(ControlMode.PercentOutput, -1.0);
-                feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);
-                break;
-            case 2:
-                feederx.set(ControlMode.PercentOutput, -1.0);
-                feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);
-                break;
-            case 3:
-                feederx.set(ControlMode.PercentOutput, -1.0);
-                feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);
-                break;
-            case 4:
-                feederx.set(ControlMode.PercentOutput, -1.0);
-                feedery.set(ControlMode.PercentOutput, 0.2);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);
-                break;
-            case 5:
-                feederx.set(ControlMode.PercentOutput, -1.0);
-                feedery.set(ControlMode.PercentOutput, -0.2);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.375);
-                feedery.set(ControlMode.PercentOutput, 0.375);
-                Timer.delay(Gains.Feeder.IndexTime+0.0625);
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);
-                Lights.GrabInstance().wantBlink();
-                break;
-            default:
-                feederx.set(ControlMode.PercentOutput, 0.0);
-                feedery.set(ControlMode.PercentOutput, 0.0);  
-                break;
+        case 1:
+            upperFeeder.set(ControlMode.PercentOutput, -1.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            break;
+        case 2:
+            upperFeeder.set(ControlMode.PercentOutput, -1.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            break;
+        case 3:
+            upperFeeder.set(ControlMode.PercentOutput, -1.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            break;
+        case 4:
+            upperFeeder.set(ControlMode.PercentOutput, -1.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            break;
+        case 5:
+            upperFeeder.set(ControlMode.PercentOutput, -1.0);
+            lowerFeeder.set(ControlMode.PercentOutput, -0.2);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.375);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.375);
+            Timer.delay(Gains.Feeder.IndexTime + 0.0625);
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            Lights.GrabInstance().wantBlink();
+            break;
+        default:
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+            break;
         }
     }
 
-    public int getBallCount()
-    {
+    public int getBallCount() {
         return ballCount;
     }
 
-    public void setBallCount(int assignBallCount)
-    {
+    public void setBallCount(final int assignBallCount) {
         ballCount = assignBallCount;
     }
 
-    public void indexToggle(boolean button) {
+    public void indexToggle(final boolean button) {
         if (!button) {
-			toggle=true;
-		}else if(toggle){
+            toggle = true;
+        } else if (toggle) {
             ballCount++;
-			indexOne();
-			toggle=false;
-		}
-     }
-     
-     public void autoIndex(boolean wantShoot)
+            indexOne();
+            toggle = false;
+        }
+    }
+
+    public void dump() {
+        upperFeeder.set(ControlMode.PercentOutput, -0.25);
+        lowerFeeder.set(ControlMode.PercentOutput, -0.25);
+    }
+
+    public void off() {
+        upperFeeder.set(ControlMode.PercentOutput, 0.0);
+        lowerFeeder.set(ControlMode.PercentOutput, 0.0);
+    }
+
+    public void autoIndex(final boolean wantShoot)
      {
          if(!wantShoot)
          {
-            feederx.set(ControlMode.PercentOutput, 0.0);
-            feedery.set(ControlMode.PercentOutput, 0.0);  
+            upperFeeder.set(ControlMode.PercentOutput, 0.0);
+            lowerFeeder.set(ControlMode.PercentOutput, 0.0);  
             indexToggle(handoffReady());
          }
          else if(wantShoot)
          {
              ballCount = 0;
              safeReverse = true;
-             feederx.set(ControlMode.PercentOutput, -0.4);
-             feedery.set(ControlMode.PercentOutput, -0.4);
+             upperFeeder.set(ControlMode.PercentOutput, -0.4);
+             lowerFeeder.set(ControlMode.PercentOutput, -0.4);
          }
+     }
+
+     public void slowSuck()
+     {
+        upperFeeder.set(ControlMode.PercentOutput, -0.3);
+        lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+     }
+
+     public void commandIndex ()
+     {
+        upperFeeder.set(ControlMode.PercentOutput, -1.0);
+        lowerFeeder.set(ControlMode.PercentOutput, 0.2);
+        Timer.delay(Gains.Feeder.IndexTime+0.0625);
+        upperFeeder.set(ControlMode.PercentOutput, 0.0);
+        lowerFeeder.set(ControlMode.PercentOutput, 0.0);
      }
 
     @Override
     public void loops()
     {
-        // TODO add any method that needs to be run in the robots main loop (200hz)
 
     }
 
     @Override
     public void zeroSensors()
     {
-        // TODO reset/home any sensors in this subsystem
-
+        ballCount = 0;
     }
 
     @Override
     public void disableSubsystem()
     {
-        // TODO disable all motor outputs
+        
     }
 
     @Override

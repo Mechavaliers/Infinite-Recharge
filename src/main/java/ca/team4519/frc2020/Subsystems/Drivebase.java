@@ -39,6 +39,13 @@ public class Drivebase extends Subsystem implements Thread
 
     private final Solenoid shifter;
 
+    private final double dt = Gains.CONTROL_LOOP_TIME_SECONDS;
+
+    private double lastLeftVel = 0;
+	private double lastRightVel = 0;
+	private double leftAccel = 0;
+	private double rightAccel = 0;
+
     private final AHRS navX;
 
     public enum AutoPaths
@@ -73,8 +80,7 @@ public class Drivebase extends Subsystem implements Thread
 
         rightDriveNeoAEncoder = new CANEncoder(rightDriveNeoA);
         rightDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        rightDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        rightDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
+        rightDriveNeoAEncoder.setVelocityConversionFactor(1/Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
 
         rightDriveNeoB = new CANSparkMax(Constants.rightDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveNeoB.setInverted(false);
@@ -84,8 +90,7 @@ public class Drivebase extends Subsystem implements Thread
 
         rightDriveNeoBEncoder = new CANEncoder(rightDriveNeoB);
         rightDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        rightDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        rightDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
+        rightDriveNeoBEncoder.setVelocityConversionFactor(1/Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
 
         leftDriveNeoA = new CANSparkMax(Constants.leftDriveNeoA, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoA.setInverted(true);
@@ -94,8 +99,7 @@ public class Drivebase extends Subsystem implements Thread
 
         leftDriveNeoAEncoder = new CANEncoder(leftDriveNeoA);
         leftDriveNeoAEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        leftDriveNeoAEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        leftDriveNeoAEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
+        leftDriveNeoAEncoder.setVelocityConversionFactor(1/Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
 
         leftDriveNeoB = new CANSparkMax(Constants.leftDriveNeoB, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveNeoB.setInverted(true);
@@ -105,8 +109,7 @@ public class Drivebase extends Subsystem implements Thread
         
         leftDriveNeoBEncoder = new CANEncoder(leftDriveNeoB);
         leftDriveNeoBEncoder.setPositionConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        leftDriveNeoBEncoder.setVelocityConversionFactor(Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
-        leftDriveNeoBEncoder.setMeasurementPeriod(Gains.CONTROL_LOOP_TIME_MILLISECOND);
+        leftDriveNeoBEncoder.setVelocityConversionFactor(1/Gains.Drive.NEO_HIGH_CorrectedTicksPerRev);
 
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
@@ -114,6 +117,28 @@ public class Drivebase extends Subsystem implements Thread
 
         navX = new AHRS(SerialPort.Port.kMXP);
     }
+
+    public void getAccel() {
+		getLeftAccel();
+		getRightAccel();
+	}
+	
+	public void getLeftAccel() {
+		double curVel = leftDriveNeoAEncoder.getVelocity();
+		double dv = curVel - lastLeftVel;
+		lastLeftVel = curVel;
+		double accel = dv/dt;
+		leftAccel = accel;
+	}
+
+	
+	public void getRightAccel() {
+		double curVel = rightDriveNeoAEncoder.getVelocity();
+		double dv = curVel - lastRightVel;
+		lastRightVel = curVel;
+		double accel = dv/dt;
+		rightAccel = accel;
+	}
 
     public DrivebasePose getRobotPose() {
         storedPose.reset(
@@ -198,7 +223,7 @@ public class Drivebase extends Subsystem implements Thread
 
     public void setLeftRightPower(DrivetrainOutput power)
     {
-        leftDriveNeoA.set(-power.leftOutput);
+        leftDriveNeoA.set(power.leftOutput);
         rightDriveNeoA.set(power.rightOutput);
     }
 
@@ -207,10 +232,10 @@ public class Drivebase extends Subsystem implements Thread
 		throttle = (Math.abs(throttle) > Math.abs(0.04))? throttle : 0.0;
 		turn = (Math.abs(turn) > Math.abs(0.04))? turn : 0.0;
 		
-		double right = throttle + turn;
-		double left = throttle - turn;
+		double right = -throttle - turn;
+		double left = -throttle + turn;
 
-		return new DrivetrainOutput(left, -right);
+		return new DrivetrainOutput(left, right);
     }
 
     public double getLeftDistanceMeters()
@@ -231,9 +256,9 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void loops()
     {
-      //  if (controller instanceof TurretRotationController) {
-		//	setpoint = ((TurretRotationController) controller).getSetpoint();
-		//}
+
+    getLeftAccel();
+    getRightAccel();
         getRobotPose();
         if(controller == null) return;
 
@@ -264,6 +289,7 @@ public class Drivebase extends Subsystem implements Thread
     public void updateDashboard()
     {
         SmartDashboard.putNumber("Left Drive Neo A Velocity", leftDriveNeoAEncoder.getVelocity());
+        SmartDashboard.putNumber("Velocity Converseion factor", leftDriveNeoAEncoder.getVelocityConversionFactor());
         SmartDashboard.putNumber("Left Drive Neo A Position", leftDriveNeoAEncoder.getPosition());
         SmartDashboard.putNumber("Left Drive Neo B Velocity", leftDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Left Drive Neo B Position", leftDriveNeoBEncoder.getPosition());
@@ -271,6 +297,10 @@ public class Drivebase extends Subsystem implements Thread
         SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
         SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
+
+        SmartDashboard.putNumber("Left Acceleration", leftAccel);
+        SmartDashboard.putNumber("Right Acceleration", rightAccel);
+
         SmartDashboard.putNumber("Drivebase Angle", navX.getAngle());
 
         if(controller != null)

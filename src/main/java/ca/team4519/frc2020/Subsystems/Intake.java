@@ -81,6 +81,16 @@ public class Intake extends Subsystem implements Thread
 
     }
 
+    public void deployIntake(){
+        intakePivot.set(true);
+        intakeRoller.set(ControlMode.PercentOutput, 0.8);
+    }
+
+    public void stowIntake(){
+        intakePivot.set(false);
+        intakeRoller.set(ControlMode.PercentOutput, 0.0);
+    }
+
     @Override
     public void loops()
     {

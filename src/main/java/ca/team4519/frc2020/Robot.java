@@ -6,6 +6,7 @@ import ca.team4519.frc2020.Gains.Drive;
 import ca.team4519.frc2020.auton.AutoMode;
 import ca.team4519.lib.AirPressureSensor; 
 import ca.team4519.frc2020.auton.AutonRunner;
+import ca.team4519.frc2020.auton.modes.SixBallCloseTrench;
 import ca.team4519.frc2020.auton.modes.TestMode;
 import ca.team4519.frc2020.subsystems.Climber;
 import ca.team4519.frc2020.subsystems.Drivebase;
@@ -13,14 +14,15 @@ import ca.team4519.frc2020.subsystems.Feeder;
 import ca.team4519.frc2020.subsystems.Flywheel;
 import ca.team4519.frc2020.subsystems.Intake;
 import ca.team4519.frc2020.subsystems.Lights;
-import ca.team4519.frc2020.subsystems.PDPMonitor;
 import ca.team4519.frc2020.subsystems.Turret;
 import ca.team4519.lib.MechaTimedRobot;
 import ca.team4519.lib.MultiThreader;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.CameraServer;
 
 public class Robot extends MechaTimedRobot
 {
@@ -38,6 +40,8 @@ public class Robot extends MechaTimedRobot
   @Override
   public void robotInit()
   {
+    LiveWindow.disableAllTelemetry();
+    CameraServer.getInstance().startAutomaticCapture();
     autonLoop.addThread(Drivebase.GrabInstance());
     autonLoop.addThread(Intake.GrabInstance());
     autonLoop.addThread(Feeder.GrabInstance());
@@ -49,11 +53,10 @@ public class Robot extends MechaTimedRobot
     telepLoop.addThread(Feeder.GrabInstance());
     telepLoop.addThread(Turret.grabInstance());
     telepLoop.addThread(Flywheel.GrabInstance());
-    //updateLoop.addThread(thread);
 
-    auton.addOption("test", null);
+    auton.addOption("test", new TestMode());
+    auton.addOption("6 Ball From trench", new SixBallCloseTrench());
     SmartDashboard.putData(auton);
-
   }
 
   @Override
@@ -61,7 +64,7 @@ public class Robot extends MechaTimedRobot
   {
     //Drivebase.GrabInstance().zeroSensors();
     //Get the selected mode from the dashboard
-    AutoMode mode = new TestMode();//auton.getSelected();
+    AutoMode mode = auton.getSelected();
     //Then feed the selected mode to our auto loop runner
     autonLoopRunner.selectAuto(mode);
     //start our auton control loops
@@ -107,17 +110,11 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopPeriodic()
   {
-    //Lights.GrabInstance().wantBlink();
-   // SmartDashboard.putNumber("joystick input", driver.getRawAxis(0));
-  // Turret.grabInstance().setPower(operator1.getRawAxis(0));
-   // Turret.grabInstance().turretPivot.set(ControlMode.PercentOutput, operator1.getRawAxis(0));
-    //Flywheel.GrabInstance().testing(driver.getRawAxis(3));
-
     Feeder.GrabInstance().autoIndex(driver.getRawButton(1));
-    if(operator1.getRawButton(2)) Flywheel.GrabInstance().wantFlywheel();
-    if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantOff();
-    //Intake.GrabInstance().setPower(operator1.getRawAxis(4)); //Wheel of fortune
-    Intake.GrabInstance().wantIntake(operator1.getRawButton(3), operator1.getRawButton(4), Feeder.GrabInstance().getBallCount());
+    if(operator1.getRawButton(1)) Flywheel.GrabInstance().wantFlywheel();
+    if(operator1.getRawButton(3)) Flywheel.GrabInstance().wantOff();
+    Intake.GrabInstance().setPower(operator1.getRawAxis(4)); //Wheel of fortune
+    Intake.GrabInstance().wantIntake(operator1.getRawButton(2), operator1.getRawButton(4), Feeder.GrabInstance().getBallCount());
     Turret.grabInstance().SetTurretIntent(operator1);
     Drivebase.GrabInstance().setLeftRightPower(Drivebase.GrabInstance().arcade(driver.getRawAxis(1), driver.getRawAxis(4)));
     Drivebase.GrabInstance().shift(driver.getRawButton(5));
@@ -145,7 +142,6 @@ public class Robot extends MechaTimedRobot
     Intake.GrabInstance().updateDashboard();
     Flywheel.GrabInstance().updateDashboard();
     Feeder.GrabInstance().updateDashboard();
-    PDPMonitor.GrabInstance().updateDashboard();
   }
 
 }

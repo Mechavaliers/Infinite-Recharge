@@ -3,7 +3,7 @@ package ca.team4519.frc2020;
 public class Gains{
 
 	public static double CONTROL_LOOP_TIME_SECONDS = 0.005;	//200hz
-	public static int CONTROL_LOOP_TIME_MILLISECOND = 5;	//Neos require this conversion
+	public static int CONTROL_LOOP_TIME_MILLISECOND = 20;	//Neos require this conversion 0.02
 	public static double NEO_TicksPerRev = 1/42.0;
 
 	public static final class Drive {
@@ -15,11 +15,11 @@ public class Gains{
 		public static final double HANDLING_MODIFIER = 1.0;	//TODO Update this
 		public static final double PATH_TOLLERANCE = 0.25;	//TODO Update this
 
-		public static double NEO_HIGH_CorrectedTicksPerRev = (Math.PI*6)/9; // 355/18.85
-		public static double NEO_LOW_CorrectedTicksPerRev = 1; //820/18.85
+		public static double NEO_HIGH_CorrectedTicksPerRev = (Math.PI*6)/9.167; // (math.pi*6)/9.167
+		public static double NEO_LOW_CorrectedTicksPerRev = 1; //(math.pi*6)/20.833
 		//	Inches/Seconds
-		public static double ROBOT_MAX_VELOCITY= 5500;			//
-		public static double ROBOT_MAX_ACCELERATION = 0.0;	//TODO Update this
+		public static double ROBOT_MAX_VELOCITY= 2500;			//
+		public static double ROBOT_MAX_ACCELERATION = 30000.0;	//TODO Update this
 		public static double ROBOT_MAX_JERK = 23; //TOT UPDATE THis
 		public static double ROBOT_MAX_ROTATIONAL_VELOCITY = 360.0;	//TODO Update this
 		public static double ROBOT_MAX_ROTATIONAL_ACCELERATION = 250.0;	//TODO Update this
@@ -27,11 +27,11 @@ public class Gains{
 		public static double Wheelbase_Length = 39.25; 	//TODO Update this
 		public static double WheelSize_Inches = 6.250; //TODO Measure wheel OD
 	
-		public static final double Dist_P = 0.0;	//TODO Tune this
-		public static final double Dist_I = 0.0;	//TODO tune this
-		public static final double Dist_D = 0.0;	//TODO Tune this
-		public static final double Dist_V = 1 / ROBOT_MAX_VELOCITY;			//CHANGE AT COMP
-		public static final double Dist_A = 0;	//TODO Tune this
+		public static final double Dist_P = 0.0125;	//TODO Tune this 0.437
+		public static final double Dist_I = 0.0;	//TODO tune this	
+		public static final double Dist_D = 0.0;	//TODO Tune this 0.216
+		public static final double Dist_V = 1/ROBOT_MAX_VELOCITY;			//CHANGE AT COMP 0.0577
+		public static final double Dist_A = 1/ROBOT_MAX_ACCELERATION;	//TODO Tune this 0.0131
 		public static final double DistTurn_P = 1.0 / 22.5;	//TODO Tune this
 		public static final double DistTurn_I = 0.0;	//TODO Tune this
 		public static final double DistTurn_D = 0.0;	//TODO Tune this
@@ -78,9 +78,9 @@ public class Gains{
 		public static final double TURRET_MAX_VELOCITY = 500.0;	//500
 		public static final double TURRET_MAX_ACCELERATION = 20000.0;	//20000
 
-		public static final double Turret_P = 0.0225;	//TODO Tune This
-		public static final double Turret_I = 0.0;	//TODO Tune This
-		public static final double Turret_D = 0.0;	//TODO Tune This
+		public static final double Turret_P = 0.08;	//0.035
+		public static final double Turret_I = 0.001;	//TODO Tune This
+		public static final double Turret_D = 0.0022%5;	//TODO Tune This
 		public static final double Turret_V = 1/TURRET_MAX_VELOCITY;
 		public static final double Turret_A = 1/TURRET_MAX_ACCELERATION;
 		public static final double Turret_Tollerance = 0.0;

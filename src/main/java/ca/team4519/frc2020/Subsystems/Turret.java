@@ -55,6 +55,7 @@ public class Turret extends Subsystem implements Thread
         turretLimitHome = new  DigitalInput(Constants.turretHomeDetector);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(1);
 
     }
 
@@ -144,49 +145,26 @@ public class Turret extends Subsystem implements Thread
                 //notPressed
                 if(limelightHasValidTarget()) aimTurretAtPos(getWantedAngle());
                 break;
-            default:
-                break;
         }
-/*
-        if(ForwardIntent)
-        {
-            aimTurretAtPos(Gains.Turret.Intent_ForwardConverted);
-        }
-        else if (RightIntent)
-        {
-            aimTurretAtPos(Gains.Turret.Intent_RightConverted);
-        }
-        else if (ReverseIntent)
-        {
-            aimTurretAtPos(Gains.Turret.Intent_ReverseConverted);
-        }
-        else if (LeftIntent)
-        {
-            aimTurretAtPos(Gains.Turret.Intent_LeftConverted);
-        }
-        else if (autoaim)
-        {
-            aimTurretAtPos(getWantedAngle());
-        }*/
     }
 
     public double getHomedAngle()
     {
-
         if (isTurretHome()) turretPositionEncoder.reset();
         return turretPositionEncoder.getDistance();
     }
 
     public void setPower(double power)
     {
-        if(power > 0.5){
+        if(power > 0.5)
+        {
             power = 0.5;
-        }else if(power < -0.5){
+        }
+        else if(power < -0.5)
+        {
             power = -0.5;
         }
-
         turretPivot.set(ControlMode.PercentOutput, power);
-
     }
 
     public boolean limelightHasValidTarget()
@@ -199,8 +177,8 @@ public class Turret extends Subsystem implements Thread
         storedPose.reset(
             getHomedAngle(),
             turretPositionEncoder.getRate(),
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0), //1 retu
-            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0) //invert this
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0),
+            NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0)
         );
         return storedPose;
     }
@@ -208,9 +186,7 @@ public class Turret extends Subsystem implements Thread
     @Override
     public void loops()
     {
-        getAccel();
         getTurretPose();
-
         //if no controller is running, exit loop
         if(controller == null) return;
         setPower(controller.update(storedPose));
@@ -219,7 +195,6 @@ public class Turret extends Subsystem implements Thread
 
     @Override
     public void zeroSensors() {
-        // TODO Auto-generated method stub
     }
 
     @Override
@@ -229,27 +204,13 @@ public class Turret extends Subsystem implements Thread
 
     }
 
-        public void getAccel() {
-            double curVel = Math.abs(turretPositionEncoder.getRate());
-            double dv = curVel - lastVel;
-            lastVel = curVel;
-            double _accel = dv/Gains.CONTROL_LOOP_TIME_SECONDS;
-            accel = _accel;
-            maxAccel = (Math.abs(accel) > Math.abs(maxAccel))? accel : maxAccel;
-        }
-
-
     @Override
     public void updateDashboard() {
         SmartDashboard.putNumber("Turret Encoder", turretPositionEncoder.getDistance());
-        //max vel is 500Ticks per second then it was 5000
+        
         SmartDashboard.putNumber("Wanted angle turret", getWantedAngle());
         SmartDashboard.putNumber("Turret Velocity", turretPositionEncoder.getRate());
-        SmartDashboard.putNumber("Turret Acceleration", accel);
-        SmartDashboard.putNumber("Turret Max Acceleration", maxAccel);
         SmartDashboard.putBoolean("Turret Hall Effect Sensor", isTurretHome());
         SmartDashboard.putNumber("Camera angle to goal", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
-        SmartDashboard.putBoolean("Camera has valid goal?",  NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) ==1? true:false);
-
     }
 }

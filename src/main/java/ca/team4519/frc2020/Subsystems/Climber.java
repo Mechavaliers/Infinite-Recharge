@@ -86,6 +86,7 @@ public class Climber extends Subsystem implements Thread
 
     public void setLeftRightPower(double power)
     {
+        power = (power < 0)? power/2 : power;  
 
         winchMotorL.set((Math.abs(power) > Math.abs(0.1))? power : 0.0);
         winchMotorR.set((Math.abs(power) > Math.abs(0.1))? -power : 0.0);
