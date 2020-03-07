@@ -288,19 +288,11 @@ public class Drivebase extends Subsystem implements Thread
     @Override
     public void updateDashboard()
     {
-        SmartDashboard.putNumber("Left Drive Neo A Velocity", leftDriveNeoAEncoder.getVelocity());
         SmartDashboard.putNumber("Velocity Converseion factor", leftDriveNeoAEncoder.getVelocityConversionFactor());
         SmartDashboard.putNumber("Left Drive Neo A Position", leftDriveNeoAEncoder.getPosition());
-        SmartDashboard.putNumber("Left Drive Neo B Velocity", leftDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Left Drive Neo B Position", leftDriveNeoBEncoder.getPosition());
-        SmartDashboard.putNumber("Right Drive Neo A Velocity", rightDriveNeoAEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo A Position", rightDriveNeoAEncoder.getPosition());
-        SmartDashboard.putNumber("Right Drive Neo B Velocity", rightDriveNeoBEncoder.getVelocity());
         SmartDashboard.putNumber("Right Drive Neo B Position", rightDriveNeoBEncoder.getPosition());
-
-        SmartDashboard.putNumber("Left Acceleration", leftAccel);
-        SmartDashboard.putNumber("Right Acceleration", rightAccel);
-
         SmartDashboard.putNumber("Drivebase Angle", navX.getAngle());
 
         if(controller != null)

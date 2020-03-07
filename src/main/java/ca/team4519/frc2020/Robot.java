@@ -20,6 +20,7 @@ import ca.team4519.lib.MultiThreader;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -43,19 +44,18 @@ public class Robot extends MechaTimedRobot
     LiveWindow.disableAllTelemetry();
     CameraServer.getInstance().startAutomaticCapture();
     autonLoop.addThread(Drivebase.GrabInstance());
-    autonLoop.addThread(Intake.GrabInstance());
     autonLoop.addThread(Feeder.GrabInstance());
     autonLoop.addThread(Turret.grabInstance());
     autonLoop.addThread(Flywheel.GrabInstance());
 
     telepLoop.addThread(Drivebase.GrabInstance());
-    telepLoop.addThread(Intake.GrabInstance());
     telepLoop.addThread(Feeder.GrabInstance());
     telepLoop.addThread(Turret.grabInstance());
     telepLoop.addThread(Flywheel.GrabInstance());
 
     auton.addOption("test", new TestMode());
-    auton.addOption("6 Ball From trench", new SixBallCloseTrench());
+    //auton.addOption("6 Ball From trench", new SixBallCloseTrench());
+    auton.setDefaultOption("6 Ball from trench", new SixBallCloseTrench());
     SmartDashboard.putData(auton);
   }
 
@@ -85,14 +85,11 @@ public class Robot extends MechaTimedRobot
   @Override
   public void disabledInit()
   {
-    //disabled init gets called when the robot is transitioning to a new state
-    // i.e. disabledPeriodic -> autoInit -> autoPeriodic -> disabledInit -> teleopInit -> so on and so forth
-
-    //we kill any active control loops so they dont keep going when the robot is re-enabled
     Drivebase.GrabInstance().disableSubsystem();
     Feeder.GrabInstance().disableSubsystem();
     Turret.grabInstance().disableSubsystem();
     Flywheel.GrabInstance().disableSubsystem();
+
     autonLoop.stop();
     telepLoop.stop();
   }
@@ -100,9 +97,7 @@ public class Robot extends MechaTimedRobot
   @Override
   public void teleopInit()
   {
-    //Lights.GrabInstance().wantBlink();
     Drivebase.GrabInstance().zeroSensors();
-    //Turret.grabInstance().zeroSensors();
     telepLoop.start();
     
   }
@@ -142,6 +137,7 @@ public class Robot extends MechaTimedRobot
     Intake.GrabInstance().updateDashboard();
     Flywheel.GrabInstance().updateDashboard();
     Feeder.GrabInstance().updateDashboard();
+    SmartDashboard.putNumber("Stored Pressure", airPressure.getAirPressurePsi());
   }
 
 }

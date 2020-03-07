@@ -200,6 +200,7 @@ public abstract class MechaIterativeRobotBase extends RobotBase {
 
     protected void loopFunc() {
         m_watchdog.reset();
+        m_watchdog.addEpoch("watchdogReset");
         allPeriodic();
         m_watchdog.addEpoch("allPeriodic()");
         // Call the appropriate function depending upon the current robot mode
