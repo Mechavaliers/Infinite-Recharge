@@ -7,24 +7,34 @@ public class SixBallCloseTrench extends AutoMode {
 
     @Override
     protected void sequence() throws AutonException {
+       //Reverse
+        drive.wantDriveLine(-20);
+        waitForDist(-16, true, 0.5);
         turret.aimTurretAtPos(148);
         flywheel.wantFlywheel();
         waitForTurretAngle(148, 1.25);
         turret.aimTurretAtPos(turret.getWantedAngle());
+        turret.aimTurretAtPos(turret.getWantedAngle());
+        turret.aimTurretAtPos(turret.getWantedAngle());
+        turret.aimTurretAtPos(turret.getWantedAngle());
+        turret.aimTurretAtPos(turret.getWantedAngle());
+        turret.aimTurretAtPos(turret.getWantedAngle());
+        waitForTurretAngle(turret.getWantedAngle(), 0.5);
         feeder.dump();
         wait(2.0);
         flywheel.wantOff();
         feeder.off();
-        drive.wantDriveLine(180, 65);
+        //Drive to get three balls
+        drive.wantDriveLine(200, 65);
         intake.deployIntake();
         feeder.slowSuck();
-        waitForDist(180, false, 5);
+        waitForDist(200, false, 4.5);
         feeder.off();
         intake.stowIntake();
-
-        drive.wantDriveLine(0);
+        drive.wantDriveLine(-20);
         flywheel.wantFlywheel();
-        waitForDist(0, true, 3);
+        //Return home
+        waitForDist(-20, true, 3);
         turret.aimTurretAtPos(turret.getWantedAngle());
         turret.aimTurretAtPos(turret.getWantedAngle());
         turret.aimTurretAtPos(turret.getWantedAngle());

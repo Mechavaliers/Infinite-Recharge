@@ -6,6 +6,7 @@ import ca.team4519.frc2020.Gains.Drive;
 import ca.team4519.frc2020.auton.AutoMode;
 import ca.team4519.lib.AirPressureSensor; 
 import ca.team4519.frc2020.auton.AutonRunner;
+import ca.team4519.frc2020.auton.modes.AimBackShootThree;
 import ca.team4519.frc2020.auton.modes.SixBallCloseTrench;
 import ca.team4519.frc2020.auton.modes.TestMode;
 import ca.team4519.frc2020.subsystems.Climber;
@@ -54,7 +55,8 @@ public class Robot extends MechaTimedRobot
     telepLoop.addThread(Flywheel.GrabInstance());
 
     auton.addOption("test", new TestMode());
-    //auton.addOption("6 Ball From trench", new SixBallCloseTrench());
+  
+    auton.addOption("Forward only shoot three", new AimBackShootThree());
     auton.setDefaultOption("6 Ball from trench", new SixBallCloseTrench());
     SmartDashboard.putData(auton);
   }
